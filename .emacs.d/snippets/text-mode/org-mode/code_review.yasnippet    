@@ -1,0 +1,54 @@
+** TODO Code Review Phase
+   :PROPERTIES:
+   :Effort: <estimated-time>
+   :Author: Matthew J. Lenzo
+   :Date: `(format-time-string "%d.%m.%Y")`    
+   :Language: C++
+   :Program: ${1:<program name>}
+   :END:
+This is a description of the code review phase and what happens here.
+*** Comment Standards [0/6]
+- [ ] Follows R2 comment conventions
+- [ ] File header comments are proper and complete
+- [ ] Variable declarations are commented
+- [ ] Numeric units are properly documented
+- [ ] Methods and in/out parameters are complete
+- [ ] Classes, structures, and typedefs are commented
+*** Coding Standards [0/1]
+- [ ] Follows R2 coding conventions
+*** Includes / Imports [0/2]
+- [ ] Includes are complete and reference indexed paths
+- [ ] Namespaces and declarations are properly scoped
+*** Error Handling [0/4]
+- [ ] Assertions/ const used to validate interface contracts
+- [ ] All exceptions are thrown and handled properly
+- [ ] Resources are released in error paths
+- [ ] Error handling code has corresponding test cases
+*** Resource Safety [0/4]
+- [ ] Allocated memory is properly freed
+- [ ] Resources "opened" are properly "closed"
+- [ ] Resources are not released more than once
+- [ ] Reference-counted objects are managed appropriately
+*** Thread Safety [0/4]
+- [ ] Global variables are all thread-safe
+- [ ] Objects accessed by multiple threads are thread-safe
+- [ ] Locks and critical sections are released in order
+- [ ] Deadlock events are considered when using multiple locks
+*** Control Structures [0/2]
+- [ ] Loop termination statements are accurately counted
+- [ ] Infinite loop conditions are addressed
+*** Performance [0/3]
+- [ ] Functions/methods call with reasonable stack space
+- [ ] Pass-by-reference used whenever possible
+- [ ] Blocking calls do not adversely affect performance
+*** Functions & Methods [0/4]
+- [ ] All parameters are validated in non-helper functions
+- [ ] Arrays are checked for out-of-bounds exceptions
+- [ ] Functions do not return dangling references
+- [ ] All variables are initialized prior to use
+*** Output Formatting [0/2]
+- [ ] Text output is correctly formatted
+- [ ] Line terminations are correct
+*** Calculations [0/2]
+- [ ] Check all casts where precision and accuracy are lost
+- [ ] Check all signed/unsigned conversions    
