@@ -1,8 +1,17 @@
-
 # /usr/local/bin takes precedence over /bin
 export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/Cellar/python/2.7.1/bin:$PATH
-export PATH=/usr/local/Cellar/ruby/1.9.2-p180/bin/:$PATH
+
+# Make aquamacs behave more like emacs from the terminal
+function aquamacs
+{
+  for f in "$@"
+  do
+    test -e $f || touch $f
+  done
+  open -a /Applications/Aquamacs.app "$@"
+}
+
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 
 # Update the terminal window title with user@hostname:dir
 export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'

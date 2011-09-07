@@ -28,5 +28,4 @@ do
   fi
   echo "--- $HOME/$i >> $HOME/.dotfiles/$i --- "
   ln -s "$HOME/.dotfiles/$i" "$HOME/$i"
-
 done
