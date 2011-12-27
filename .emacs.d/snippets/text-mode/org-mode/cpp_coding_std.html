@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>cpp<sub>coding</sub><sub>std</sub></title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2011-07-19 21:36:52 EDT"/>
+<meta name="generated" content="2011-11-22 14:50:14 EST"/>
 <meta name="author" content="Matthew J. Lenzo"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -79,9 +79,14 @@ lang="en" xml:lang="en">
 
 </head>
 <body>
-<div id="content">
 
+<div id="preamble">
+
+</div>
+
+<div id="content">
 <h1 class="title">cpp<sub>coding</sub><sub>std</sub></h1>
+
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -167,7 +172,6 @@ inclusion.  The format of this guard shall be:
 #define &lt;PROJECT&gt;_&lt;FILE&gt;_H
 ...
 #endif
-
 </pre>
 
 
@@ -215,7 +219,6 @@ int z = init();
 /* Bad Example */
 int z;
 z = init();
-
 </pre>
 
 
@@ -263,7 +266,6 @@ through private declaration.
 <pre class="src src-C++">private:
   TypeName(const TypeName&amp;);
   void operator=(const TypeName&amp;);
-
 </pre>
 
 
@@ -323,7 +325,6 @@ variable:
 <pre class="src src-C++">int m_private_var; // Private
 private_var(); // Get
 set_private_var(...); // Set
-
 </pre>
 
 
@@ -336,7 +337,6 @@ All parameters passed by reference must be labeled <code>const</code>:
 
 
 <pre class="src src-C++">void DoSomething(const std::string &amp;s);
-
 </pre>
 
 
@@ -473,7 +473,6 @@ Matching braces should follow on their own lines.
 {
 ...
 }
-
 </pre>
 
 
@@ -504,7 +503,6 @@ else
 if (condition) return; // Bad, line spacing
 if (condition)
   return; // OK
-
 </pre>
 
 
@@ -532,7 +530,6 @@ parenthesis, but braces should follow on their own lines.
 
 while (expression)
   continue;
-
 </pre>
 
 
@@ -562,7 +559,6 @@ public:
 private:
   m_instance_var;
 };
-
 </pre>
 
 
@@ -587,7 +583,6 @@ private:
   int j;
   int k;
 } &lt;struct_name&gt;;
-
 </pre>
 
 
@@ -595,12 +590,14 @@ private:
 </div>
 </div>
 </div>
-<div id="postamble">
-<p class="date">Date: 2011-07-19 21:36:52 EDT</p>
-<p class="author">Author: Matthew J. Lenzo</p>
-<p class="creator">Org version 7.5 with Emacs version 23</p>
-<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 </div>
+
+<div id="postamble">
+<p class="date">Date: 2011-11-22 14:50:14 EST</p>
+<p class="author">Author: Matthew J. Lenzo</p>
+<p class="creator">Org version 7.7 with Emacs version 23</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
 </div>
 </body>
 </html>

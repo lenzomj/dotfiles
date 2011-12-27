@@ -60,6 +60,7 @@
         "~/org/system"
         "~/org/smart"
         "~/org/com"
+        "~/org/fam"
         "~/org/studio"))
 
 ;; Configure geektool batch agenda 
@@ -77,8 +78,8 @@
 (setq org-agenda-skip-deadline-if-done t)
 (setq org-agenda-todo-ignore-scheduled t)
 
-;; display 7 days in overview
-(setq org-agenda-ndays 7)
+;; display 21 days in overview (danger radar)
+(setq org-agenda-ndays 21)
 ;; start calendar on the current day
 (setq org-agenda-start-on-weekday nil)
 ;; first day of week is monday
@@ -101,7 +102,7 @@
 
 ;; Configure TODO States
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")
+      '((sequence "TODO(t)" "WAITING(w)" "STAGED(s)" "|" "DONE(d)")
         ;(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
         (sequence "|" "CANCELED(c)")))
 
