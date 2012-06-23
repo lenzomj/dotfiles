@@ -8,6 +8,8 @@
 (add-to-list 'load-path "/usr/local/share/emacs/24.0.50/site-lisp")
 (add-to-list 'load-path "~/.emacs.d/plugins/auto-complete-1.3.1")
 
+;;(setq server-socket-dir (format "/tmp/emacs%d" (user-uid)))
+
 ;; Put autosave files (ie #foo#) in one place
 (defvar backup-dir (concat "/tmp/emacs_" (user-login-name) "/"))
 (make-directory backup-dir t)
@@ -36,8 +38,10 @@
 (setq default_tab_width 2)
 (setq-default transient-mark-mode t)
 (setq ring-bell-function 'ignore)
-;;(tool-bar-mode -1)
+(tool-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
+(set-face-background 'modeline "yellow")
+
 
 ;; Configure autocompletion
 (require 'auto-complete-config)
@@ -58,3 +62,12 @@
 
 ;; Enable and configure org mode
 (require 'org-config)
+
+;; Enable and configure gnus
+(require 'gnus-config)
+
+;; Enable and configure flyspell
+(setq flyspell-issue-welcome-flag nil)
+(dolist (hook '(org-mode-hook))
+      (add-hook hook (lambda () (flyspell-mode 1))))
+

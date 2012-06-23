@@ -3,7 +3,6 @@
 ;; Copyright (C) 2011 Matthew Lenzo
 
 ;; Author: Matthew Lenzo
-;; Keywords: 
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -54,9 +53,12 @@
 ;; Configure agenda files
 (setq org-agenda-files 
   (list "~/org/home" 
-        "~/org/msd"
-        "~/org/mod"
-        "~/org/mtd"
+;;        "~/org/msd"
+;;        "~/org/mod"
+;;        "~/org/mtd"
+        "~/org/analysis"
+        "~/org/arch"
+        "~/org/agile"
         "~/org/system"
         "~/org/smart"
         "~/org/com"
@@ -77,6 +79,12 @@
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-skip-deadline-if-done t)
 (setq org-agenda-todo-ignore-scheduled t)
+
+(setq org-agenda-exporter-settings
+      '((ps-number-of-columns 2)
+        (ps-landscape-mode t)
+        (org-agenda-add-entry-text-maxlines 5)
+        (htmlize-output-type 'css)))
 
 ;; display 21 days in overview (danger radar)
 (setq org-agenda-ndays 21)

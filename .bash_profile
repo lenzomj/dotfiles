@@ -1,18 +1,18 @@
 # /usr/local/bin takes precedence over /bin
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/share/python:$PATH
+export PATH=/usr/local/sbin:$PATH
 
-# Make aquamacs behave more like emacs from the terminal
-function aquamacs
-{
-  for f in "$@"
-  do
-    test -e $f || touch $f
-  done
-  open -a /Applications/Aquamacs.app "$@"
-}
-
+#alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
+alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+#alias emacs=emacsclient
+alias mysql="/usr/local/mysql/bin/mysql"
+alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
 
+# Create editor alias
+export EDITOR=emacsclient
+export ALTERNATE_EDITOR=""
+#export EDITOR=emacsclient
 # Update the terminal window title with user@hostname:dir
 export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 
