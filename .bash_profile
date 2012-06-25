@@ -11,7 +11,8 @@ alias mysql="/usr/local/mysql/bin/mysql"
 alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
 
 # Create editor alias
-export EDITOR="emacs -q"
+export EDITOR=fast_emacs
+#export EDITOR="emacs -q"
 export ALTERNATE_EDITOR=emacs
 
 # Update the terminal window title with user@hostname:dir
