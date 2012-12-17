@@ -1,0 +1,25 @@
+
+#+AUTHOR:    Matthew J. Lenzo
+
+# ------------------------------------------------------------
+# Export Options
+# See http://orgmode.org/manual/Export-options.html
+# ------------------------------------------------------------
+#+OPTIONS:   H:3 num:nil toc:nil @:t 
+#+OPTIONS:   ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t 
+#+OPTIONS:   skip:nil d:nil todo:nil pri:nil tags:nil
+
+# ------------------------------------------------------------
+# JavaScript Support
+# See http://orgmode.org/manual/JavaScript-support.html
+# view: info | overview | content | showall
+# ------------------------------------------------------------
+#+INFOJS_OPT: path:http://orgmode.org/org-info.js
+#+INFOJS_OPT: view:nil
+#+INFOJS_OPT: toc:nil ltoc:t mouse:underline buttons:0 
+
+#+LINK_UP:   
+#+LINK_HOME: 
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="css/site.css" />
