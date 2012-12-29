@@ -1,22 +1,35 @@
 # /usr/local/bin takes precedence over /bin
+
+# Export system paths
+export PATH=/usr/local/mysql/bin:$PATH
 export PATH=/usr/local/bin:/usr/local/share/python:$PATH
 export PATH=/usr/local/sbin:/usr/texbin:$PATH
+export PATH=/usr/local/gnat/bin:$PATH
 
-source ~/.git-completion.sh
+export JAVA_HOME=\
+/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 
-alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+export OpenCV_DIR=/usr/local/include/opencv
+
+alias emacsclient=\
+"/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
+
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+alias emacsdaemon_start="emacs --daemon"
+alias emacsdaemon_stop="emacsclient -e '(kill-emacs)'"
 
 alias mysql="/usr/local/mysql/bin/mysql"
 alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
+alias tmux="tmux -2"
 
 # Create editor alias
 export EDITOR=fast_emacs
-#export EDITOR="emacs -q"
 export ALTERNATE_EDITOR=emacs
 
 # Update the terminal window title with user@hostname:dir
-export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+export PROMPT_COMMAND=\
+'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 
 # Tab complete in sudo
 complete -cf sudo
@@ -50,3 +63,33 @@ extract() {
         echo "'$1' is not a valid file"
     fi
 }
+
+# Pomodoro Hacks
+function countdown
+{
+        local OLD_IFS="${IFS}"
+        IFS=":"
+        local ARR=( $1 )
+        local SECONDS=$(((ARR[0] * 60 * 60) + (ARR[1] * 60) + ARR[2]))
+        local START=$(date +%s)
+        local END=$((START + SECONDS))
+        local CUR=$START
+
+        while [[ $CUR -lt $END ]]
+        do
+                CUR=$(date +%s)
+                LEFT=$((END-CUR))
+
+                printf "\r%02d:%02d:%02d" \
+                        $((LEFT/3600)) $(( (LEFT/60)%60)) $((LEFT%60))
+
+                sleep 1
+        done
+        IFS="${OLD_IFS}"
+        echo "        "
+        growlnotify -s -m "Pomodoro Event!"
+}
+
+alias do_pomodoro="countdown '00:25:00'"
+alias do_break="countdown '00:05:00'"
+alias do_rest="countdown '00:30:00'"

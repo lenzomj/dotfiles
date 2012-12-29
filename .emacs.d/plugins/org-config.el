@@ -1,21 +1,21 @@
-;;; org-config.el --- 
-
-;; Copyright (C) 2011 Matthew Lenzo
-
-;; Author: Matthew Lenzo
-
-;; This program is free software; you can redistribute it and/or modify
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org-config - emacs configuration file for org-mode major mode
+;;
+;; Copyright (C) 2012 Matthew J. Lenzo
+;;
+;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
-
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
-
+;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see http://www.gnu.org/licenses/.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Enable org-mode major mode
 (require 'org-install)
@@ -23,7 +23,6 @@
 ;; Configure org-mode load paths
 (add-to-list 'load-path "/usr/local/src/org-mode/lisp")
 (add-to-list 'load-path "/usr/local/src/org-mode/contrib/lisp")
-(add-to-list 'load-path "/usr/local/src/org-mode/EXPERIMENTAL")
 
 ;; Configure org-mode directories
 (setq org-directory "~/Dropbox/org")
@@ -53,26 +52,9 @@
 ;; Configure agenda files
 (setq org-agenda-files 
   (list "~/org/home" 
-;;        "~/org/msd"
-;;        "~/org/mod"
-;;        "~/org/mtd"
-        "~/org/analysis"
-        "~/org/arch"
-        "~/org/agile"
+        "~/org/software_eng"
         "~/org/system"
-        "~/org/smart"
-        "~/org/com"
-        "~/org/fam"
-        "~/org/studio"))
-
-;; Configure geektool batch agenda 
-;(setq org-agenda-custom-commands
-;  '(
-;    ("G" "Geektool agenda"
-;      ((agenda "")(alltodo))
-;      ((org-agenda-ndays 1)(org-deadline-warning-days 7))
-;      ("~/.agenda_view")
-;    )))
+        "~/org/fam"))
 
 ;; Configure agenda view
 (setq org-agenda-include-all-todo nil)
@@ -95,12 +77,7 @@
 
 ;; Configure org-mode extension hooks
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(add-to-list 'auto-mode-alist '("\\.psp\\'" . org-mode))
-(add-to-list 'auto-mode-alist '("\\.notes\\'" . org-mode))
-(add-to-list 'auto-mode-alist '("\\.gtd\\'" . org-mode))
 
-;; Fontify code blocks
-(setq org-src-fontify-natively t)
 
 ;; Configure additional key bindings
 (global-set-key "\C-cl" 'org-store-link)
@@ -111,7 +88,7 @@
 ;; Configure TODO States
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAITING(w)" "STAGED(s)" "|" "DONE(d)")
-        ;(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+        ;;(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
         (sequence "|" "CANCELED(c)")))
 
 ;; Configure time logging
@@ -137,24 +114,16 @@
    )
 )
 
-;; Enable kindlegen support
-(defun kindlegen ()
-  "Exports an org-mode text file to MOBI format"
-  (interactive)
-  (org-export-as-html-to-buffer nil)
-  (write-file "/tmp/kgen.html")
-  (kill-buffer-and-window)
-  (let ((buffer (get-buffer-create "*temp*")))
-    (with-current-buffer buffer
-      (unwind-protect
-        (shell-command "kindlegen /tmp/kgen.html -o kgen.mobi > /dev/null")
-        (shell-command "mv /tmp/kgen.mobi $HOME/Desktop/kgen.mobi")
-        (print "Created kgen.mobi on ~/Desktop")
-      )
-    )
-  )
-)
-
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (python . t)
+   (ruby . t)
+   (emacs-lisp . t)
+   ))
+;; Fontify code blocks
+(setq org-src-fontify-natively t)
 
 (provide 'org-config)
 ;;; org-config.el ends here
