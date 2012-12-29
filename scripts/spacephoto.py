@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 #######################################################################
 ## spacephoto.py - script for downloading space photo of the day!
 ##
@@ -15,6 +16,8 @@
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see http://www.gnu.org/licenses/.
+#######################################################################
+## sudo launchctl load /battlestar.spacephoto.daemon.plist
 #######################################################################
 
 import os
@@ -54,7 +57,7 @@ if options.days <= 0:
 if not os.path.exists(options.out):
     print "{0} does not exist. Creating.".format(options.out)
     os.makedirs(options.out)
-print "Downloadingphotos to {0}".format(options.out)
+print "Downloading photos to {0}".format(options.out)
 
 # Calculate back-date for image grabs
 tz_eastern = timezone('US/Eastern')
