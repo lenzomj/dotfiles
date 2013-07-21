@@ -1,0 +1,230 @@
+** C++ Coding Standard
+   :PROPERTIES:
+   :Author: Matthew J. Lenzo
+   :Date: <2011-07-19 Tue>    
+   :Language: C++
+   :Program: ${1:<program name>}
+   :END:
+*** Purpose
+Adhere to this basic style document to produce manageable, safe,
+consistent, readable, and measurable C++ code.  This standard has been
+adapted from the Google C++ Style Guide.
+
+*** File Conventions
+All C++ source files shall use the .cc file extension and all C++
+header files shall use the .h file extension.  Every source file shall
+have a corresponding header file, except in the case of program entry
+points and unit test cases.  Filenames shall be all lowercase and may
+include underscores or dashes:
+
+=mycode.cc=, =mycode.h=, =main.cc=
+
+*** Header Files
+All C++ header files shall use #define guards to prevent multiple
+inclusion.  The format of this guard shall be:
+
+#+BEGIN_SRC C++
+#ifndef <PROJECT>_<FILE>_H
+#define <PROJECT>_<FILE>_H
+...
+#endif
+#+END_SRC
+
+*** Type Definitions
+All type names for *class*, *struct*, *typedef*, *union*, and *enum*
+must start with a capital letter for each word without underscores
+(i.e. mixed case).  Do not use reserved keywords in the type name:
+
+=MyClass=, =MyEnum=, =MyStruct=, =MyType=
+
+*** Variables
+Variable names shall be declared in all lowercase with underscores
+separating words.  Class member variables shall begin with =m_=.  Do
+not use reserved keywords in the type name:
+
+=word_count=, =sleep_counter=, =m_word_counter=, =m_sleep_counter=
+
+Variable initialization shall be used in place of declaration and then
+subsequent assignment.
+
+#+BEGIN_SRC C++
+/* Good Example */
+int z = init();
+/* Bad Example */
+int z;
+z = init();
+#+END_SRC
+
+Use C++ style casts such as =static_cast<>()= over c-style casts.
+
+Use =0= for integers, =0.0= for reals, and =NULL= for pointer values.
+
+*** Constants and Enumerators
+For constant names and enumerator values, use k followed by mixed
+case:
+
+=kConstantValue=, =kEnumValue1=, =kEnumValue2=
+
+*** Constructors
+Default constructors must be defined for all classes with member
+variables.  Always use the C++ keyword *explicit* for constructors
+with only one argument.
+
+If not defining copy and assignment constructors, always disable them
+through private declaration.
+
+#+BEGIN_SRC C++
+private:
+  TypeName(const TypeName&);
+  void operator=(const TypeName&);
+#+END_SRC
+
+*** Inheritance
+Classes with virtual methods shall have virtual destructors.
+
+Multiple inheritance shall only be permitted when at most one of the
+base classes has implementation.  All other classes must be pure
+interfaces.  Pure interfaces should be named starting with an "=I=".
+
+*** Access Control
+*public* members shall be declared before *private* and *protected*
+ members.  Methods shall be declared before variables.
+
+All data members shall be marked *private* and only accessible through
+explicit accessor and mutator methods.
+
+*** Functions & Methods
+Functions other than accessors and mutators shall be defined using
+mixed case:
+
+=MyFunction()=, =MyOtherFunction()=
+
+Accessor and mutator methods shall match the name of the protected
+variable:
+
+#+BEGIN_SRC C++
+int m_private_var; // Private
+private_var(); // Get
+set_private_var(...); // Set
+#+END_SRC
+
+All parameters passed by reference must be labeled =const=:
+
+#+BEGIN_SRC C++
+void DoSomething(const std::string &s);
+#+END_SRC
+
+Do not use default function parameters in the parameter list.
+
+*** Macros & Preprocessor
+Macro and preprocessor names are defined using all uppercase with
+underscores:
+ 
+=#define: MY_MACRO=
+
+*** File Commments
+Each code file shall start with a descriptive header:
+1.  Program assignment number
+2.  Author's name
+3.  The date program development started
+4.  A short description of the file's contents
+
+*** Class Comments
+Every class definition shall have an accompanying comment:
+1.  Description and purpose
+2.  Usage
+
+*** Function & Method Comments
+Every function definition shall have an accompanying comment:
+1.  Description and purpose
+2.  Arguments (inputs and outputs) and allowed NULL parameters
+3.  Return value
+4.  Whether the function allocates memory that the caller must free
+5.  Synchronization assumptions
+
+*** Variable Comments
+Each instance variable shall have an accompanying comment.
+All global variables shall have an accompanying comment.
+In general, non-instance and non-global variables do not need comments
+if their names are sufficiently descriptive.
+
+*** Spacing
+Separate each program construct with at least one space.
+
+*** Indent
+Use only spaces for indentation.  One indent level equals 2 spaces.
+
+*** Function Formatting
+Return type and function name declaration must be on the same line.
+Function declaration parameters my be listed on multiple lines.
+Function call parameter lists may be listed on multiple lines.
+Matching braces should follow on their own lines.
+
+#+BEGIN_SRC C++
+ReturnType ClassName::Fnc(Type p1, Type p2)
+{
+...
+}
+#+END_SRC
+
+*** Conditional Formatting
+*if*, *else*, *else if* keywords should be placed on separate source
+ lines.  One space should be used between *if* and parenthesis, but
+ braces should follow on their own lines.
+
+#+BEGIN_SRC C++
+if (condition) // Note single space after if
+{ // Separate line
+}
+else
+{
+}
+
+if (condition) return; // Bad, line spacing
+if (condition)
+  return; // OK
+#+END_SRC
+
+*** Loop Formatting
+Empty loop bodies should use the *continue* keyword and not a lone
+'=;='.  One space should be used between the iterative keyword and
+parenthesis, but braces should follow on their own lines.
+
+#+BEGIN_SRC C++
+for (int j = 0; j < 100; j++)
+{
+  // Do stuff
+}
+
+while (expression)
+  continue;
+#+END_SRC
+
+*** Class Formatting
+The base class name should precede on the same line as the subclass.
+Matching braces should follow _all_ class definitions.  *public*,
+*protected*, and *private* keywords shall be on their own line and
+even with matching braces.
+
+#+BEGIN_SRC C++
+class MyClass : public BaseClass
+{
+public:
+  MyClass();
+
+private:
+  m_instance_var;
+};
+#+END_SRC
+
+*** Struct Formatting
+*struct* declaration may follow definition.  Matching braces should
+ follow _all_ *struct* definitions on their own lines.
+
+#+BEGIN_SRC C++
+typedef struct <name>
+{
+  int j;
+  int k;
+} <struct_name>;
+#+END_SRC
