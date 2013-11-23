@@ -1,7 +1,7 @@
 # /usr/local/bin takes precedence over /bin
 
-#
-# Points to this directory
+##
+# $DOTFILES Points to this directory
 #
 export DOTFILES="$HOME/.dotfiles"
 
@@ -15,6 +15,7 @@ export PATH=/usr/local/mysql/bin:$PATH
 export PATH=/usr/local/bin:/usr/local/share/python:$PATH
 export PATH=/usr/local/sbin:/usr/texbin:$PATH
 export PATH=/usr/local/gnat/bin:$PATH
+export PATH=/usr/local/Cellar/ruby/2.0.0-p247/bin:$PATH
 
 launchctl setenv PATH $PATH 2> /dev/null
 
@@ -24,6 +25,8 @@ export JAVA_HOME=\
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 export OpenCV_DIR=/usr/local/include/opencv
 
+export PATH=$PYTHONPATH:$PATH
+
 alias emacsclient=\
 "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
@@ -32,6 +35,7 @@ alias emacsdaemon_stop="emacsclient -e '(kill-emacs)'"
 
 alias mysql="/usr/local/mysql/bin/mysql"
 alias mysqladmin="/usr/local/mysql/bin/mysqladmin"
+export TERM="xterm-256color"
 alias tmux="tmux -2"
 
 alias org_export="emacs -eval '(org-batch-store-agenda-views)' -kill"
@@ -69,9 +73,9 @@ if [ "$PS1" ] ; then
     trm=\"\[$Y\]\${ldr}\[$RST\] \${trm}\n\[$Y\]\${trl}\[$RST\]\"
     echo -e \"\${trm}\"
   "
-  export PS1="\$(${prompt})"
+  #export PS1="\$(${prompt})"
 
-  PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} - ${PWD}\007"'
+  #PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} - ${PWD}\007"'
 fi
 
 # Tab complete in sudo
@@ -110,29 +114,30 @@ extract() {
 # Pomodoro Hacks
 function countdown
 {
-        local OLD_IFS="${IFS}"
-        IFS=":"
-        local ARR=( $1 )
-        local SECONDS=$(((ARR[0] * 60 * 60) + (ARR[1] * 60) + ARR[2]))
-        local START=$(date +%s)
-        local END=$((START + SECONDS))
-        local CUR=$START
-
-        while [[ $CUR -lt $END ]]
-        do
-                CUR=$(date +%s)
-                LEFT=$((END-CUR))
-
-                printf "\r%02d:%02d:%02d" \
-                        $((LEFT/3600)) $(( (LEFT/60)%60)) $((LEFT%60))
-
-                sleep 1
-        done
-        IFS="${OLD_IFS}"
-        echo "        "
-        growlnotify -s -m "Pomodoro Event!"
+  local OLD_IFS="${IFS}"
+  IFS=":"
+  local ARR=( $1 )
+  local SECONDS=$(((ARR[0] * 60 * 60) + (ARR[1] * 60) + ARR[2]))
+  local START=$(date +%s)
+  local END=$((START + SECONDS))
+  local CUR=$START
+    
+  while [[ $CUR -lt $END ]]
+  do
+    CUR=$(date +%s)
+    LEFT=$((END-CUR))
+        
+    printf "\r%02d:%02d:%02d" \
+      $((LEFT/3600)) $(( (LEFT/60)%60)) $((LEFT%60))
+        
+    sleep 1
+  done
+  IFS="${OLD_IFS}"
+  echo "        "
+  growlnotify -s -m "Pomodoro Event!"
 }
 
 alias do_pomodoro="countdown '00:25:00'"
 alias do_break="countdown '00:05:00'"
 alias do_rest="countdown '00:30:00'"
+

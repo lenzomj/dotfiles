@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; .emacs - configuration file loaded upon starting emacs
 ;;
-;; Copyright (C) 2012 Matthew J. Lenzo
+;; Copyright (C) 2013 Matthew J. Lenzo
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -142,42 +142,42 @@
 
 ; Customize mode-line
 (setq-default mode-line-format
-      (list
-       ;; buffer name
-       (propertize "%b "  'face face-ml-default)
-
-       ;; (line,column)
-       (propertize "("    'face face-ml-default)
-       (propertize "%02l" 'face face-ml-default) 
-       (propertize ","    'face face-ml-default)
-       (propertize "%02c" 'face face-ml-default) 
-       (propertize ") "   'face face-ml-default)
-
-       ;; [%position/file_size]
-       (propertize "["    'face face-ml-default)
-       (propertize "%02p" 'face face-ml-default)
-       ;;(propertize "|"  'face face-ml-default)
-       ;;(propertize "%I" 'face face-ml-default) 
-       (propertize "] "   'face face-ml-default)
-
-       ;; [major_mode]
-       (propertize "["    'face face-ml-default)
-       (propertize "%m"   'face face-ml-default)
-       (propertize "] "   'face face-ml-default)
-
-       ;; [OVR|INS|MOD|RDO]
-       (propertize "["    'face face-ml-default)
-       (propertize (if overwrite-mode "OVR" "INS")
-                   'face face-ml-default)
-       '(:eval (when (buffer-modified-p) 
-                 (propertize " MOD" 'face face-ml-default)))
-       '(:eval (when (buffer-read-only)
-                 (propertize " RO" 'face face-ml-default)))
-       (propertize "] " 'face face-ml-default)
-
-       ;; minor-mode-alist  ;; list of minor modes
-       ;; fill with '-'
-       (propertize "%-" 'face face-ml-default)))
+              (list
+               ;; buffer name
+               (propertize "%b "  'face face-ml-default)
+               
+               ;; (line,column)
+               (propertize "("    'face face-ml-default)
+               (propertize "%02l" 'face face-ml-default) 
+               (propertize ","    'face face-ml-default)
+               (propertize "%02c" 'face face-ml-default) 
+               (propertize ") "   'face face-ml-default)
+               
+               ;; [%position/file_size]
+               (propertize "["    'face face-ml-default)
+               (propertize "%02p" 'face face-ml-default)
+               ;;(propertize "|"  'face face-ml-default)
+               ;;(propertize "%I" 'face face-ml-default) 
+               (propertize "] "   'face face-ml-default)
+               
+               ;; [major_mode]
+               (propertize "["    'face face-ml-default)
+               (propertize "%m"   'face face-ml-default)
+               (propertize "] "   'face face-ml-default)
+               
+               ;; [OVR|INS|MOD|RDO]
+               (propertize "["    'face face-ml-default)
+               (propertize (if overwrite-mode "OVR" "INS")
+                           'face face-ml-default)
+               '(:eval (when (buffer-modified-p) 
+                         (propertize " MOD" 'face face-ml-default)))
+               '(:eval (when (buffer-read-only)
+                         (propertize " RO" 'face face-ml-default)))
+               (propertize "] " 'face face-ml-default)
+               
+               ;; minor-mode-alist  ;; list of minor modes
+               ;; fill with '-'
+               (propertize "%-" 'face face-ml-default)))
 
 
 ;;---------------------------------------------------------------------
@@ -195,19 +195,12 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;---------------------------------------------------------------------
-;; Editor server
-;;---------------------------------------------------------------------
-
-;;(require 'edit-server)
-
-
-;;---------------------------------------------------------------------
 ;; Fontification and color themes
 ;;---------------------------------------------------------------------
 
 ;; Configure themes
 (add-to-list 'custom-theme-load-path 
-     "~/.emacs.d/themes/emacs-color-theme-solarized")
+             "~/.emacs.d/themes/emacs-color-theme-solarized")
 (load-theme 'solarized-dark t)
 
 ;; Enable visual markers to identify bad style
@@ -248,6 +241,12 @@
 ;; Configure org-mode major mode
 (require 'org-config)
 
+;; Configure AADL major mode
+(load "aadl-mode.el")
+
+;; Associate rake files with ruby mode
+(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+
 ;; Configure PostScript printer
 (setq ps-print-header nil)
 (setq ps-font-size 10)
@@ -267,3 +266,20 @@
 ;;  (add-hook hook (lambda () (flyspell-mode 1))))
 
 (setq js-indent-level 2)
+
+;; ---------
+(defun do-count (posBegin posEnd)
+  "Print number of words and chars in region."
+  (interactive "r")
+  (message "Counting …")
+  (save-excursion
+    (let (wordCount charCount)
+      (setq wordCount 0)
+      (setq charCount (- posEnd posBegin))
+      (goto-char posBegin)
+      (while (and (< (point) posEnd)
+                  (re-search-forward "\\w+\\W*" posEnd t))
+        (setq wordCount (1+ wordCount)))
+
+      (message "Words: %d. Chars: %d." wordCount charCount)
+      )))
