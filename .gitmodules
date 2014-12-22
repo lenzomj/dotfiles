@@ -11,7 +11,9 @@
 	path = vim.d/bundle/nerdtree
   url  = https://github.com/scrooloose/nerdtree.git
 
-
+[submodule "themes/solarized/gnome-terminal"]
+  path = themes/solarized/gnome-terminal
+  url  = https://github.com/Anthony25/gnome-terminal-colors-solarized.git
 
 [submodule "emacs.d/themes/emacs-color-theme-solarized"]
   path = emacs.d/themes/emacs-color-theme-solarized
