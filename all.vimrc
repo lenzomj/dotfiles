@@ -19,12 +19,15 @@ set number
 set textwidth=80
 "set formatoptions+=a
 
+set backupdir=$HOME/.swapfiles
+
 " Enable Pathogen "
 runtime 'bundle/vim-pathogen/autoload/pathogen.vim'
 execute pathogen#infect('bundle/{}')
 filetype plugin indent on
 
 " Enable Solarized Theme "
+set t_Co=256
 set background=dark
 colorscheme solarized
 
