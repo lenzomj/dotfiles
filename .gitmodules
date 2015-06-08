@@ -22,3 +22,9 @@
 [submodule "themes/gnome-terminal-dircolors-solarized"]
 	path = themes/gnome-terminal-dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized.git
+[submodule "themes/gedit-solarized"]
+	path = themes/gedit-solarized
+	url = git@github.com:mattcan/solarized-gedit.git
+[submodule "themes/netbeans-solarized"]
+	path = themes/netbeans-solarized
+	url = git@github.com:fentie/netbeans-colors-solarized.git
