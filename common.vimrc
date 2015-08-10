@@ -1,99 +1,56 @@
+" General Settings {{{
 
-" Settings {{{
-" Switch syntax highlighting on, when the terminal has colors
-syntax on
-
-" Use vim, not vi api
+" Use vim, not vi API
 set nocompatible
 
-" No backup files
-set nobackup
+" Disable use of swap and backup files
+set nobackup nowritebackup noswapfile
 
-" No write backup
-set nowritebackup
-
-" No swap file
-set noswapfile
-
-" Command history
-set history=100
-
-" Always show cursor
-set ruler
+" Show command history
+set history=150
 
 " Show incomplete commands
 set showcmd
 
-" Incremental searching (search as you type)
-set incsearch
-
-" Highlight search matches
-set hlsearch
-
-" Ignore case in search
-set smartcase
-
-" Make sure any searches /searchPhrase doesn't need the \c escape character
-set ignorecase
-
-" A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
-" if you try and quit Vim while there are hidden buffers, you will raise an error:
-" E162: No write since last change for buffer “a.txt”
+" Prevent quitting vim with hidden buffers (unfocused with unsaved changes)
 set hidden
 
-" Turn word wrap off
-set nowrap
+" Disable splash screen
+set shortmess+=I
 
-" Allow backspace to delete end of line, indent and start of line characters
-set backspace=indent,eol,start
+" }}}
 
-" Convert tabs to spaces
-set expandtab
-
-" Set tab size in spaces (this is for manual indenting)
-set tabstop=4
-
-" The number of spaces inserted for a tab (used for auto indenting)
-set shiftwidth=4
-
-" Turn on line numbers
-set number
-
-" Highlight tailing whitespace
-set list listchars=tab:\ \ ,trail:·
-
-" Get rid of the delay when pressing O (for example)
-" http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
-set timeout timeoutlen=1000 ttimeoutlen=100
-
-" Always show status bar
-set laststatus=2
-
-" Set the status line to something useful
-set statusline=%f\ %=L:%l/%L\ %c\ (%p%%)
-
-" Hide the toolbar
-set guioptions-=T
-
+" ---- Editor {{{
 " UTF encoding
 set encoding=utf-8
 
-" Autoload files that have changed outside of vim
-set autoread
+" Enable syntax highlighting
+syntax on
+
+" Disable wordwrap
+set nowrap
+
+" Show cursor
+set ruler
+
+" Show line numbers
+set number
 
 " Use system clipboard
-" http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
 set clipboard+=unnamed
 
-" Don't show intro
-set shortmess+=I
-
-" Better splits (new windows appear below and to the right)
-set splitbelow
-set splitright
-
-" Highlight the current line
+" Highlight current line
 set cursorline
+
+" highlight a matching [{()}] when cursor is placed on start/end character
+set showmatch
+
+" Always highlight column 80 so it's easier to see where
+autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
+set colorcolumn=80
+
+" Get rid of command delays
+set timeout timeoutlen=1000 ttimeoutlen=100
 
 " Ensure Vim doesn't beep at you every time you make a mistype
 set visualbell
@@ -101,91 +58,177 @@ set visualbell
 " Visual autocomplete for command menu (e.g. :e ~/path/to/file)
 set wildmenu
 
+" }}}
+
+" ---- Search {{{
+" Search while typing
+set incsearch
+
+" Search highlit matches
+set hlsearch
+
+" Search ignore case
+set smartcase
+set ignorecase
+" }}}
+
+" ---- Tabs and Spacing {{{
+" Convert tabs to spaces
+set expandtab
+
+" Set tab size for manual indenting
+set tabstop=4
+
+" Set tab size for auto indenting
+set shiftwidth=4
+
+" Permit backspace to delete whitespace characters
+set backspace=indent,eol,start
+
+" Highlight trailing whitespace
+set list listchars=tab:\ \ ,trail:·
+" }}}
+
+" ---- Status Bar {{{
+" Show status bar
+set laststatus=2
+
+" Set the status bar text
+" set statusline=%f\ %=L:%l/%L\ %c\ (%p%%)
+
+" Hide the toolbar
+set guioptions-=T
+
+" }}}
+
+" ---- Buffers and Windows {{{
+
+" Autoload files that have changed outside of vim
+set autoread
+
+" Better splits (new windows appear below and to the right)
+set splitbelow
+set splitright
+
 " redraw only when we need to (i.e. don't redraw when executing a macro)
 set lazyredraw
 
-" highlight a matching [{()}] when cursor is placed on start/end character
-set showmatch
-
-" Set built-in file system explorer to use layout similar to the NERDTree plugin
-let g:netrw_liststyle=3
-
-" Always highlight column 80 so it's easier to see where
-" cutoff appears on longer screens
-autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
-set colorcolumn=80
 " }}}
 
-" Plugins {{{
-execute pathogen#infect()
-filetype plugin indent on " required by Pathogen Plugin Manager
+" Plugin Manager {{{
+" ==============
 
-" Theme
-set background=dark t_Co=256
-colorscheme Tomorrow-Night
+" To install, execute :PluginInstall
+filetype off
+set rtp+=~/.vim/bundle/vundle
+call vundle#begin()
 
-" CtrlP
-map <leader>t <C-p>
-map <leader>y :CtrlPBuffer<cr>
-let g:ctrlp_show_hidden=1
-let g:ctrlp_working_path_mode=0
-let g:ctrlp_max_height=30
+" System Plugins
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'airblade/vim-gitgutter'
 
-" CtrlP -> override <C-o> to provide options for how to open files
-let g:ctrlp_arg_map = 1
+" Theme Plugins
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'bling/vim-airline'
+Plugin 'flazz/vim-colorschemes'
 
-" CtrlP -> files matched are ignored when expanding wildcards
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+" Editing Plugins
+Plugin 'elzr/vim-json'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'scrooloose/syntastic'
+" Plugin 'kien/ctrlp.vim'
 
-" CtrlP -> use Ag for searching instead of VimScript
-" (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" Git Plugins
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
 
-" CtrlP -> directories to ignore when fuzzy finding
-let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
+call vundle#end()
+filetype plugin indent on
+" }}}
 
-" Ack (uses Ag behind the scenes)
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
-" Airline (status line)
-let g:airline_powerline_fonts = 1
+" ---- airline plugin {{{
+let g:airline_powerline_fonts=1
 let g:airline_theme='wombat'
+" }}}
 
-" Gist authorisation settings
+" ---- colorschemes plugin {{{
+set t_Co=256
+colorscheme wombat256
+" }}}
+
+" ---- gist plugin {{{
 let g:github_user = $GITHUB_USER
 let g:github_token = $GITHUB_TOKEN
 let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 1
-" Related plugins:
-" https://github.com/mattn/webapi-vim
-" https://github.com/vim-scripts/Gist.vim
-" https://github.com/tpope/vim-fugitive
+let g:gist_open_browser_after_post = 0
 
-" HTML generation using 'emmet-vim'
-" NORMAL mode Ctrl+y then , <C-y,>
+" Make gists private by default
+let g:gist_post_private = 1
 
-" Git gutter
+" Show private gists when executing :Gist -l
+let g:gist_show_privates = 1
+" }}}
+
+" ---- gitgutter plugin {{{
 let g:gitgutter_enabled = 1
 let g:gitgutter_eager = 0
 let g:gitgutter_sign_column_always = 1
 highlight clear SignColumn
+" }}}
 
-" Searching the file system
-map <leader>' :NERDTreeToggle<cr>
+" ---- json plugin {{{
 
-" Tabularize
-map <Leader>e :Tabularize /=<cr>
-map <Leader>c :Tabularize /:<cr>
-map <Leader>es :Tabularize /=\zs<cr>
-map <Leader>cs :Tabularize /:\zs<cr>
+" }}}
 
-" Camel Case Motion (for dealing with programming code)
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
+" ---- nerdtree plugin {{{
+map <leader><leader> :NERDTreeToggle<cr>
+" }}}
+
+" ---- tmuxline plugin {{{
+
+" }}}
+
+" Plugins {{{
+
+" CtrlP
+" map <leader>t <C-p>
+" map <leader>y :CtrlPBuffer<cr>
+" let g:ctrlp_show_hidden=1
+" let g:ctrlp_working_path_mode=0
+" let g:ctrlp_max_height=30
+"
+" " CtrlP -> override <C-o> to provide options for how to open files
+" let g:ctrlp_arg_map = 1
+"
+" " CtrlP -> files matched are ignored when expanding wildcards
+" set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+"
+" " CtrlP -> use Ag for searching instead of VimScript
+" " (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
+" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"
+" " CtrlP -> directories to ignore when fuzzy finding
+" let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
+"
+" " Ack (uses Ag behind the scenes)
+" let g:ackprg = 'ag --nogroup --nocolor --column'
+"
+"
+" " Tabularize
+" map <Leader>e :Tabularize /=<cr>
+" map <Leader>c :Tabularize /:<cr>
+" map <Leader>es :Tabularize /=\zs<cr>
+" map <Leader>cs :Tabularize /:\zs<cr>
+"
+" " Camel Case Motion (for dealing with programming code)
+" map <silent> w <Plug>CamelCaseMotion_w
+" map <silent> b <Plug>CamelCaseMotion_b
+" map <silent> e <Plug>CamelCaseMotion_e
+" sunmap w
+" sunmap b
+" sunmap e
 " }}}
 
 " Mappings {{{
