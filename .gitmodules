@@ -1,6 +1,3 @@
-[submodule "vim.d/bundle/vundle"]
-	path = vim.d/bundle/vundle
-	url = git@github.com:VundleVim/Vundle.vim.git
 [submodule "vim.d/bundle/Vundle.vim"]
 	path = vim.d/bundle/Vundle.vim
 	url = git@github.com:VundleVim/Vundle.vim.git
