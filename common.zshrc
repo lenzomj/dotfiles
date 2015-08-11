@@ -13,6 +13,16 @@ export CLICOLOR=1
 #export LS_COLORS=Gxfxcxdxbxegedabagacad
 # }}}
 
+# Custom Modules {{{
+if [ -d ~/.conf ]; then
+  echo "Loading custom shell ..."
+  for file in ~/.conf/*.sh; do
+    echo "  - Loading $file ..."
+    source "$file"
+  done
+fi
+# }}}
+
 # Ruby {{{
 function get_ruby_version() {
   ruby -v | awk '{print $1 " " $2}'
