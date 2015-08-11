@@ -46,8 +46,8 @@ set cursorline
 set showmatch
 
 " Always highlight column 80 so it's easier to see where
-autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
-set colorcolumn=80
+ autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
+ set colorcolumn=80
 
 " Get rid of command delays
 set timeout timeoutlen=1000 ttimeoutlen=100
@@ -134,15 +134,12 @@ Plugin 'git@github.com:bling/vim-airline'
 Plugin 'git@github.com:flazz/vim-colorschemes'
 
 " Editing Plugins
-"Plugin 'git@github.com:elzr/vim-json'
-"Plugin 'git@github.com:godlygeek/tabular'
-"Plugin 'git@github.com:plasticboy/vim-markdown'
-"Plugin 'git@github.com:scrooloose/syntastic'
-"Plugin 'kien/ctrlp.vim'
+Plugin 'git@github.com:godlygeek/tabular'
+Plugin 'git@github.com:plasticboy/vim-markdown'
 
 " Git Plugins
-"Bundle 'git@github.com:mattn/webapi-vim'
-"Bundle 'git@github.com:mattn/gist-vim'
+Bundle 'git@github.com:mattn/webapi-vim'
+Bundle 'git@github.com:mattn/gist-vim'
 
 call vundle#end()
 filetype plugin indent on
