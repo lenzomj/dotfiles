@@ -6,10 +6,11 @@ export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
 export MANPAGER="less -X"
 export EDITOR="vim"
-export TERM="screen-256color"
+export TERM="xterm-256color"
 export CLICOLOR=1
-export LSCOLORS=Gxfxcxdxbxegedabagacad
-export LS_COLORS=Gxfxcxdxbxegedabagacad
+#TODO: MacOSX/FreeBSD-specific configuration
+#export LSCOLORS=Gxfxcxdxbxegedabagacad
+#export LS_COLORS=Gxfxcxdxbxegedabagacad
 # }}}
 
 # Ruby {{{

@@ -120,42 +120,45 @@ set lazyredraw
 
 " To install, execute :PluginInstall
 filetype off
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " System Plugins
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'airblade/vim-gitgutter'
+Plugin 'git@github.com:gmarik/Vundle.vim'
+Plugin 'git@github.com:scrooloose/nerdtree'
+Plugin 'git@github.com:airblade/vim-gitgutter'
 
 " Theme Plugins
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'bling/vim-airline'
-Plugin 'flazz/vim-colorschemes'
+"Plugin 'git@github.com:edkolev/tmuxline.vim'
+Plugin 'git@github.com:bling/vim-airline'
+Plugin 'git@github.com:flazz/vim-colorschemes'
 
 " Editing Plugins
-Plugin 'elzr/vim-json'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'scrooloose/syntastic'
-" Plugin 'kien/ctrlp.vim'
+"Plugin 'git@github.com:elzr/vim-json'
+"Plugin 'git@github.com:godlygeek/tabular'
+"Plugin 'git@github.com:plasticboy/vim-markdown'
+"Plugin 'git@github.com:scrooloose/syntastic'
+"Plugin 'kien/ctrlp.vim'
 
 " Git Plugins
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
+"Bundle 'git@github.com:mattn/webapi-vim'
+"Bundle 'git@github.com:mattn/gist-vim'
 
 call vundle#end()
 filetype plugin indent on
 " }}}
 
-" ---- airline plugin {{{
-let g:airline_powerline_fonts=1
-let g:airline_theme='wombat'
-" }}}
-
 " ---- colorschemes plugin {{{
 set t_Co=256
-colorscheme wombat256
+set background=dark
+" colorscheme wombat256
+colorscheme jellybeans
+" }}}
+
+" ---- airline plugin {{{
+let g:airline_powerline_fonts=1
+" let g:airline_theme='wombat'
+let g:airline_theme='jellybeans'
 " }}}
 
 " ---- gist plugin {{{
@@ -178,16 +181,8 @@ let g:gitgutter_sign_column_always = 1
 highlight clear SignColumn
 " }}}
 
-" ---- json plugin {{{
-
-" }}}
-
 " ---- nerdtree plugin {{{
 map <leader><leader> :NERDTreeToggle<cr>
-" }}}
-
-" ---- tmuxline plugin {{{
-
 " }}}
 
 " Plugins {{{
