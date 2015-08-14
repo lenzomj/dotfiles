@@ -182,6 +182,13 @@ highlight clear SignColumn
 map <leader><leader> :NERDTreeToggle<cr>
 " }}}
 
+" ---- tabularize plugin {{{
+map <Leader>e :Tabularize /=<cr>
+map <Leader>c :Tabularize /:<cr>
+map <Leader>es :Tabularize /=\zs<cr>
+map <Leader>cs :Tabularize /:\zs<cr>
+" }}}
+
 " Plugins {{{
 
 " CtrlP
@@ -209,10 +216,6 @@ map <leader><leader> :NERDTreeToggle<cr>
 "
 "
 " " Tabularize
-" map <Leader>e :Tabularize /=<cr>
-" map <Leader>c :Tabularize /:<cr>
-" map <Leader>es :Tabularize /=\zs<cr>
-" map <Leader>cs :Tabularize /:\zs<cr>
 "
 " " Camel Case Motion (for dealing with programming code)
 " map <silent> w <Plug>CamelCaseMotion_w
