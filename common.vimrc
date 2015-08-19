@@ -123,17 +123,21 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" System Plugins
+" Vim
 Plugin 'git@github.com:gmarik/Vundle.vim'
+
+" File System Navigation
 Plugin 'git@github.com:scrooloose/nerdtree'
+
+" Code Navigation
 Plugin 'git@github.com:airblade/vim-gitgutter'
+Plugin 'git@github.com:majutsushi/tagbar'
 
 " Theme Plugins
-"Plugin 'git@github.com:edkolev/tmuxline.vim'
 Plugin 'git@github.com:bling/vim-airline'
 Plugin 'git@github.com:flazz/vim-colorschemes'
 
-" Editing Plugins
+" Editor Plugins
 Plugin 'git@github.com:godlygeek/tabular'
 Plugin 'git@github.com:plasticboy/vim-markdown'
 
@@ -187,6 +191,10 @@ map <Leader>e :Tabularize /=<cr>
 map <Leader>c :Tabularize /:<cr>
 map <Leader>es :Tabularize /=\zs<cr>
 map <Leader>cs :Tabularize /:\zs<cr>
+" }}}
+
+" ---- tagbar plugin {{{
+map <leader>] :TagbarToggle<cr>
 " }}}
 
 " Plugins {{{
