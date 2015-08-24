@@ -129,19 +129,20 @@ Plugin 'git@github.com:gmarik/Vundle.vim'
 " File System Navigation
 Plugin 'git@github.com:scrooloose/nerdtree'
 
-" Code Navigation
-Plugin 'git@github.com:airblade/vim-gitgutter'
+" Text/Code Navigation
 Plugin 'git@github.com:majutsushi/tagbar'
+Plugin 'git@github.com:kien/ctrlp.vim'
 
-" Theme Plugins
+" Look and Feel
 Plugin 'git@github.com:bling/vim-airline'
 Plugin 'git@github.com:flazz/vim-colorschemes'
 
-" Editor Plugins
+" Special File Types
 Plugin 'git@github.com:godlygeek/tabular'
 Plugin 'git@github.com:plasticboy/vim-markdown'
 
-" Git Plugins
+" Version Control
+Plugin 'git@github.com:airblade/vim-gitgutter'
 Bundle 'git@github.com:mattn/webapi-vim'
 Bundle 'git@github.com:mattn/gist-vim'
 
@@ -160,6 +161,26 @@ colorscheme jellybeans
 let g:airline_powerline_fonts=1
 " let g:airline_theme='wombat'
 let g:airline_theme='jellybeans'
+" }}}
+
+" ---- ctrl-p plugin
+map <leader><leader> <C-p>
+map <leader>b :CtrlPBuffer<cr>
+map <leader>t :CtrlPTag<cr>
+let g:ctrlp_show_hidden=1
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_max_height=30
+
+" " CtrlP -> override <C-o> to provide options for how to open files
+let g:ctrlp_arg_map = 1
+
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" " CtrlP -> directories to ignore when fuzzy finding
+let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
 " }}}
 
 " ---- gist plugin {{{
@@ -183,7 +204,7 @@ highlight clear SignColumn
 " }}}
 
 " ---- nerdtree plugin {{{
-map <leader><leader> :NERDTreeToggle<cr>
+map <leader>[ :NERDTreeToggle<cr>
 " }}}
 
 " ---- tabularize plugin {{{
@@ -195,43 +216,6 @@ map <Leader>cs :Tabularize /:\zs<cr>
 
 " ---- tagbar plugin {{{
 map <leader>] :TagbarToggle<cr>
-" }}}
-
-" Plugins {{{
-
-" CtrlP
-" map <leader>t <C-p>
-" map <leader>y :CtrlPBuffer<cr>
-" let g:ctrlp_show_hidden=1
-" let g:ctrlp_working_path_mode=0
-" let g:ctrlp_max_height=30
-"
-" " CtrlP -> override <C-o> to provide options for how to open files
-" let g:ctrlp_arg_map = 1
-"
-" " CtrlP -> files matched are ignored when expanding wildcards
-" set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
-"
-" " CtrlP -> use Ag for searching instead of VimScript
-" " (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
-" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-"
-" " CtrlP -> directories to ignore when fuzzy finding
-" let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
-"
-" " Ack (uses Ag behind the scenes)
-" let g:ackprg = 'ag --nogroup --nocolor --column'
-"
-"
-" " Tabularize
-"
-" " Camel Case Motion (for dealing with programming code)
-" map <silent> w <Plug>CamelCaseMotion_w
-" map <silent> b <Plug>CamelCaseMotion_b
-" map <silent> e <Plug>CamelCaseMotion_e
-" sunmap w
-" sunmap b
-" sunmap e
 " }}}
 
 " Mappings {{{
