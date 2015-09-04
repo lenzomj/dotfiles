@@ -140,6 +140,7 @@ Plugin 'git@github.com:flazz/vim-colorschemes'
 " Special File Types
 Plugin 'git@github.com:godlygeek/tabular'
 Plugin 'git@github.com:plasticboy/vim-markdown'
+Plugin 'aklt/plantuml-syntax'
 
 " Version Control
 Plugin 'git@github.com:airblade/vim-gitgutter'
@@ -163,7 +164,7 @@ let g:airline_powerline_fonts=1
 let g:airline_theme='jellybeans'
 " }}}
 
-" ---- ctrl-p plugin
+" ---- ctrl-p plugin {{{
 map <leader><leader> <C-p>
 map <leader>b :CtrlPBuffer<cr>
 map <leader>t :CtrlPTag<cr>
