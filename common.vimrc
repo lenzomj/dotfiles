@@ -77,10 +77,10 @@ set ignorecase
 set expandtab
 
 " Set tab size for manual indenting
-set tabstop=2
+set tabstop=3
 
 " Set tab size for auto indenting
-set shiftwidth=2
+set shiftwidth=3
 
 " Permit backspace to delete whitespace characters
 set backspace=indent,eol,start
