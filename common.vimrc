@@ -134,7 +134,8 @@ Plugin 'git@github.com:majutsushi/tagbar'
 Plugin 'git@github.com:kien/ctrlp.vim'
 
 " Look and Feel
-Plugin 'git@github.com:bling/vim-airline'
+Plugin 'git@github.com:vim-airline/vim-airline'
+Plugin 'git@github.com:vim-airline/vim-airline-themes'
 Plugin 'git@github.com:flazz/vim-colorschemes'
 
 " Special File Types

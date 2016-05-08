@@ -1,0 +1,30 @@
+#%Module 1.0
+
+set name      krb5
+set version   2.6.32
+set release   573.18.1.el6
+set sys       x86_64
+
+set help      "uses $name $version/$sys"
+
+proc ModulesHelp { } {
+  global name version help
+  puts stderr "$name/$version - $help"
+}
+
+module-whatis "$help"
+
+conflict $name
+
+### Configure paths ###
+set topdir $::env(APPLOCAL)/$name/$version-$release/$sys
+set bindir $topdir/bin
+set etcdir $topdir/etc
+
+prepend-path PATH $bindir
+
+### Configure environment variables ###
+setenv KRB5_HOME   $topdir
+setenv KRB5_CONFIG $etcdir/krb5.conf
+
+### Set aliases ###

@@ -1,0 +1,12 @@
+[user]
+   name = "Matthew J. Lenzo"
+[include]
+   path = ~/.gitconfig-local
+[color]
+   branch = auto
+   diff = auto
+   interactive = auto
+   status = auto
+   ui = auto
+[push]
+   default = nothing

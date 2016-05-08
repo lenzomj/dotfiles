@@ -1,3 +1,17 @@
+# Environment Modules {{{
+if [ -e /etc/profile.d/modules.sh ]; then
+   shell=`/bin/basename \`/bin/ps -p $$ -ocomm=\``
+   if [ -f /usr/share/Modules/init/$shell ]; then
+      echo " - Initializing environment modules for $shell"
+      . /usr/share/Modules/init/$shell
+   fi
+   if [ -d "$HOME/.modulefiles" ]; then
+      echo " - Using modulefiles in .modulefiles"
+      export APPLOCAL=$HOME/app
+      module use $HOME/.modulefiles
+   fi
+fi
+# }}}
 
 # Exports {{{
 export GITHUB_USER="mjlenzo"
@@ -8,25 +22,6 @@ export MANPAGER="less -X"
 export EDITOR="vim"
 export TERM="screen-256color"
 export CLICOLOR=1
-#TODO: MacOSX/FreeBSD-specific configuration
-#export LSCOLORS=Gxfxcxdxbxegedabagacad
-#export LS_COLORS=Gxfxcxdxbxegedabagacad
-# }}}
-
-# Custom Modules {{{
-if [ -d ~/.conf ]; then
-  echo "Loading custom shell ..."
-  for file in ~/.conf/*.sh; do
-    echo "  - Loading $file ..."
-    source "$file"
-  done
-fi
-# }}}
-
-# Ruby {{{
-function get_ruby_version() {
-  ruby -v | awk '{print $1 " " $2}'
-}
 # }}}
 
 # Tmux {{{
@@ -186,6 +181,10 @@ setopt multios # perform implicit tees or cats when multiple redirections are at
 # }}}
 
 # Prompt {{{
+function kerberized_info {
+   [ $KRB5CCNAME ] && klist -s && echo '(kerberos)'
+}
+
 function virtualenv_info {
   [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
 }
@@ -281,7 +280,7 @@ $(prompt_char) '
 
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r$reset_color [(y)es (n)o (a)bort (e)dit]? "
 
-RPROMPT='${PR_GREEN}$(virtualenv_info)%{$reset_color%} ${PR_RED}$(get_ruby_version)%{$reset_color%}'
+RPROMPT='${PR_GREEN}$(virtualenv_info)%{$reset_color%} ${PR_RED}$(kerberized_info)%{$reset_color%}'
 # }}}
 
 # History {{{
