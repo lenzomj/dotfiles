@@ -128,6 +128,7 @@ Plugin 'git@github.com:gmarik/Vundle.vim'
 
 " File System Navigation
 Plugin 'git@github.com:scrooloose/nerdtree'
+Plugin 'git@github.com:rking/ag.vim'
 
 " Text/Code Navigation
 Plugin 'git@github.com:majutsushi/tagbar'
