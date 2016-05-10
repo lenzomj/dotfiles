@@ -52,9 +52,6 @@ set showmatch
 " Get rid of command delays
 set timeout timeoutlen=1000 ttimeoutlen=100
 
-" Ensure Vim doesn't beep at you every time you make a mistype
-set visualbell
-
 " Visual autocomplete for command menu (e.g. :e ~/path/to/file)
 set wildmenu
 
