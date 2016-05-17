@@ -23,7 +23,6 @@ ln -s .dotfiles/vim.d .vim
 - [ ] Wire-up zsh configuration files
 ```bash
 ln -s .dotfiles/common.zshrc .zshrc
-ln -s .dotfiles/zsh.bashrc .bashrc
 ```
 - [ ] Install tmux using `sudo yum install tmux`
 - [ ] Wire-up tmux configuration file
@@ -34,4 +33,8 @@ ln -s .dotfiles/linux.tmux.conf .tmux.conf
 ```bash
 ln -s .dotfiles/common.gitconfig .gitconfig
 touch .gitconfig-local
+```
+- [ ] Wire-up module files
+```bash
+ln -s .dotfiles/modulefiles .modulefiles
 ```
