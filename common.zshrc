@@ -1,17 +1,3 @@
-# Environment Modules {{{
-if [ -e /etc/profile.d/modules.sh ]; then
-   shell=`/bin/basename \`/bin/ps -p $$ -ocomm=\``
-   if [ -f /usr/share/Modules/init/$shell ]; then
-      echo " - Initializing environment modules for $shell"
-      . /usr/share/Modules/init/$shell
-   fi
-   if [ -d "$HOME/.modulefiles" ]; then
-      echo " - Using modulefiles in .modulefiles"
-      export APPLOCAL=$HOME/app
-      module use $HOME/.modulefiles
-   fi
-fi
-# }}}
 
 # Exports {{{
 export GITHUB_USER="mjlenzo"
