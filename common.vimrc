@@ -376,3 +376,7 @@ fun! SetDiffColors()
 endfun
 autocmd FilterWritePre * call SetDiffColors()
 " }}}
+
+set exrc
+
+set secure
