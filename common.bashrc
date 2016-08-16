@@ -23,4 +23,6 @@ fi
 
 # }}}
 
-export PATH=$PATH:$HOME/.local/bin
+[[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && PATH="${PATH}:$HOME/.local/bin"
+
+export PATH

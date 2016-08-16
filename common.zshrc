@@ -1,7 +1,6 @@
 
 # Exports {{{
 export GITHUB_USER="mjlenzo"
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
 export MANPAGER="less -X"
