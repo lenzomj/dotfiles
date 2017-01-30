@@ -130,6 +130,7 @@ Plugin 'git@github.com:rking/ag.vim'
 " Text/Code Navigation
 Plugin 'git@github.com:majutsushi/tagbar'
 Plugin 'git@github.com:kien/ctrlp.vim'
+Plugin 'git@github.com:ajh17/VimCompletesMe'
 
 " Look and Feel
 Plugin 'git@github.com:vim-airline/vim-airline'
