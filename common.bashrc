@@ -7,10 +7,17 @@ module() {
 }
 
 if [ -e /usr/bin/modulecmd ]; then
+   
+   export APPLOCAL=$HOME/app
+   
    if [ -d "$HOME/.modules" ]; then
       echo " - Using modulefiles in .modules"
-      export APPLOCAL=$HOME/app
       module use $HOME/.modules
+   fi
+
+   if [ -d "$HOME/.modules_local" ]; then
+      echo " - Using modulefiles in .modules_local"
+      module use $HOME/.modules_local
    fi
 
    if [ -d "/app/linux/modules" ]; then
