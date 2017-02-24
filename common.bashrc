@@ -16,7 +16,7 @@ if [[ (-e /usr/bin/modulecmd) && (! -z "$PS1") ]]; then
    fi
 
    if [ -d "$HOME/.modules_local" ]; then
-      echo " - Using modulefiles in .modules_local"
+      echo " - Using modulefiles in .modules-local"
       module use $HOME/.modules_local
    fi
 
