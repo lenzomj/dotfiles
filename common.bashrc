@@ -6,17 +6,17 @@ module() {
    fi
 }
 
-if [ -e /usr/bin/modulecmd ]; then
-   
+if [[ (-e /usr/bin/modulecmd) && (! -z "$PS1") ]]; then
+
    export APPLOCAL=$HOME/app
-   
+
    if [ -d "$HOME/.modules" ]; then
       echo " - Using modulefiles in .modules"
       module use $HOME/.modules
    fi
 
    if [ -d "$HOME/.modules_local" ]; then
-      echo " - Using modulefiles in .modules_local"
+      echo " - Using modulefiles in .modules-local"
       module use $HOME/.modules_local
    fi
 

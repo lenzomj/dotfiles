@@ -36,5 +36,11 @@ touch .gitconfig-local
 ```
 - [ ] Wire-up module files
 ```bash
-ln -s .dotfiles/modulefiles .modulefiles
+ln -s .dotfiles/modules .modules
+mkdir .modules-local
+```
+- [ ] Wire-up `bashrc` and `bash_profile`
+```bash
+ln -s .dotfiles/common.bashrc .bashrc
+ln -s .dotfiles/common.bash_profile .bash_profile
 ```
