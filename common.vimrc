@@ -42,12 +42,12 @@ set clipboard+=unnamed
 " Highlight current line
 set cursorline
 
-" highlight a matching [{()}] when cursor is placed on start/end character
+" Highlight a matching [{()}] when cursor is placed on start/end character
 set showmatch
 
-" Always highlight column 80 so it's easier to see where
- autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
- set colorcolumn=80
+" Always highlight column 80
+autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
+set colorcolumn=80
 
 " Get rid of command delays
 set timeout timeoutlen=1000 ttimeoutlen=100
@@ -127,10 +127,14 @@ Plugin 'git@github.com:gmarik/Vundle.vim'
 Plugin 'git@github.com:scrooloose/nerdtree'
 Plugin 'git@github.com:rking/ag.vim'
 
+" Python
+Plugin 'git@github.com:davidhalter/jedi-vim.git'
+
 " Text/Code Navigation
 Plugin 'git@github.com:majutsushi/tagbar'
 Plugin 'git@github.com:kien/ctrlp.vim'
 Plugin 'git@github.com:ajh17/VimCompletesMe'
+Plugin 'git@github.com:pseewald/vim-anyfold.git'
 
 " Look and Feel
 Plugin 'git@github.com:vim-airline/vim-airline'
@@ -148,7 +152,12 @@ Bundle 'git@github.com:mattn/webapi-vim'
 Bundle 'git@github.com:mattn/gist-vim'
 
 call vundle#end()
+" }}}
+
+" ---- anyfold plugin {{{
 filetype plugin indent on
+let anyfold_activate=1
+set foldlevel=0
 " }}}
 
 " ---- colorschemes plugin {{{
@@ -378,6 +387,7 @@ endfun
 autocmd FilterWritePre * call SetDiffColors()
 " }}}
 
+" External {{{
 set exrc
-
 set secure
+" }}}
