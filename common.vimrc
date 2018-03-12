@@ -127,9 +127,6 @@ Plugin $HOME . '/workspace/mirror/git/Vundle.vim.git'
 Plugin $HOME . '/workspace/mirror/git/nerdtree.git'
 Plugin $HOME . '/workspace/mirror/git/ag.vim.git'
 
-" Python
-Plugin $HOME . '/workspace/mirror/git/jedi-vim.git'
-
 " Text/Code Navigation
 Plugin $HOME . '/workspace/mirror/git/tagbar.git'
 Plugin $HOME . '/workspace/mirror/git/ctrlp.vim.git'
