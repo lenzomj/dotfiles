@@ -121,32 +121,32 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Vim
-Plugin $HOME . '/workspace/mirror/Vundle.vim.git'
+Plugin $HOME . '/workspace/mirror/git/Vundle.vim.git'
 
 " File System Navigation
-Plugin $HOME . '/workspace/mirror/nerdtree.git'
-Plugin $HOME . '/workspace/mirror/ag.vim.git'
+Plugin $HOME . '/workspace/mirror/git/nerdtree.git'
+Plugin $HOME . '/workspace/mirror/git/ag.vim.git'
 
 " Python
-Plugin $HOME . '/workspace/mirror/jedi-vim.git'
+Plugin $HOME . '/workspace/mirror/git/jedi-vim.git'
 
 " Text/Code Navigation
-Plugin $HOME . '/workspace/mirror/tagbar.git'
-Plugin $HOME . '/workspace/mirror/ctrlp.vim.git'
-Plugin $HOME . '/workspace/mirror/VimCompletesMe.git'
-Plugin $HOME . '/workspace/mirror/vim-anyfold.git'
+Plugin $HOME . '/workspace/mirror/git/tagbar.git'
+Plugin $HOME . '/workspace/mirror/git/ctrlp.vim.git'
+Plugin $HOME . '/workspace/mirror/git/VimCompletesMe.git'
+Plugin $HOME . '/workspace/mirror/git/vim-anyfold.git'
 
 " Look and Feel
-Plugin $HOME . '/workspace/mirror/vim-airline.git'
-Plugin $HOME . '/workspace/mirror/vim-airline-themes.git'
-Plugin $HOME . '/workspace/mirror/vim-colorschemes.git'
+Plugin $HOME . '/workspace/mirror/git/vim-airline.git'
+Plugin $HOME . '/workspace/mirror/git/vim-airline-themes.git'
+Plugin $HOME . '/workspace/mirror/git/vim-colorschemes.git'
 
 " Special File Types
-Plugin $HOME . '/workspace/mirror/tabular.git'
-Plugin $HOME . '/workspace/mirror/vim-markdown.git'
+Plugin $HOME . '/workspace/mirror/git/tabular.git'
+Plugin $HOME . '/workspace/mirror/git/vim-markdown.git'
 
 " Version Control
-Plugin $HOME . '/workspace/mirror/vim-gitgutter.git'
+Plugin $HOME . '/workspace/mirror/git/vim-gitgutter.git'
 
 call vundle#end()
 " }}}
