@@ -35,5 +35,6 @@ fi
 # }}}
 
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && PATH="${PATH}:$HOME/.local/bin"
+[[ ":$PATH:" != *":$HOME/opt/bin:"* ]] && PATH="${PATH}:$HOME/opt/bin"
 
 export PATH
