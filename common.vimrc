@@ -130,7 +130,7 @@ Plugin $HOME . '/workspace/mirror/git/ag.vim.git'
 " Text/Code Navigation
 Plugin $HOME . '/workspace/mirror/git/tagbar.git'
 Plugin $HOME . '/workspace/mirror/git/ctrlp.vim.git'
-Plugin $HOME . '/workspace/mirror/git/VimCompletesMe.git'
+"Plugin $HOME . '/workspace/mirror/git/VimCompletesMe.git'
 Plugin $HOME . '/workspace/mirror/git/vim-anyfold.git'
 
 " Look and Feel
@@ -203,7 +203,12 @@ let g:gist_show_privates = 1
 " ---- gitgutter plugin {{{
 let g:gitgutter_enabled = 1
 let g:gitgutter_eager = 0
-let g:gitgutter_sign_column_always = 1
+
+if exists('&signcolumn')  " Vim 7.4.2201
+  set signcolumn=yes
+else
+  let g:gitgutter_sign_column_always = 1
+endif
 highlight clear SignColumn
 " }}}
 
