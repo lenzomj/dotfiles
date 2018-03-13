@@ -116,34 +116,34 @@ set lazyredraw
 " ==============
 
 " To install, execute :PluginInstall
+" To clean, execute :PluginClean
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Vim
-Plugin $HOME . '/workspace/mirror/git/Vundle.vim.git'
+Plugin $HOME . '/workspace/mirror/git/base/Vundle.vim.git'
 
 " File System Navigation
-Plugin $HOME . '/workspace/mirror/git/nerdtree.git'
-Plugin $HOME . '/workspace/mirror/git/ag.vim.git'
+Plugin $HOME . '/workspace/mirror/git/base/nerdtree.git'
+Plugin $HOME . '/workspace/mirror/git/base/ag.vim.git'
 
 " Text/Code Navigation
-Plugin $HOME . '/workspace/mirror/git/tagbar.git'
-Plugin $HOME . '/workspace/mirror/git/ctrlp.vim.git'
-"Plugin $HOME . '/workspace/mirror/git/VimCompletesMe.git'
-Plugin $HOME . '/workspace/mirror/git/vim-anyfold.git'
+Plugin $HOME . '/workspace/mirror/git/base/tagbar.git'
+Plugin $HOME . '/workspace/mirror/git/base/ctrlp.vim.git'
+Plugin $HOME . '/workspace/mirror/git/base/vim-anyfold.git'
 
 " Look and Feel
-Plugin $HOME . '/workspace/mirror/git/vim-airline.git'
-Plugin $HOME . '/workspace/mirror/git/vim-airline-themes.git'
-Plugin $HOME . '/workspace/mirror/git/vim-colorschemes.git'
+Plugin $HOME . '/workspace/mirror/git/base/vim-airline.git'
+Plugin $HOME . '/workspace/mirror/git/base/vim-airline-themes.git'
+Plugin $HOME . '/workspace/mirror/git/base/vim-colorschemes.git'
 
 " Special File Types
-Plugin $HOME . '/workspace/mirror/git/tabular.git'
-Plugin $HOME . '/workspace/mirror/git/vim-markdown.git'
+Plugin $HOME . '/workspace/mirror/git/base/tabular.git'
+Plugin $HOME . '/workspace/mirror/git/base/vim-markdown.git'
 
 " Version Control
-Plugin $HOME . '/workspace/mirror/git/vim-gitgutter.git'
+Plugin $HOME . '/workspace/mirror/git/base/vim-gitgutter.git'
 
 call vundle#end()
 " }}}
