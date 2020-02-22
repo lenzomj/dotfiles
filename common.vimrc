@@ -150,15 +150,14 @@ call vundle#end()
 
 " ---- anyfold plugin {{{
 filetype plugin indent on
-let anyfold_activate=1
-set foldlevel=0
+autocmd FileType * AnyFoldActivate " Activate for all filetypes
+set foldlevel=0                    " Open all folds
 " }}}
 
 " ---- colorschemes plugin {{{
 set t_Co=256
 set background=dark
-" colorscheme wombat256
-colorscheme jellybeans
+colorscheme iceberg
 " }}}
 
 " ---- airline plugin {{{
