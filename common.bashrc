@@ -35,12 +35,13 @@ fi
 # }}}
 
 # Homebrew {{{
-export HOMEBREW_PREFIX="${HOME}/.linuxbrew";
-export HOMEBREW_CELLAR="${HOME}/.linuxbrew/Cellar";
-export HOMEBREW_REPOSITORY="${HOME}/workspace/linuxbrew/Homebrew";
-export PATH="${HOME}/.linuxbrew/bin:${HOME}/.linuxbrew/sbin${PATH+:$PATH}";
-export MANPATH="${HOME}/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
-export INFOPATH="${HOME}/.linuxbrew/share/info:${INFOPATH}";
+export HOMEBREW_PREFIX="${HOME}/workspace/homebrew"
+export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar"
+export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}"
+export HOMEBREW_CACHE="${HOME}/workspace/mirror/homebrew"
+export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin${PATH+:$PATH}"
+export MANPATH="${HOMEBREW_PREFIX}/share/man${MANPATH+:$MANPATH}:"
+export INFOPATH="${HOMEBREW_PREFIX}/share/info:${INFOPATH}"
 # }}}
 
 # System Path {{{
