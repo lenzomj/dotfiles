@@ -31,13 +31,13 @@ syminstall () {
   fi
 }
 
-syminstall common.bash_profile
-syminstall common.bashrc
-syminstall common.gitconfig
-syminstall common.inputrc
-syminstall common.tmux.conf
-syminstall common.vimrc
-syminstall common.vim
+syminstall bash/common.bash_profile
+syminstall bash/common.bashrc
+syminstall bash/common.inputrc
+syminstall git/common.gitconfig
+syminstall tmux/common.tmux.conf
+syminstall vim/common.vimrc
+syminstall vim/common.vim
 
 if [[ `command -v vim` ]]; then
   vim -E -s -u "${PREFIX}/.vimrc" +PlugInstall +qall
