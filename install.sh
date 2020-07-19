@@ -33,8 +33,8 @@ syminstall () {
 
 syminstall bash/common.bash_profile
 syminstall bash/common.bashrc
-syminstall bash/common.inputrc
 syminstall git/common.gitconfig
+syminstall other/common.inputrc
 syminstall tmux/common.tmux.conf
 syminstall vim/common.vimrc
 syminstall vim/common.vim
