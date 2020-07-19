@@ -19,5 +19,8 @@ jobs:
       uses: actions/checkout@master
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
+      env:
+        # (-e SC1071) ShellCheck only supports sh/bash/dash/ksh scripts
+        SHELLCHECK_OPTS: -e SC1071
       with:
         ignore: other

@@ -1,6 +1,4 @@
 #!/usr/bin/env zsh
-# SC1071: ShellCheck only supports sh/bash/dash/ksh scripts. Sorry!
-# shellcheck disable=SC1071
 
 # Exports {{{
 export GITHUB_USER="mjlenzo"
