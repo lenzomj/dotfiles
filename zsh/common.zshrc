@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 
 # Exports {{{
 export GITHUB_USER="mjlenzo"
