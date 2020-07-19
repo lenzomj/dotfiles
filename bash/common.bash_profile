@@ -2,7 +2,7 @@
 
 if [ -n "${BASH_VERSION}" ]; then
   if [ -f "${HOME}/.bashrc" ]; then
-    # shellcheck source=bash/common.bashrc
+    # shellcheck source=/dev/null
     source "${HOME}/.bashrc"
   fi
 fi

@@ -14,7 +14,7 @@ fi
 
 if [ -d "${DOTFILES_ROOT}/.git" ]; then
   pushd "${DOTFILES_ROOT}" &> /dev/null;
-    if [ ! "$(git remote | grep -q upstream)" ]; then
+  if ! (git remote | grep -q upstream) then
       git remote add upstream "git@github.com:lenzomj/dotfiles.git"
     fi
   popd &> /dev/null;

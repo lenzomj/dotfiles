@@ -23,12 +23,12 @@ if [ -f "${HOME}/.workspace.conf" ]; then
   source "${HOME}/.workspace.conf"
 fi
 
-if [ ":${PATH}:" != *":${HOME}/.local/bin:"* ]; then
+if [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
   PATH="${PATH}:${HOME}/.local/bin"
   export PATH
 fi
 
-if [ ":${PATH}:" != *":${HOME}/bin:"* ]; then
+if [[ ":${PATH}:" != *":${HOME}/bin:"* ]]; then
   PATH="${PATH}:${HOME}/bin"
   export PATH
 fi
