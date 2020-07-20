@@ -30,7 +30,8 @@ teardown () {
 
 test_install () {
   echo "test_install: Executing ${ROOT}/install.sh ..."
-  bash -e "${ROOT}/install.sh" "${PREFIX}"
+  ./install.sh "${PREFIX}"
+  #bash -e "${ROOT}/install.sh" "${PREFIX}"
 
   echo "test_install: Verifying symlinks ..."
   { [ "${ROOT}/bash/common.bash_profile" -ef "${PREFIX}/.bash_profile" ] \
