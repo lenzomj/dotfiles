@@ -208,6 +208,7 @@ highlight clear SignColumn
 
 " ---- nerdtree plugin {{{
 map <leader>[ :NERDTreeToggle<cr>
+let NERDTreeShowHidden=1
 " }}}
 
 " ---- tabularize plugin {{{

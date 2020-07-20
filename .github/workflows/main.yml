@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
       env:
@@ -24,3 +24,14 @@ jobs:
         SHELLCHECK_OPTS: -e SC1071
       with:
         ignore: other
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest macos-latest]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run Test
+      run: ./test.sh
