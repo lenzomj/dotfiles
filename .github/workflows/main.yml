@@ -35,4 +35,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run Test
-      run: ./test.sh
+      run: |
+        chmod +x install.sh
+        chmod +x uninstall.sh
+        ./test.sh

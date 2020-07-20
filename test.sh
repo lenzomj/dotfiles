@@ -30,7 +30,7 @@ teardown () {
 
 test_install () {
   echo "test_install: Executing ${ROOT}/install.sh ..."
-  source "${ROOT}/install.sh" "${PREFIX}"
+  "${ROOT}/install.sh" "${PREFIX}"
 
   echo "test_install: Verifying symlinks ..."
   { [ "${ROOT}/bash/common.bash_profile" -ef "${PREFIX}/.bash_profile" ] \
@@ -50,7 +50,7 @@ test_install () {
 
 test_uninstall () {
   echo "test_install: Executing ${ROOT}/uninstall.sh ..."
-  source "${ROOT}/uninstall.sh" "${PREFIX}"
+  "${ROOT}/uninstall.sh" "${PREFIX}"
 
   echo "test-uninstall: Verifying symlinks ..."
   { [ ! -L "${PREFIX}/.bash_profile" ] \
