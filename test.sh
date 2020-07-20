@@ -13,9 +13,9 @@ throw_error () {
 setup () {
   PREFIX="$(mktemp -d "${PREFIX}")"
   echo "setup: Creating ${PREFIX} ..."
-  echo "setup: Creating .bashrc"    | tee "${PREFIX}/.bashrc"
-  echo "setup: Creating .vimrc"     | tee "${PREFIX}/.vimrc"
-  echo "setup: Creating .gitconfig" | tee "${PREFIX}/.gitconfig"
+  echo "setup: Creating ${PREFIX}/.bashrc"    | tee "${PREFIX}/.bashrc"
+  echo "setup: Creating ${PREFIX}/.vimrc"     | tee "${PREFIX}/.vimrc"
+  echo "setup: Creating ${PREFIX}/.gitconfig" | tee "${PREFIX}/.gitconfig"
 }
 
 teardown () {
@@ -29,6 +29,7 @@ teardown () {
 }
 
 test_install () {
+  echo "test_install: Executing ${ROOT}/install.sh ..."
   "${ROOT}/install.sh" "${PREFIX}"
 
   echo "test_install: Verifying symlinks ..."
@@ -48,6 +49,7 @@ test_install () {
 }
 
 test_uninstall () {
+  echo "test_install: Executing ${ROOT}/uninstall.sh ..."
   "${ROOT}/uninstall.sh" "${PREFIX}"
 
   echo "test-uninstall: Verifying symlinks ..."
