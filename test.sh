@@ -7,28 +7,31 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 PREFIX="/tmp/test_dotfiles.XXX"
 
 throw_error () {
-  printf "%s: Failed at line %d.\n" "${FUNCNAME[1]}" "${BASH_LINENO[0]}"
   return 1
 }
 
 setup () {
   PREFIX="$(mktemp -d "${PREFIX}")"
-
-  echo "Setting up ${PREFIX} ..."
-  echo "Existing .bashrc"    > "${PREFIX}/.bashrc"
-  echo "Existing .vimrc"     > "${PREFIX}/.vimrc"
-  echo "Existing .gitconfig" > "${PREFIX}/.gitconfig"
+  echo "setup: Creating ${PREFIX} ..."
+  echo "setup: Creating .bashrc"    | tee "${PREFIX}/.bashrc"
+  echo "setup: Creating .vimrc"     | tee "${PREFIX}/.vimrc"
+  echo "setup: Creating .gitconfig" | tee "${PREFIX}/.gitconfig"
 }
 
 teardown () {
-  echo "Cleaning up ${PREFIX} ..."
+  local _status="$?"
+  if [ "${_status}" -ne 0 ]; then
+    printf "%s: Error %d at line %d.\n" \
+      "${FUNCNAME[1]}" "${_status}" "${BASH_LINENO[0]}"
+  fi
+  echo "teardown: Removing ${PREFIX} ..."
   rm -rf "${PREFIX}"
 }
 
 test_install () {
   "${ROOT}/install.sh" "${PREFIX}"
 
-  echo "- Install: Verifying symlinks ..."
+  echo "test_install: Verifying symlinks ..."
   { [ "${ROOT}/bash/common.bash_profile" -ef "${PREFIX}/.bash_profile" ] \
     && [ "${ROOT}/bash/common.bashrc" -ef "${PREFIX}/.bashrc" ] \
     && [ "${ROOT}/git/common.gitconfig" -ef "${PREFIX}/.gitconfig" ] \
@@ -38,7 +41,7 @@ test_install () {
     && [ "${ROOT}/vim/common.vim/autoload/plug.vim" -ef \
          "${PREFIX}/.vim/autoload/plug.vim" ]; } || throw_error
 
-  echo "- Install: Verifying backups ..."
+  echo "test_install: Verifying backups ..."
   { [ -s "${PREFIX}/.bashrc.old" ] \
     && [ -s "${PREFIX}/.vimrc.old"  ] \
     && [ -s "${PREFIX}/.gitconfig.old" ]; } || throw_error
@@ -47,7 +50,7 @@ test_install () {
 test_uninstall () {
   "${ROOT}/uninstall.sh" "${PREFIX}"
 
-  echo "- Uninstall: Verifying symlinks ..."
+  echo "test-uninstall: Verifying symlinks ..."
   { [ ! -L "${PREFIX}/.bash_profile" ] \
     && [ ! -L "${PREFIX}/.bashrc" ] \
     && [ ! -L "${PREFIX}/.gitconfig" ] \
@@ -56,7 +59,7 @@ test_uninstall () {
     && [ ! -L "${PREFIX}/.vimrc" ] \
     && [ ! -L "${PREFIX}/.vim" ]; } || throw_error
 
-  echo "- Uninstall: Verifying backups ..."
+  echo "test-uninstall: Verifying backups ..."
   { [ -s "${PREFIX}/.bashrc" ] \
     && [ -s "${PREFIX}/.vimrc"  ] \
     && [ -s "${PREFIX}/.gitconfig" ]; } || throw_error
