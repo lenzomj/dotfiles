@@ -13,6 +13,7 @@ if [ -z "$PREFIX" ]; then
 fi
 
 if [ -d "${DOTFILES_ROOT}/.git" ]; then
+  echo "install: Adding git remote (upstream) to dotfiles repository ..."
   pushd "${DOTFILES_ROOT}" &> /dev/null;
   if ! (git remote | grep -q upstream) then
       git remote add upstream "git@github.com:lenzomj/dotfiles.git"
@@ -24,9 +25,11 @@ syminstall () {
   local _source="$1"
   local _target=".${_source#*.}"
 
+  echo "install: Creating link ${PREFIX}/${_target}"
   if [ -L "${PREFIX}/${_target}" ]; then
     ln -sfn "${DOTFILES_ROOT}/${_source}" "${PREFIX}/${_target}"
   else
+    echo "install: Creating backup of existing dotfile ${PREFIX}/${_target}"
     ln -sb -S ".old" "${DOTFILES_ROOT}/${_source}" "${PREFIX}/${_target}"
   fi
 }
@@ -40,6 +43,7 @@ syminstall vim/common.vimrc
 syminstall vim/common.vim
 
 if [ "$(command -v vim)" ]; then
+  echo "install: Installing vim plugins ..."
   vim -E -s -u "${PREFIX}/.vimrc" +PlugInstall +qall
 fi
 
