@@ -29,8 +29,11 @@ syminstall () {
   if [ -L "${PREFIX}/${_target}" ]; then
     ln -sfn "${DOTFILES_ROOT}/${_source}" "${PREFIX}/${_target}"
   else
-    echo "install: Creating backup of existing dotfile ${PREFIX}/${_target}"
-    ln -sb -S ".old" "${DOTFILES_ROOT}/${_source}" "${PREFIX}/${_target}"
+    if [ -f "${PREFIX}/${_target}" ]; then
+      echo "install: Creating backup of existing dotfile ${PREFIX}/${_target}"
+      mv "${PREFIX}/${_target}" "${PREFIX}/${_target}.old"
+    fi
+    ln -s "${DOTFILES_ROOT}/${_source}" "${PREFIX}/${_target}"
   fi
 }
 

@@ -20,9 +20,9 @@ if [ -d "${DOTFILES_ROOT}/.git" ]; then
   popd &> /dev/null;
 fi
 
-#if [ "$(command -v vim)" ]; then
-#  vim -E -s -u "${PREFIX}/.vimrc" +PlugClean +qall
-#fi
+if [ -d "${DOTFILES_ROOT}/vim/common.vim/bundle" ]; then
+  rm -rf "${DOTFILES_ROOT}/vim/common.vim/bundle"
+fi
 
 symremove () {
   local _source="$1"

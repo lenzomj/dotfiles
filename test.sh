@@ -16,6 +16,8 @@ setup () {
   echo "setup: Creating ${PREFIX}/.bashrc"    | tee "${PREFIX}/.bashrc"
   echo "setup: Creating ${PREFIX}/.vimrc"     | tee "${PREFIX}/.vimrc"
   echo "setup: Creating ${PREFIX}/.gitconfig" | tee "${PREFIX}/.gitconfig"
+  echo "setup: Creating symlink ${PREFIX}/.inputrc"
+  ln -s "/dev/null" "${PREFIX}/.inputrc"
 }
 
 teardown () {
@@ -46,6 +48,9 @@ test_install () {
   { [ -s "${PREFIX}/.bashrc.old" ] \
     && [ -s "${PREFIX}/.vimrc.old"  ] \
     && [ -s "${PREFIX}/.gitconfig.old" ]; } || throw_error
+
+  echo "test_install: Verifying plugins ..."
+  { [ -d "${ROOT}/vim/common.vim/bundle" ]; } || throw_error
 }
 
 test_uninstall () {
@@ -65,6 +70,9 @@ test_uninstall () {
   { [ -s "${PREFIX}/.bashrc" ] \
     && [ -s "${PREFIX}/.vimrc"  ] \
     && [ -s "${PREFIX}/.gitconfig" ]; } || throw_error
+
+  echo "test-uninstall: Verifying plugins ..."
+  { [ ! -d "${ROOT}/vim/common.vim/bundle" ]; } || throw_error
 }
 
 setup
