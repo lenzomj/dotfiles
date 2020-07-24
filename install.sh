@@ -50,3 +50,4 @@ if [ "$(command -v vim)" ]; then
   vim -E -s -u "${PREFIX}/.vimrc" +PlugInstall +qall
 fi
 
+echo "install: Complete"

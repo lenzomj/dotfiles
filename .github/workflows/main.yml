@@ -37,3 +37,11 @@ jobs:
     - name: Run Test
       run: ./test.sh
       shell: bash
+  vint:
+    name: Vint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run Vint
+      uses: reviewdog/action-vint@v1.0.1

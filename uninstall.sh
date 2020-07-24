@@ -13,6 +13,7 @@ if [ -z "$PREFIX" ]; then
 fi
 
 if [ -d "${DOTFILES_ROOT}/.git" ]; then
+  echo "uninstall: Removing git remote (upstream) from dotfiles repository ..."
   pushd "${DOTFILES_ROOT}" &> /dev/null;
   if (git remote | grep -q upstream) then
       git remote remove upstream
@@ -20,6 +21,7 @@ if [ -d "${DOTFILES_ROOT}/.git" ]; then
   popd &> /dev/null;
 fi
 
+echo "uninstall: Cleaning ~/.vim/bundle plugins ..."
 if [ -d "${DOTFILES_ROOT}/vim/common.vim/bundle" ]; then
   rm -rf "${DOTFILES_ROOT}/vim/common.vim/bundle"
 fi
@@ -28,13 +30,14 @@ symremove () {
   local _source="$1"
   local _target=".${_source#*.}"
 
-  # Remove symlinks in ${PREFIX}
+  echo "uninstall: Removing link ${PREFIX}/${_target}"
   if [ -L "${PREFIX}/${_target}" ]; then
     rm "${PREFIX}/${_target}"
   fi
 
   # Restore any ".old" dotfiles
   if [ -f "${PREFIX}/${_target}.old" ]; then
+    echo "uninstall: Restoring backup of existing dotfile ${PREFIX}/${_target}"
     mv "${PREFIX}/${_target}.old" "${PREFIX}/${_target}"
   fi
 }
@@ -46,3 +49,5 @@ symremove other/common.inputrc
 symremove tmux/common.tmux.conf
 symremove vim/common.vimrc
 symremove vim/common.vim
+
+echo "uninstall: Complete"
