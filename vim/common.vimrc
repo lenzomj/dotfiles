@@ -109,7 +109,6 @@ set splitright
 
 " redraw only when we need to (i.e. don't redraw when executing a macro)
 set lazyredraw
-
 " }}}
 
 " File-Specific Settings {{{
@@ -135,7 +134,7 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab
 
 " Plugin Manager {{{
 " ==============
-
+set rtp+=~/.vim/autoload
 " Declares a plugin using a local mirror, if available
 function! DeclarePlugin(plugin)
   let fq_local_path = 'file://'.$WORKSPACE_MIRROR.'/'.a:plugin.'.git'
