@@ -1,4 +1,5 @@
 " General Settings {{{
+let $VIMHOME=expand('<sfile>:p:h')
 
 " Use vim, not vi API
 set nocompatible
@@ -134,7 +135,8 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab
 
 " Plugin Manager {{{
 " ==============
-set rtp+=~/.vim/autoload
+exe 'set rtp+='.expand($VIMHOME.'/.vim')
+echom &rtp
 " Declares a plugin using a local mirror, if available
 function! DeclarePlugin(plugin)
   let fq_local_path = 'file://'.$WORKSPACE_MIRROR.'/'.a:plugin.'.git'
@@ -148,7 +150,7 @@ endfunction
 
 " Returns true, if a plugin is available
 function! PluginAvailable(plugin)
-  let status = isdirectory($HOME.'/.vim/bundle/'.a:plugin)
+  let status = isdirectory(expand($VIMHOME.'/.vim/bundle/'.a:plugin))
   if ! status
     echom a:plugin.' is not available'
   endif
@@ -157,7 +159,7 @@ endfunction
 
 " To install, execute :PlugInstall
 " To clean, execute :PlugClean
-call plug#begin($HOME.'/.vim/bundle')
+call plug#begin(expand($VIMHOME.'/.vim/bundle'))
 
 " File System Navigation
 call DeclarePlugin('preservim/nerdtree')

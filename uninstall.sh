@@ -21,7 +21,7 @@ if [ -d "${DOTFILES_ROOT}/.git" ]; then
   popd &> /dev/null;
 fi
 
-echo "uninstall: Cleaning ~/.vim/bundle plugins ..."
+echo "uninstall: Cleaning ${PREFIX}/.vim/bundle plugins ..."
 if [ -d "${DOTFILES_ROOT}/vim/common.vim/bundle" ]; then
   rm -rf "${DOTFILES_ROOT}/vim/common.vim/bundle"
 fi
