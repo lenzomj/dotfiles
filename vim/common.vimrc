@@ -70,8 +70,6 @@ set ignorecase
 " }}}
 
 " ---- Tabs and Spacing {{{
-filetype plugin indent on
-
 " Convert tabs to spaces
 set expandtab
 
@@ -115,6 +113,8 @@ set lazyredraw
 " }}}
 
 " File-Specific Settings {{{
+filetype plugin indent on
+
 " git
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
@@ -137,7 +137,7 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab
 " ==============
 
 " Declares a plugin using a local mirror, if available
-function DeclarePlugin(plugin)
+function! DeclarePlugin(plugin)
   let fq_local_path = 'file://'.$WORKSPACE_MIRROR.'/'.a:plugin.'.git'
   let fq_remote_path = 'https://github.com/'.a:plugin.'.git'
   if isdirectory(fq_local_path)
@@ -148,7 +148,7 @@ function DeclarePlugin(plugin)
 endfunction
 
 " Returns true, if a plugin is available
-function PluginAvailable(plugin)
+function! PluginAvailable(plugin)
   let status = isdirectory($HOME.'/.vim/bundle/'.a:plugin)
   if ! status
     echom a:plugin.' is not available'
@@ -168,12 +168,13 @@ call DeclarePlugin('ctrlpvim/ctrlp.vim')
 call DeclarePlugin('pseewald/vim-anyfold')
 
 " Look and Feel
-call DeclarePlugin('arcticicestudio/nord-vim')
+call DeclarePlugin('flazz/vim-colorschemes')
 call DeclarePlugin('itchyny/lightline.vim')
 
 " Special File Types
 call DeclarePlugin('godlygeek/tabular')
 call DeclarePlugin('plasticboy/vim-markdown')
+call DeclarePlugin('tpope/vim-scriptease')
 
 " Version Control
 call DeclarePlugin('airblade/vim-gitgutter')
@@ -192,11 +193,11 @@ endif
 " }}}
 
 " ---- colorscheme plugins {{{
-if PluginAvailable('nord-vim') && PluginAvailable('lightline.vim')
+if PluginAvailable('vim-colorschemes') && PluginAvailable('lightline.vim')
   set t_Co=256
   set background=dark
-  colorscheme nord
-  let g:lightline = {'colorscheme': 'nord',}
+  colorscheme jellybeans
+  let g:lightline = {'colorscheme': 'jellybeans',}
 endif
 " }}}
 
