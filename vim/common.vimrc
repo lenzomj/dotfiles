@@ -1,4 +1,5 @@
 " General Settings {{{
+let $VIMHOME=expand('<sfile>:p:h')
 
 " Use vim, not vi API
 set nocompatible
@@ -109,116 +110,146 @@ set splitright
 
 " redraw only when we need to (i.e. don't redraw when executing a macro)
 set lazyredraw
+" }}}
 
+" File-Specific Settings {{{
+filetype plugin indent on
+
+" git
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" markdown
+autocmd Bufread,BufNewFile *.md set filetype=markdown
+autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0
+
+" yaml
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab
+
+" shell
+autocmd Bufread,BufNewFile *.bats set filetype=sh
+autocmd FileType sh,zsh,vim,bats setlocal shiftwidth=2 tabstop=2 expandtab
+
+" vim
+autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab
 " }}}
 
 " Plugin Manager {{{
 " ==============
+" Set runtimepath for unconventional installs
+exe 'set rtp+='.expand($VIMHOME.'/.vim')
+
+" Declares a plugin using a local mirror, if available
+function! DeclarePlugin(plugin)
+  let fq_local_path = 'file://'.$WORKSPACE_MIRROR.'/'.a:plugin.'.git'
+  let fq_remote_path = 'https://github.com/'.a:plugin.'.git'
+  if isdirectory(fq_local_path)
+    Plug fq_local_path
+  else
+    Plug fq_remote_path
+  endif
+endfunction
+
+" Returns true, if a plugin is available
+function! PluginAvailable(plugin)
+  let status = isdirectory(expand($VIMHOME.'/.vim/bundle/'.a:plugin))
+  if ! status
+    echom a:plugin.' is not available'
+  endif
+  return status
+endfunction
 
 " To install, execute :PlugInstall
 " To clean, execute :PlugClean
-call plug#begin('~/.vim/bundle')
+call plug#begin(expand($VIMHOME.'/.vim/bundle'))
 
 " File System Navigation
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/nerdtree.git'
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/ag.vim.git'
+call DeclarePlugin('preservim/nerdtree')
 
 " Text/Code Navigation
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/tagbar.git'
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/ctrlp.vim.git'
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/vim-anyfold.git'
+call DeclarePlugin('ctrlpvim/ctrlp.vim')
+call DeclarePlugin('pseewald/vim-anyfold')
 
 " Look and Feel
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/vim-airline.git'
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/vim-airline-themes.git'
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/vim-colorschemes.git'
+call DeclarePlugin('flazz/vim-colorschemes')
+call DeclarePlugin('itchyny/lightline.vim')
 
 " Special File Types
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/tabular.git'
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/vim-markdown.git'
+call DeclarePlugin('godlygeek/tabular')
+call DeclarePlugin('plasticboy/vim-markdown')
+call DeclarePlugin('tpope/vim-scriptease')
 
 " Version Control
-Plug 'file://'. $WORKSPACE_MIRROR . '/git/base/vim-gitgutter.git'
+call DeclarePlugin('airblade/vim-gitgutter')
 
 call plug#end()
 " }}}
 
 " ---- anyfold plugin {{{
-filetype plugin indent on
-autocmd FileType * AnyFoldActivate " Activate for all filetypes
-set foldlevel=0                    " Open all folds
+if PluginAvailable('vim-anyfold')
+  autocmd FileType * AnyFoldActivate " Activate for all filetypes
+
+  " Close all marker folds when opening a new buffer
+  autocmd BufRead * setlocal foldmethod=marker
+  autocmd BufRead * normal zM
+endif
 " }}}
 
-" ---- colorschemes plugin {{{
-set t_Co=256
-set background=dark
-colorscheme iceberg
-" }}}
-
-" ---- airline plugin {{{
-let g:airline_powerline_fonts=1
-" let g:airline_theme='wombat'
-let g:airline_theme='jellybeans'
+" ---- colorscheme plugins {{{
+if PluginAvailable('vim-colorschemes') && PluginAvailable('lightline.vim')
+  set t_Co=256
+  set background=dark
+  colorscheme jellybeans
+  let g:lightline = {'colorscheme': 'jellybeans',}
+endif
 " }}}
 
 " ---- ctrl-p plugin {{{
-map <leader><leader> <C-p>
-map <leader>b :CtrlPBuffer<cr>
-map <leader>t :CtrlPTag<cr>
-let g:ctrlp_show_hidden=1
-let g:ctrlp_working_path_mode=0
-let g:ctrlp_max_height=30
+if PluginAvailable('ctrlp.vim')
+  map <leader><leader> <C-p>
+  map <leader>b :CtrlPBuffer<cr>
+  map <leader>t :CtrlPTag<cr>
+  let g:ctrlp_show_hidden=1
+  let g:ctrlp_working_path_mode=0
+  let g:ctrlp_max_height=30
 
-" " CtrlP -> override <C-o> to provide options for how to open files
-let g:ctrlp_arg_map = 1
+  " CtrlP -> override <C-o> to provide options for how to open files
+  let g:ctrlp_arg_map = 1
 
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
 
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
-" " CtrlP -> directories to ignore when fuzzy finding
-let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
-" }}}
-
-" ---- gist plugin {{{
-let g:github_user = $GITHUB_USER
-let g:github_token = $GITHUB_TOKEN
-let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 0
-
-" Make gists private by default
-let g:gist_post_private = 1
-
-" Show private gists when executing :Gist -l
-let g:gist_show_privates = 1
+  " CtrlP -> directories to ignore when fuzzy finding
+  let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
+endif
 " }}}
 
 " ---- gitgutter plugin {{{
-let g:gitgutter_enabled = 1
-let g:gitgutter_eager = 0
+if PluginAvailable('vim-gitgutter')
+  let g:gitgutter_enabled = 1
+  let g:gitgutter_eager = 0
 
-if exists('&signcolumn')  " Vim 7.4.2201
-  set signcolumn=yes
-else
-  let g:gitgutter_sign_column_always = 1
+  if exists('&signcolumn')  " Vim 7.4.2201
+    set signcolumn=yes
+  else
+    let g:gitgutter_sign_column_always = 1
+  endif
+  highlight clear SignColumn
 endif
-highlight clear SignColumn
 " }}}
 
 " ---- nerdtree plugin {{{
-map <leader>[ :NERDTreeToggle<cr>
+if PluginAvailable('nerdtree')
+  map <leader>[ :NERDTreeToggle<cr>
+  let NERDTreeShowHidden=1
+endif
 " }}}
 
 " ---- tabularize plugin {{{
-map <Leader>e :Tabularize /=<cr>
-map <Leader>c :Tabularize /:<cr>
-map <Leader>es :Tabularize /=\zs<cr>
-map <Leader>cs :Tabularize /:\zs<cr>
-" }}}
-
-" ---- tagbar plugin {{{
-map <leader>] :TagbarToggle<cr>
+if PluginAvailable('tabular')
+  map <Leader>e :Tabularize /=<cr>
+  map <Leader>c :Tabularize /:<cr>
+  map <Leader>es :Tabularize /=\zs<cr>
+  map <Leader>cs :Tabularize /:\zs<cr>
+endif
 " }}}
 
 " Mappings {{{
@@ -306,16 +337,6 @@ fun! StripTrailingWhitespace()
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
 
-" file formats
-autocmd Filetype gitcommit setlocal spell textwidth=72
-autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
-autocmd FileType sh,cucumber,ruby,yaml,zsh,vim,bats setlocal shiftwidth=2 tabstop=2 expandtab
-
-" specify syntax highlighting for specific files
-autocmd Bufread,BufNewFile *.spv set filetype=php
-autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
-autocmd Bufread,BufNewFile *.bats set filetype=sh
-
 " Highlight words to avoid in tech writing
 " http://css-tricks.com/words-avoid-educational-writing/
 highlight TechWordsToAvoid ctermbg=red ctermfg=white
@@ -346,10 +367,6 @@ function! s:RunShellCommand(cmdline)
   setlocal nomodifiable
   1
 endfunction
-
-" Close all folds when opening a new buffer
-autocmd BufRead * setlocal foldmethod=marker
-autocmd BufRead * normal zM
 
 " Rainbow parenthesis always on!
 if exists(':RainbowParenthesesToggle')
