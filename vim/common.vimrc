@@ -135,8 +135,9 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab
 
 " Plugin Manager {{{
 " ==============
+" Set runtimepath for unconventional installs
 exe 'set rtp+='.expand($VIMHOME.'/.vim')
-echom &rtp
+
 " Declares a plugin using a local mirror, if available
 function! DeclarePlugin(plugin)
   let fq_local_path = 'file://'.$WORKSPACE_MIRROR.'/'.a:plugin.'.git'
