@@ -47,7 +47,7 @@ set cursorline
 set showmatch
 
 " Always highlight column 80
-autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
+autocmd BufWinEnter * highlight ColorColumn ctermbg=234
 set colorcolumn=80
 
 " Get rid of command delays
@@ -168,6 +168,7 @@ call DeclarePlugin('preservim/nerdtree')
 " Text/Code Navigation
 call DeclarePlugin('ctrlpvim/ctrlp.vim')
 call DeclarePlugin('pseewald/vim-anyfold')
+call DeclarePlugin('reedes/vim-pencil')
 
 " Look and Feel
 call DeclarePlugin('flazz/vim-colorschemes')
@@ -176,7 +177,6 @@ call DeclarePlugin('itchyny/lightline.vim')
 " Special File Types
 call DeclarePlugin('godlygeek/tabular')
 call DeclarePlugin('plasticboy/vim-markdown')
-call DeclarePlugin('tpope/vim-scriptease')
 
 " Version Control
 call DeclarePlugin('airblade/vim-gitgutter')
