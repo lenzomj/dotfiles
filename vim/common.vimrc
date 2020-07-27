@@ -140,10 +140,10 @@ exe 'set rtp+='.expand($VIMHOME.'/.vim')
 
 " Declares a plugin using a local mirror, if available
 function! DeclarePlugin(plugin)
-  let fq_local_path = 'file://'.$WORKSPACE_MIRROR.'/'.a:plugin.'.git'
+  let fq_local_path = expand($WORKSPACE_MIRROR.'/github/'.a:plugin.'.git')
   let fq_remote_path = 'https://github.com/'.a:plugin.'.git'
   if isdirectory(fq_local_path)
-    Plug fq_local_path
+    Plug 'file://'.fq_local_path
   else
     Plug fq_remote_path
   endif
