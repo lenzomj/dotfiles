@@ -28,8 +28,8 @@ if [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
   export PATH
 fi
 
-if [[ ":${PATH}:" != *":${HOME}/bin:"* ]]; then
-  PATH="${PATH}:${HOME}/bin"
-  export PATH
+if [[ ":${LD_LIBRARY_PATH}:" != *":${HOME}/.local/lib:"* ]]; then
+  LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${HOME}/.local/lib"
+  export LD_LIBRARY_PATH
 fi
 # }}}
