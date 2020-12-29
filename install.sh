@@ -45,9 +45,9 @@ syminstall tmux/common.tmux.conf
 syminstall vim/common.vimrc
 syminstall vim/common.vim
 
-if [ "$(command -v vim)" ]; then
-  echo "install: Installing vim plugins ..."
-  vim -E -s -u "${PREFIX}/.vimrc" +PlugInstall +qall
-fi
+#if [ "$(command -v vim)" ]; then
+#  echo "install: Installing vim plugins ..."
+#  vim -E -s -u "${PREFIX}/.vimrc" +PlugInstall +qall
+#fi
 
 echo "install: Complete"
