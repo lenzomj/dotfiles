@@ -49,8 +49,8 @@ test_install () {
     && [ -s "${PREFIX}/.vimrc.old"  ] \
     && [ -s "${PREFIX}/.gitconfig.old" ]; } || throw_error
 
-  echo "test_install: Verifying plugins ..."
-  { [ -d "${ROOT}/vim/common.vim/bundle/nerdtree" ]; } || throw_error
+  #echo "test_install: Verifying plugins ..."
+  #{ [ -d "${ROOT}/vim/common.vim/bundle/nerdtree" ]; } || throw_error
 }
 
 test_uninstall () {

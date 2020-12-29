@@ -2,7 +2,6 @@
 
 # Global /etc/bashrc {{{
 if [ -f "/etc/bashrc" ]; then
-  # shellcheck source=/dev/null
   source "/etc/bashrc"
 fi
 # }}}
@@ -18,9 +17,8 @@ fi
 # }}}
 
 # System Path {{{
-if [ -f "${HOME}/.workspace.conf" ]; then
-  # shellcheck source=/dev/null
-  source "${HOME}/.workspace.conf"
+if [ -f "${HOME}/workspace/activate" ]; then
+  source "${HOME}/workspace/activate"
 fi
 
 if [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
