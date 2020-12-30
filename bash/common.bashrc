@@ -17,8 +17,8 @@ fi
 # }}}
 
 # System Path {{{
-if [ -f "${HOME}/workspace/activate" ]; then
-  source "${HOME}/workspace/activate"
+if [ -f "${HOME}/.bashrc_local" ]; then
+  source "${HOME}/.bashrc_local"
 fi
 
 if [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
