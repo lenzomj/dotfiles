@@ -180,6 +180,7 @@ call DeclarePlugin('plasticboy/vim-markdown')
 
 " Version Control
 call DeclarePlugin('airblade/vim-gitgutter')
+call DeclarePlugin('tpope/vim-fugitive')
 
 call plug#end()
 " }}}
