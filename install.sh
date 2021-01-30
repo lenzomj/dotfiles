@@ -40,13 +40,13 @@ syminstall () {
   fi
 }
 
-syminstall bash/common.bash_profile ${PREFIX}
-syminstall bash/common.bashrc       ${PREFIX}
-syminstall git/common.gitconfig     ${PREFIX}
-syminstall other/common.inputrc     ${PREFIX}
-syminstall tmux/common.tmux.conf    ${PREFIX}
-syminstall vim/common.vimrc         ${PREFIX}
-syminstall vim/common.vim           ${PREFIX}
+syminstall bash/common.bash_profile "${PREFIX}"
+syminstall bash/common.bashrc       "${PREFIX}"
+syminstall git/common.gitconfig     "${PREFIX}"
+syminstall other/common.inputrc     "${PREFIX}"
+syminstall tmux/common.tmux.conf    "${PREFIX}"
+syminstall vim/common.vimrc         "${PREFIX}"
+syminstall vim/common.vim           "${PREFIX}"
 
 echo "install: Creating file ${PREFIX}/.config/nvim/init.vim"
 mkdir -p "${PREFIX}/.config/nvim"
