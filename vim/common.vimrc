@@ -169,6 +169,7 @@ call DeclarePlugin('preservim/nerdtree')
 call DeclarePlugin('ctrlpvim/ctrlp.vim')
 call DeclarePlugin('pseewald/vim-anyfold')
 call DeclarePlugin('reedes/vim-pencil')
+call DeclarePlugin('vim-syntastic/syntastic')
 
 " Look and Feel
 call DeclarePlugin('flazz/vim-colorschemes')
@@ -267,6 +268,10 @@ endif
 " e.g.
 " to map something in just NORMAL mode use :nmap or :nnoremap
 " to map something in just VISUAL mode use :vmap or :vnoremap
+
+" Alternate escape
+inoremap jk <esc>
+inoremap kj <esc>
 
 " Clear search buffer
 :nnoremap § :nohlsearch<cr>
