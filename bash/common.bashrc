@@ -30,4 +30,8 @@ if [[ ":${LD_LIBRARY_PATH}:" != *":${HOME}/.local/lib:"* ]]; then
   LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${HOME}/.local/lib"
   export LD_LIBRARY_PATH
 fi
+
+if [[ -f "$HOME/.cargo/env" ]]; then
+  . "$HOME/.cargo/env"
+fi
 # }}}
