@@ -45,6 +45,7 @@ syminstall bash/common.bashrc       "${PREFIX}"
 syminstall git/common.gitconfig     "${PREFIX}"
 syminstall other/common.inputrc     "${PREFIX}"
 syminstall tmux/common.tmux.conf    "${PREFIX}"
+syminstall termux                   "${PREFIX}"
 syminstall vim/common.vimrc         "${PREFIX}"
 syminstall vim/common.vim           "${PREFIX}"
 

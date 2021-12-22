@@ -47,6 +47,7 @@ symremove bash/common.bashrc
 symremove git/common.gitconfig
 symremove other/common.inputrc
 symremove tmux/common.tmux.conf
+symremove termux
 symremove vim/common.vimrc
 symremove vim/common.vim
 

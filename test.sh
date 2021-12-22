@@ -39,6 +39,7 @@ test_install () {
     && [ "${ROOT}/bash/common.bashrc" -ef "${PREFIX}/.bashrc" ] \
     && [ "${ROOT}/git/common.gitconfig" -ef "${PREFIX}/.gitconfig" ] \
     && [ "${ROOT}/other/common.inputrc" -ef "${PREFIX}/.inputrc" ] \
+    && [ "${ROOT}/termux" -ef "${PREFIX}/.termux" ] \
     && [ "${ROOT}/tmux/common.tmux.conf" -ef "${PREFIX}/.tmux.conf" ] \
     && [ "${ROOT}/vim/common.vimrc" -ef "${PREFIX}/.vimrc" ] \
     && [ "${ROOT}/vim/common.vim/autoload/plug.vim" -ef \
@@ -63,6 +64,7 @@ test_uninstall () {
     && [ ! -L "${PREFIX}/.gitconfig" ] \
     && [ ! -L "${PREFIX}/.inputrc" ] \
     && [ ! -L "${PREFIX}/.tmux.conf" ] \
+    && [ ! -L "${PREFIX}/.termux" ] \
     && [ ! -L "${PREFIX}/.vimrc" ] \
     && [ ! -L "${PREFIX}/.vim" ]; } || throw_error
 
