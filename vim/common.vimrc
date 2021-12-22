@@ -168,7 +168,8 @@ call DeclarePlugin('preservim/nerdtree')
 " Text/Code Navigation
 call DeclarePlugin('ctrlpvim/ctrlp.vim')
 call DeclarePlugin('pseewald/vim-anyfold')
-call DeclarePlugin('reedes/vim-pencil')
+call DeclarePlugin('preservim/vim-pencil')
+call DeclarePlugin('preservim/vim-wordy')
 call DeclarePlugin('vim-syntastic/syntastic')
 
 " Look and Feel
