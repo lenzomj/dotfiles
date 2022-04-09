@@ -21,6 +21,16 @@
           - pcsc-tools
           - opensc
         state: present
+        
+    - name: Add essential productivity tools
+      dnf:
+        name:
+          - git
+          - curl
+          - tmux
+          - vim
+          - neovim
+         state: present
 
     - name: Upgrade all packages to their latest versions
       dnf:
