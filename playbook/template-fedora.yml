@@ -1,0 +1,28 @@
+---
+- name: Provision Fedora Template VM
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Add third-party Fedora repositories
+      dnf:
+        name: fedora-workstation-repositories
+        state: present
+
+    - name: Install Google Chrome stable (third-party)
+      dnf:
+        name: google-chrome-stable
+        enablerepo: google-chrome
+        state: present
+
+    - name: Enable smart card support (PC/SC, OpenSC, NSS)
+      dnf:
+        name: 
+          - nss-tools
+          - pcsc-tools
+          - opensc
+        state: present
+
+    - name: Upgrade all packages to their latest versions
+      dnf:
+        name: "*"
+        state: latest
