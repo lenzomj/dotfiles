@@ -26,11 +26,11 @@
       dnf:
         name:
           - git
-          - curl
+          - curl-minimal
           - tmux
           - vim
           - neovim
-         state: present
+        state: present
 
     - name: Upgrade all packages to their latest versions
       dnf:
