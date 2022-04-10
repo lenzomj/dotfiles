@@ -1,0 +1,24 @@
+---
+- name: Provision Fedora Template Development VM 
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Add container management tools
+      dnf:
+        name:
+          - buildah
+          - podman
+          - skopeo
+        state: present
+
+    - name: Add essential development tools
+      dnf:
+        name: 
+          - '@Development tools'
+          - cmake
+        state: present
+
+    - name: Upgrade all packages to their latest versions
+      dnf:
+        name: "*"
+        state: latest
