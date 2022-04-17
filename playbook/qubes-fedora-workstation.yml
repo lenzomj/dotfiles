@@ -46,6 +46,7 @@
       unarchive:
         src: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
         dest: "{{ tmpdir.path }}/"
+        remote_src: yes
         
     - name: Export Root CA certificates
       shell: |
