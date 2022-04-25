@@ -3,13 +3,18 @@
   hosts: localhost
   become: true
   vars:
-    vmware_installer: "VMware-Horizon-Client-2106.1-8.3.1-18435609.x64.bundle"
+    vmware_installer: "VMware-Horizon-Client-2203-8.5.0-19586897.x64.bundle"
+  vars_prompt:
+    - name: _reinstall
+      prompt: Reinstall applications?
+      default: false
+      private: no
   tasks:
     - name: Adjust default locale
       lineinfile:
         path: /etc/locale.conf
         regexp: '^LANG='
-        line: SELINUX=en_US.UTF-8
+        line: LANG=en_US.UTF-8
   
     - name: Create temporary directory
       tempfile:
@@ -41,7 +46,8 @@
       get_url:
         url: "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/certificates_pkcs7_DoD.zip"
         dest: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
-
+        checksum: sha256:557dd02c22ba0fd28ac8390958565f51bdd5aef53fc7320342c6881a9a5103c8
+        
     - name: Unpack Root CA certificate bundle
       unarchive:
         src: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
@@ -54,13 +60,14 @@
         cp DoD_CAs_v5.9.pem /etc/pki/ca-trust/source/anchors/
         update-ca-trust
       args:
+        creates: /etc/pki/ca-trust/source/anchors/DoD_CAs_v5.9.pem
         chdir: "{{ tmpdir.path }}/Certificates_PKCS7_v5.9_DoD"
 
     - name: Download VMWare Horizons Client installer for Linux
       get_url:
-        url: "https://download3.vmware.com/software/view/viewclients/CART22FQ2/{{ vmware_installer }}"
+        url: "https://download3.vmware.com/software/CART23FQ1_LIN64_2203/{{ vmware_installer }}"
         dest: "{{ tmpdir.path }}/{{ vmware_installer }}"
-        checksum: sha256:5fc0ac3fc08f948065beb1212de8cc5d77817cdbc661f02c9a0f2f3c56e7fb85
+        checksum: sha256:a8afe52dddcf02f98af74a74716c8ac5da87c05d7eda240f48075e730850c495
 
     - name: Make VMWare Horizons Client installer executable
       file:
@@ -86,7 +93,7 @@
 
     - name: Install VMWare Horizons Client for Linux
       become: yes
-      when: vmware_components is failed
+      when: vmware_components is failed or ( _reinstall | bool )
       shell: |
         env TERM=dumb VMWARE_EULAS_AGREED=yes \
         ./{{ vmware_installer }} --console --regular \
