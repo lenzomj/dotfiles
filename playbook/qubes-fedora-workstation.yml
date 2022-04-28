@@ -132,6 +132,7 @@
           - tmux
           - vim
           - neovim
+          - libreoffice
         state: present
         
     - name: Add container management tools
