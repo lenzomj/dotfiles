@@ -149,6 +149,12 @@
           - '@Development tools'
           - cmake
         state: present
+        
+    - name: Add dependencies for graphical applications
+      dnf:
+        name:
+          - mesa-libGLU
+        state: present
 
     - name: Upgrade all packages to their latest versions
       dnf:
