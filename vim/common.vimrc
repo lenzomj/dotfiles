@@ -75,10 +75,10 @@ set ignorecase
 set expandtab
 
 " Set tab size for manual indenting
-set tabstop=3
+set tabstop=2
 
 " Set tab size for auto indenting
-set shiftwidth=3
+set shiftwidth=2
 
 " Permit backspace to delete whitespace characters
 set backspace=indent,eol,start
@@ -179,6 +179,7 @@ call DeclarePlugin('itchyny/lightline.vim')
 " Special File Types
 call DeclarePlugin('godlygeek/tabular')
 call DeclarePlugin('plasticboy/vim-markdown')
+call DeclarePlugin('gyim/vim-boxdraw')
 
 " Version Control
 call DeclarePlugin('airblade/vim-gitgutter')
