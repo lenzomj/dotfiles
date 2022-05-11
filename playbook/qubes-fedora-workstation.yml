@@ -1,5 +1,5 @@
 ---
-- name: Provision Fedora Workstation VM 
+- name: Provision Fedora Workstation VM
   hosts: localhost
   become: true
   vars:
@@ -8,20 +8,20 @@
     - name: _reinstall
       prompt: Reinstall applications?
       default: false
-      private: no
+      private: false
   tasks:
     - name: Adjust default locale
       lineinfile:
         path: /etc/locale.conf
         regexp: '^LANG='
         line: LANG=en_US.UTF-8
-  
+
     - name: Create temporary directory
       tempfile:
         state: directory
         suffix: ansible
       register: tmpdir
-      
+
     - name: Add third-party Fedora repositories
       dnf:
         name: fedora-workstation-repositories
@@ -35,25 +35,25 @@
 
     - name: Enable smart card support (PC/SC, OpenSC, NSS)
       dnf:
-        name: 
+        name:
           - nss-tools
           - pcsc-tools
           - opensc
           - openssl
         state: present
-        
+
     - name: Obtain Root CA certificate bundle
       get_url:
         url: "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/certificates_pkcs7_DoD.zip"
         dest: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
         checksum: sha256:557dd02c22ba0fd28ac8390958565f51bdd5aef53fc7320342c6881a9a5103c8
-        
+
     - name: Unpack Root CA certificate bundle
       unarchive:
         src: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
         dest: "{{ tmpdir.path }}/"
-        remote_src: yes
-        
+        remote_src: true
+
     - name: Export Root CA certificates
       shell: |
         openssl pkcs7 -in Certificates_PKCS7_v5.9_DoD.pem.p7b -print_certs -out DoD_CAs_v5.9.pem
@@ -75,24 +75,24 @@
         mode: a+x
 
     - name: Verify existing VMWare Horizons Client installation
-      become: yes
+      become: true
       shell: |
         ./{{ vmware_installer }} --list-components | grep {{ item }}
       args:
         chdir: "{{ tmpdir.path }}"
       with_items:
         - vmware-installer
-        - vmware-horizon-client 
+        - vmware-horizon-client
         - vmware-horizon-html5mmr
-        - vmware-horizon-pcoip 
+        - vmware-horizon-pcoip
         - vmware-horizon-mmr
         - vmware-horizon-rtav
-        - vmware-horizon-smartcard 
+        - vmware-horizon-smartcard
       register: vmware_components
       ignore_errors: true
 
     - name: Install VMWare Horizons Client for Linux
-      become: yes
+      become: true
       when: vmware_components is failed or ( _reinstall | bool )
       shell: |
         env TERM=dumb VMWARE_EULAS_AGREED=yes \
@@ -112,13 +112,13 @@
         chdir: "{{ tmpdir.path }}"
 
     - name: Create PKCS11 directory under /usr/lib/vmware/view
-      become: yes
+      become: true
       file:
         path: "/usr/lib/vmware/view/pkcs11"
         state: directory
 
     - name: Create symbolic link to PKCS11 library from /usr/lib/vmware/view
-      become: yes
+      become: true
       file:
         src: "/usr/lib64/pkcs11/opensc-pkcs11.so"
         dest: "/usr/lib/vmware/view/pkcs11/libopenscpkcs11.so"
@@ -134,7 +134,7 @@
           - neovim
           - libreoffice
         state: present
-        
+
     - name: Add container management tools
       dnf:
         name:
@@ -145,11 +145,11 @@
 
     - name: Add essential development tools
       dnf:
-        name: 
+        name:
           - '@Development tools'
           - cmake
         state: present
-        
+
     - name: Add dependencies for graphical applications
       dnf:
         name:
