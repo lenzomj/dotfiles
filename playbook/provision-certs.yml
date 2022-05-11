@@ -48,4 +48,4 @@
           module: /usr/lib64/pkcs11/opensc-pkcs11.so
         path: "{{ ansible_env.HOME }}/.config/pkcs11/pkcs11.conf"
         marker: "# {mark} ANSIBLE MANAGED BLOCK"
-        create: yes
+        create: true
