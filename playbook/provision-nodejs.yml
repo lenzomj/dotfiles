@@ -1,20 +1,27 @@
 ---
 - name: Provision node.js on the local host
   hosts: localhost
+  vars:
+    nvm_ver: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1"
+    nvm_dir: "{{ ansible_env.HOME }}/.nvm"
   tasks:
+    - name: Create default NVM_DIR
+      file:
+        path: "{{ nvm_dir }}"
+        state: directory
+
     - name: Install Node Version Manager (NVM)
       shell: >
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+        curl -o- {{ nvm_ver }}/install.sh | NVM_DIR={{ nvm_dir }} bash
       args:
-        creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+        creates: "{{ nvm_dir }}/nvm.sh"
 
     - name: Install node.js versions
       shell: >
-        source {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install {{ item }}
+        source {{ nvm_dir }}/nvm.sh && nvm install {{ item }}
       args:
-        creates: "{{ ansible_env.HOME }}/.nvm/versions/node/v{{ item }}"
+        creates: "{{ nvm_dir }}/versions/node/v{{ item }}"
         chdir: "{{ ansible_env.HOME }}"
         executable: /bin/bash
       loop:
-        - 17.4.0   # Current
-        - 16.13.2  # LTS
+        - 16.15.0  # LTS
