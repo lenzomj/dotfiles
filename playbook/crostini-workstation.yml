@@ -47,5 +47,5 @@
       user:
         name: "{{ item }}"
         groups: docker
-        append: yes
+        append: true
       with_items: "{{ var_users }}"
