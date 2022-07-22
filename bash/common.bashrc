@@ -32,12 +32,33 @@ if [[ ":${LD_LIBRARY_PATH}:" != *":${HOME}/.local/lib:"* ]]; then
 fi
 
 if [[ -f "$HOME/.cargo/env" ]]; then
-  . "$HOME/.cargo/env"
+  source "$HOME/.cargo/env"
 fi
 
 if [[ -d "$HOME/.nvm" ]]; then
   export NVM_DIR="$HOME/.nvm"
-  . "$NVM_DIR/nvm.sh"
-  . "$NVM_DIR/bash_completion"
+  source "$NVM_DIR/nvm.sh"
+  source "$NVM_DIR/bash_completion"
 fi
+# }}}
+
+# GPG Tools {{{
+gpg-encrypt () {
+  default=0x12813A70E33FDA8A
+  output=$(pwd)/"${1}".$(date +%s).enc
+  gpg --encrypt --armor --output ${output} --recipient ${default} "${1}" \
+    && echo "${1} => ${output}"
+}
+
+gpg-decrypt () {
+  output=$(echo "${1}" | rev | cut -c16- | rev)
+  gpg --decrypt --output ${output} "${1}" \
+    && echo "${1} => ${output}"
+}
+
+gpg-sign () {
+  output=$(pwd)/"${1}".$(date +%s).sig
+  gpg --detach-sig --armor --output ${output} "${1}" \
+    && echo "${1} => ${output}"
+}
 # }}}
