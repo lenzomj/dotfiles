@@ -24,9 +24,9 @@ if [ -d "${DOTFILES_ROOT}/.git" ]; then
 fi
 
 syminstall () {
-  local _source="$1"
-  local _prefix="$2"
-  local _target=".${_source#*.}"
+  local _source="${1}"
+  local _prefix="${2}"
+  local _target="${3}"
 
   echo "install: Creating link ${_prefix}/${_target}"
   if [ -L "${_prefix}/${_target}" ]; then
@@ -40,14 +40,25 @@ syminstall () {
   fi
 }
 
-syminstall bash/common.bash_profile "${PREFIX}"
-syminstall bash/common.bashrc       "${PREFIX}"
-syminstall git/common.gitconfig     "${PREFIX}"
-syminstall other/common.inputrc     "${PREFIX}"
-syminstall tmux/common.tmux.conf    "${PREFIX}"
-syminstall termux                   "${PREFIX}"
-syminstall vim/common.vimrc         "${PREFIX}"
-syminstall vim/common.vim           "${PREFIX}"
+dotinstall () {
+  local _source="${1}"
+  local _prefix="${2}"
+  local _target=".${_source#*.}"
+
+  syminstall "${_source}" "${_prefix}" "${_target}"
+}
+
+dotinstall bash/common.bash_profile "${PREFIX}"
+dotinstall bash/common.bashrc       "${PREFIX}"
+dotinstall git/common.gitconfig     "${PREFIX}"
+dotinstall other/common.inputrc     "${PREFIX}"
+dotinstall tmux/common.tmux.conf    "${PREFIX}"
+dotinstall termux                   "${PREFIX}"
+dotinstall vim/common.vimrc         "${PREFIX}"
+dotinstall vim/common.vim           "${PREFIX}"
+
+mkdir -p "${PREFIX}/.gnupg"
+syminstall gpg/gpg.conf "${PREFIX}/.gnupg" "gpg.conf"
 
 echo "install: Creating file ${PREFIX}/.config/nvim/init.vim"
 mkdir -p "${PREFIX}/.config/nvim"

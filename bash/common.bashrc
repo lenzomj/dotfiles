@@ -47,12 +47,18 @@ gpg-encrypt () {
   default=0x12813A70E33FDA8A
   output=$(pwd)/"${1}".$(date +%s).enc
   gpg --encrypt --armor --output ${output} --recipient ${default} "${1}" \
-    && echo "${1} -> ${output}"
+    && echo "${1} => ${output}"
 }
 
 gpg-decrypt () {
   output=$(echo "${1}" | rev | cut -c16- | rev)
   gpg --decrypt --output ${output} "${1}" \
-    && echo "${1} -> ${output}"
+    && echo "${1} => ${output}"
+}
+
+gpg-sign () {
+  output=$(pwd)/"${1}".$(date +%s).sig
+  gpg --detach-sig --armor --output ${output} "${1}" \
+    && echo "${1} => ${output}"
 }
 # }}}

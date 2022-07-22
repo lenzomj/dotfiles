@@ -27,28 +27,39 @@ if [ -d "${DOTFILES_ROOT}/vim/common.vim/bundle" ]; then
 fi
 
 symremove () {
-  local _source="$1"
-  local _target=".${_source#*.}"
+  local _source="${1}"
+  local _prefix="${2}"
+  local _target="${3}"
 
-  echo "uninstall: Removing link ${PREFIX}/${_target}"
-  if [ -L "${PREFIX}/${_target}" ]; then
-    rm "${PREFIX}/${_target}"
+  echo "uninstall: Removing link ${_prefix}/${_target}"
+  if [ -L "${_prefix}/${_target}" ]; then
+    rm "${_prefix}/${_target}"
   fi
 
   # Restore any ".old" dotfiles
-  if [ -f "${PREFIX}/${_target}.old" ]; then
-    echo "uninstall: Restoring backup of existing dotfile ${PREFIX}/${_target}"
-    mv "${PREFIX}/${_target}.old" "${PREFIX}/${_target}"
+  if [ -f "${_prefix}/${_target}.old" ]; then
+    echo "uninstall: Restoring backup of existing dotfile ${_prefix}/${_target}"
+    mv "${_prefix}/${_target}.old" "${_prefix}/${_target}"
   fi
 }
 
-symremove bash/common.bash_profile
-symremove bash/common.bashrc
-symremove git/common.gitconfig
-symremove other/common.inputrc
-symremove tmux/common.tmux.conf
-symremove termux
-symremove vim/common.vimrc
-symremove vim/common.vim
+dotremove () {
+  local _source="${1}"
+  local _prefix="${2}"
+  local _target=".${_source#*.}"
+
+  symremove "${_source}" "${_prefix}" "${_target}"
+}
+
+dotremove bash/common.bash_profile "${PREFIX}"
+dotremove bash/common.bashrc       "${PREFIX}"
+dotremove git/common.gitconfig     "${PREFIX}"
+dotremove other/common.inputrc     "${PREFIX}"
+dotremove tmux/common.tmux.conf    "${PREFIX}"
+dotremove termux                   "${PREFIX}"
+dotremove vim/common.vimrc         "${PREFIX}"
+dotremove vim/common.vim           "${PREFIX}"
+
+symremove gpg/gpg.conf "${PREFIX}/.gnupg" "gpg.conf"
 
 echo "uninstall: Complete"
