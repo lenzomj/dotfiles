@@ -11,3 +11,19 @@ dotfiles/install.sh $HOME
 ```bash
 dotfiles/uninstall.sh $HOME
 ```
+# Manual Actions
+
+## Install Vim Plugins
+```bash
+# Vim
+vim +'PlugInstall --sync' +qa
+
+# Neovim
+nvim --headless +PlugInstall +qall
+```
+
+## Add GitHub Public Key
+```bash
+curl https://github.com/web-flow.gpg | gpg --import
+gpg --edit-key noreply@github.com trust quit
+```
