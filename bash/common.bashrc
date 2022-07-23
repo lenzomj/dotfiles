@@ -43,6 +43,10 @@ fi
 # }}}
 
 # GPG Tools {{{
+
+# Necessary for TTY-based PIN entry
+export GPG_TTY=$(tty)
+
 gpg-encrypt () {
   default=0x12813A70E33FDA8A
   output=$(pwd)/"${1}".$(date +%s).enc
