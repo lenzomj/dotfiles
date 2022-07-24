@@ -29,6 +29,7 @@
       apt:
         name:
           - ca-certificates
+          - pass
           - gnupg2
           - paperkey
           - opensc

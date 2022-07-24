@@ -30,20 +30,29 @@ if [[ ":${LD_LIBRARY_PATH}:" != *":${HOME}/.local/lib:"* ]]; then
   LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${HOME}/.local/lib"
   export LD_LIBRARY_PATH
 fi
+# }}}
 
+# Cargo {{{
 if [[ -f "$HOME/.cargo/env" ]]; then
   source "$HOME/.cargo/env"
 fi
+# }}}
 
+# Node {{{
 if [[ -d "$HOME/.nvm" ]]; then
   export NVM_DIR="$HOME/.nvm"
   source "$NVM_DIR/nvm.sh"
+  # Bash completion
   source "$NVM_DIR/bash_completion"
 fi
 # }}}
 
-# GPG Tools {{{
+# Pipenv {{{
+# Bash completion
+eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+# }}}
 
+# GPG Tools {{{
 # Necessary for TTY-based PIN entry
 export GPG_TTY=$(tty)
 
