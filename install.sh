@@ -51,6 +51,7 @@ dotinstall () {
 dotinstall bash/common.bash_profile "${PREFIX}"
 dotinstall bash/common.bashrc       "${PREFIX}"
 dotinstall git/common.gitconfig     "${PREFIX}"
+dotinstall mutt/common.muttrc       "${PREFIX}"
 dotinstall other/common.inputrc     "${PREFIX}"
 dotinstall tmux/common.tmux.conf    "${PREFIX}"
 dotinstall termux                   "${PREFIX}"

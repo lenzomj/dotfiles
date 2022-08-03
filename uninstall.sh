@@ -54,6 +54,7 @@ dotremove () {
 dotremove bash/common.bash_profile "${PREFIX}"
 dotremove bash/common.bashrc       "${PREFIX}"
 dotremove git/common.gitconfig     "${PREFIX}"
+dotremove git/common.muttrc        "${PREFIX}"
 dotremove other/common.inputrc     "${PREFIX}"
 dotremove tmux/common.tmux.conf    "${PREFIX}"
 dotremove termux                   "${PREFIX}"
