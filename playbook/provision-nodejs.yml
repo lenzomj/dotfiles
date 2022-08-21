@@ -24,4 +24,4 @@
         chdir: "{{ ansible_env.HOME }}"
         executable: /bin/bash
       loop:
-        - 16.15.0  # LTS
+        - 16.17.0  # LTS
