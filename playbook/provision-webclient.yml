@@ -1,0 +1,12 @@
+---
+- name: Provision Fedora web client
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Provision Google Chrome on the local host
+      include_tasks: provision-chrome.yml
+
+    - name: Upgrade all packages to their latest versions
+      dnf:
+        name: "*"
+        state: latest
