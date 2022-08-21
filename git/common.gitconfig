@@ -14,3 +14,9 @@
    default = nothing
 [credential]
    helper = cache --timeout=28800
+[pull]
+  rebase = true
+[fetch]
+  prune = true
+[diff]
+  colorMoved = zebra
