@@ -1,51 +1,40 @@
 ---
 - name: Provision root certs on the local host
   hosts: localhost
+  become: true
   tasks:
-    - name: Check packages
-      package_facts:
-        manager: auto
-
-    - name: Verify package dependencies
-      loop:
-        - nss-tools
-        - pcsc-tools
-        - opensc
-      fail:
-        msg: "Missing '{{ item }}' system package"
-      when: item not in ansible_facts.packages
-
     - name: Create temporary directory
       tempfile:
         state: directory
-        suffix: tmpdir
+        suffix: ansible
       register: tmpdir
+
+    - name: Enable smart card support (PC/SC, OpenSC, NSS)
+      dnf:
+        name:
+          - nss-tools
+          - pcsc-tools
+          - opensc
+          - openssl
+        state: present
 
     - name: Obtain Root CA certificate bundle
       get_url:
         url: "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/certificates_pkcs7_DoD.zip"
         dest: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
+        checksum: sha256:557dd02c22ba0fd28ac8390958565f51bdd5aef53fc7320342c6881a9a5103c8
 
     - name: Unpack Root CA certificate bundle
       unarchive:
         src: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
         dest: "{{ tmpdir.path }}/"
+        remote_src: true
 
-      # certutil -d sql:$HOME/.pki/nssdb/ -L
-      # openssl pkcs7 -print_certs -in *pem.p7b -out certs.crt
-      # certutil -d sql:$HOME/.pki/nssdb -A -t TC -n certs.crt -i certs.crt
-    - name: Import p7b files into the trust store
+    - name: Export Root CA certificates
       shell: |
-        mkdir -p $HOME/.pki/nssdb
-        for n in *.p7b; do certutil -d sql:$HOME/.pki/nssdb -A -t TC -n $n -i $n; done
+        openssl pkcs7 -in Certificates_PKCS7_v5.9_DoD.pem.p7b -print_certs -out DoD_CAs_v5.9.pem
+        cp DoD_CAs_v5.9.pem /etc/pki/ca-trust/source/anchors/
+        update-ca-trust
       args:
+        creates: /etc/pki/ca-trust/source/anchors/DoD_CAs_v5.9.pem
         chdir: "{{ tmpdir.path }}/Certificates_PKCS7_v5.9_DoD"
-        executable: /bin/bash
-
-    - name: Configure PKCS11 module
-      blockinfile:
-        block: |
-          module: /usr/lib64/pkcs11/opensc-pkcs11.so
-        path: "{{ ansible_env.HOME }}/.config/pkcs11/pkcs11.conf"
-        marker: "# {mark} ANSIBLE MANAGED BLOCK"
-        create: true

@@ -1,0 +1,85 @@
+---
+- name: Provision VMware Horizon Client on the local host
+  hosts: localhost
+  become: true
+  vars:
+    vmware_downloads: "https://download3.vmware.com/software/CART23FQ2_LIN64_2206"
+    vmware_installer: "VMware-Horizon-Client-2206-8.6.0-20094634.x64.bundle"
+    vmware_sha256sum: 38912e41f2704a2e48584d05ff24510692fcdc1aba16e73f343b987d44730bc9
+  vars_prompt:
+    - name: _reinstall
+      prompt: Reinstall VMware Horizon Client?
+      default: false
+      private: false
+  tasks:
+    - name: Create temporary directory
+      tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+
+    - name: Provision root certs
+      include_tasks: provision-certs.yml
+
+    - name: Download VMWare Horizons Client installer for Linux
+      get_url:
+        url: "{{ vmware_downloads }}/{{ vmware_installer }}"
+        dest: "{{ tmpdir.path }}/{{ vmware_installer }}"
+        checksum: "sha256:{{ vmware_sha256sum }}"
+
+    - name: Make VMWare Horizons Client installer executable
+      file:
+        path: "{{ tmpdir.path }}/{{ vmware_installer }}"
+        mode: a+x
+
+    - name: Verify existing VMWare Horizons Client installation
+      shell: |
+        ./{{ vmware_installer }} --list-components | grep {{ item }}
+      args:
+        chdir: "{{ tmpdir.path }}"
+      with_items:
+        - vmware-installer
+        - vmware-horizon-client
+        - vmware-horizon-html5mmr
+        - vmware-horizon-pcoip
+        - vmware-horizon-mmr
+        - vmware-horizon-rtav
+        - vmware-horizon-smartcard
+      register: vmware_components
+      ignore_errors: true
+
+    - name: Install VMWare Horizons Client for Linux
+      when: vmware_components is failed or ( _reinstall | bool )
+      shell: |
+        env TERM=dumb VMWARE_EULAS_AGREED=yes \
+        ./{{ vmware_installer }} --console --regular \
+        --set-setting vmware-horizon-html5mmr html5mmrEnable yes \
+        --set-setting vmware-horizon-integrated-printing vmipEnable no \
+        --set-setting vmware-horizon-media-provider mediaproviderEnable no \
+        --set-setting vmware-horizon-teams-optimization teamsOptimizationEnable yes \
+        --set-setting vmware-horizon-mmr mmrEnable yes \
+        --set-setting vmware-horizon-rtav rtavEnable yes \
+        --set-setting vmware-horizon-scannerclient scannerEnable no \
+        --set-setting vmware-horizon-serialportclient serialportEnable no \
+        --set-setting vmware-horizon-smartcard smartcardEnable yes \
+        --set-setting vmware-horizon-tsdr tsdrEnable no \
+        --set-setting vmware-horizon-usb usbEnable no
+      args:
+        chdir: "{{ tmpdir.path }}"
+
+    - name: Create PKCS11 directory under /usr/lib/vmware/view
+      file:
+        path: "/usr/lib/vmware/view/pkcs11"
+        state: directory
+
+    - name: Create symbolic link to PKCS11 library from /usr/lib/vmware/view
+      file:
+        src: "/usr/lib64/pkcs11/opensc-pkcs11.so"
+        dest: "/usr/lib/vmware/view/pkcs11/libopenscpkcs11.so"
+        state: link
+
+    - name: Adjust default locale
+      lineinfile:
+        path: /etc/locale.conf
+        regexp: '^LANG='
+        line: LANG=en_US.UTF-8
