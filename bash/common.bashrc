@@ -47,11 +47,6 @@ if [[ -d "$HOME/.nvm" ]]; then
 fi
 # }}}
 
-# Pipenv {{{
-# Bash completion
-eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
-# }}}
-
 # GPG Tools {{{
 # Necessary for TTY-based PIN entry
 export GPG_TTY=$(tty)
