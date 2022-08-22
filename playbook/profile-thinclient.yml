@@ -18,9 +18,9 @@
         suffix: ansible
       register: tmpdir
 
-    - name: include_tasks: provision-certs.yml
+    - include_tasks: provision-certs.yml
 
-    - name: include_tasks: provision-chrome.yml
+    - include_tasks: provision-chrome.yml
 
     - name: Download VMWare Horizons Client installer for Linux
       get_url:
@@ -87,4 +87,4 @@
             regexp: '^LANG='
             line: LANG=en_US.UTF-8
 
-    - include: provision-cleanup.yml
+    - include_tasks: provision-cleanup.yml
