@@ -12,6 +12,7 @@ FLAGS:
     -h, --help      Print this help information
     -d, --dry-run   Verify playbook with --check; don't change anything
     -l, --local     Use local playbook; don't download anything
+    -x, --persist   Persist temporary runtime directory (for debugging)
 
 OPTIONS:
     -p, --profile <profile>   Installation profile (see PROFILES)
@@ -52,6 +53,7 @@ declare -A PROFILES=(
 main() {
   local _local=0
   local _dryrun=0
+  local _persist=0
   local _profile=${DEFAULT_PROFILE}
   local _branch=${DEFAULT_BRANCH}
   local _tmpdir
@@ -69,6 +71,10 @@ main() {
         ;;
       --local|-l)
         _local=1
+        shift
+        ;;
+      --persist|-x)
+        _persist=1
         shift
         ;;
       --profile|-p)
@@ -114,7 +120,9 @@ main() {
     fi
   popd &> /dev/null;
 
-  try rm -rf ${_tmpdir}
+  if [[ ${_persist} -eq 0 ]]; then
+    try rm -rf ${_tmpdir}
+  fi
 }
 
 describe_inventory() {
