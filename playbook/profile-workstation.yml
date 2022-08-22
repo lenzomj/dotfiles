@@ -28,6 +28,8 @@
 
     - include_tasks: provision-certs.yml
 
+    - include_tasks: provision-chrome.yml
+
     - include_tasks: provision-docker.yml
 
     - when: ansible_os_family == 'Debian'
@@ -70,7 +72,4 @@
               - libreoffice
             state: present
 
-    - name: Upgrade all packages to their latest versions
-      package:
-        name: "*"
-        state: latest
+    - include: provision-cleanup.yml

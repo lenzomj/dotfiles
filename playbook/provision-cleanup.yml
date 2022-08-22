@@ -1,0 +1,17 @@
+---
+- name: (Debian) Upgrade all packages to their latest versions
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: "*"
+    state: latest
+    autoclean: true
+    autoremove: true
+
+- name: (RHEL) Upgrade all packages to their latest versions
+  when: ansible_os_family == 'RedHat'
+  dnf:
+    name: "*"
+    state: latest
+    autoremove: true
+
+

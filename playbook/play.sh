@@ -31,9 +31,22 @@ SOURCE=https://raw.githubusercontent.com/lenzomj/dotfiles
 # Profiles
 DEFAULT_PROFILE=WEBCLIENT
 declare -A PROFILES=(
-  [thinclient]="provison-certs.yml provision-vmware.yml profile-thinclient.yml"
-  [webclient]="provision-certs.yml provision-chrome.yml profile-webclient.yml"
-  [workstation]="provision-certs.yml provision-security.yml provision-docker.yml profile-workstation.yml"
+  [thinclient]="provison-certs.yml
+                provision-chrome.yml
+                provision-cleanup.yml
+                profile-thinclient.yml"
+
+  [webclient]="provision-certs.yml
+               provision-chrome.yml
+               provision-cleanup.yml
+               profile-webclient.yml"
+
+  [workstation]="provision-certs.yml
+                 provision-security.yml
+                 provision-chrome.yml
+                 provision-docker.yml
+                 provision-cleanup.yml
+                 profile-workstation.yml"
 )
 
 main() {
