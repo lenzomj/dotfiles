@@ -7,11 +7,16 @@
     autoclean: true
     autoremove: true
 
-- name: (RHEL) Upgrade all packages to their latest versions
-  when: ansible_os_family == 'RedHat'
-  dnf:
-    name: "*"
-    state: latest
-    autoremove: true
+- when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Upgrade all packages to their latest versions
+      dnf:
+        name: "*"
+        state: latest
+
+    - name: (RHEL) Autoremove old packages
+      dnf:
+        autoremove: true
+
 
 
