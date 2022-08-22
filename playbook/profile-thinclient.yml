@@ -38,7 +38,7 @@
 
     - name: Verify existing VMWare Horizons Client installation
       shell: |
-        ./{{ vmware_installer }} --list-components | grep {{ item }}
+        ./{{ vmware_installer }} --console --list-components | grep {{ item }}
       args:
         chdir: "{{ tmpdir.path }}"
       with_items:
