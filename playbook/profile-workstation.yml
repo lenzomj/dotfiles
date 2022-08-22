@@ -32,6 +32,8 @@
 
     - include_tasks: provision-docker.yml
 
+    - include_tasks: provision-netclient.yml
+
     - when: ansible_os_family == 'Debian'
       block:
         - name: (Debian) Add system tools

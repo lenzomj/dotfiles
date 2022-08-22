@@ -1,0 +1,10 @@
+---
+- when: ansible_os_family == 'Debian'
+  block:
+    - name: (Debian) Install network audio tools
+      package:
+        name:
+          - netcat
+          - sox
+          - libsox-fmt-mp3
+        state: present
