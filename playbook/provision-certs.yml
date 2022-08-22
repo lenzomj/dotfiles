@@ -6,6 +6,7 @@
         state: directory
         suffix: ansible
       register: tmpdir
+      check_mode: true
 
     - name: (RHEL) Obtain Root CA certificate bundle
       get_url:
