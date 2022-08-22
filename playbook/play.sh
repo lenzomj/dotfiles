@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-#https://raw.githubusercontent.com/lenzomj/dotfiles/tune-up/playbook/provision-certs.yml
-DEFAULT_BRANCH=master
-SOURCE=https://raw.githubusercontent.com/lenzomj/dotfiles
-
 usage() {
   cat 1>&2 <<EOF
 play.sh
@@ -14,7 +10,8 @@ USAGE:
 
 FLAGS:
     -h, --help      Print this help information
-    -d, --dry-run   Don't change anything
+    -d, --dry-run   Verify playbook with --check; don't change anything
+    -l, --local     Use local playbook; don't download anything
 
 OPTIONS:
     -p, --profile <profile>   Installation profile (see PROFILES)
@@ -26,14 +23,21 @@ PROFILES:
 EOF
 }
 
-#Profiles
+# Constants
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+DEFAULT_BRANCH=master
+SOURCE=https://raw.githubusercontent.com/lenzomj/dotfiles
+
+# Profiles
 DEFAULT_PROFILE=WEBCLIENT
 declare -A PROFILES=(
-  [thinclient]="provison-certs.yml provision-vmware.yml provison-thinclient.yml"
-  [webclient]="provision-certs.yml provision-chrome.yml provision-webclient.yml"
+  [thinclient]="provison-certs.yml provision-vmware.yml profile-thinclient.yml"
+  [webclient]="provision-certs.yml provision-chrome.yml profile-webclient.yml"
+  [workstation]="provision-certs.yml provision-security.yml provision-docker.yml profile-workstation.yml"
 )
 
 main() {
+  local _local=0
   local _dryrun=0
   local _profile=${DEFAULT_PROFILE}
   local _branch=${DEFAULT_BRANCH}
@@ -48,6 +52,10 @@ main() {
         ;;
       --dry-run|-d)
         _dryrun=1
+        shift
+        ;;
+      --local|-l)
+        _local=1
         shift
         ;;
       --profile|-p)
@@ -70,30 +78,39 @@ main() {
 
   _tmpdir="$(try mktemp -d)"
 
-  fetch ${_profile} ${_branch} ${_tmpdir}
+  declare -a _manifest=(${PROFILES[${_profile}]})
+  for file in "${_manifest[@]}"; do
+    if [[ ${_local} -eq 0 ]]; then
+      try curl -sS "${SOURCE}/${_branch}/playbook/${file}" -o "${_tmpdir}/${file}"
+    else
+      try cp "${SCRIPT_DIR}/${file}" "${_tmpdir}/${file}"
+    fi
+  done
+
+  describe_inventory ${_tmpdir}
 
   pushd "${_tmpdir}" &> /dev/null;
-
-  if [[ ${_dryrun} -eq 0 ]]; then
-    try ansible-playbook "provision-${_profile}.yml"
-  else
-    try ansible-playbook "provision-${_profile}.yml" --check
-  fi
+    if [[ ${_dryrun} -eq 0 ]]; then
+      try ansible-playbook -i hosts "profile-${_profile}.yml"
+    else
+      try ansible-playbook -i hosts "profile-${_profile}.yml" --check --diff
+    fi
   popd &> /dev/null;
 
   try rm -rf ${_tmpdir}
 }
 
-fetch() {
-  local _manifest
+describe_inventory() {
+  cat << EOF > "${1}/hosts"
+localhost
 
-  declare -a _manifest=(${PROFILES[${1}]})
+[local]
+localhost
 
-  pushd "${3}" &> /dev/null;
-  for file in "${_manifest[@]}"; do
-    try curl -sS "${SOURCE}/${2}/playbook/${file}" -o ${file}
-  done
-  popd &> /dev/null;
+[local:vars]
+ansible_connection=local
+ansible_python_interpreter="/usr/bin/env python3"
+EOF
 }
 
 say() {

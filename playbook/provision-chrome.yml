@@ -1,14 +1,12 @@
 ---
-- name: Provision Google Chrome on the local host
-  hosts: localhost
-  become: true
-  tasks:
-    - name: Add third-party Fedora repositories
+- when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Add third-party Fedora repositories
       dnf:
         name: fedora-workstation-repositories
         state: present
 
-    - name: Install Google Chrome stable (third-party)
+    - name: (RHEL) Add Google Chrome stable (third-party)
       dnf:
         name: google-chrome-stable
         enablerepo: google-chrome

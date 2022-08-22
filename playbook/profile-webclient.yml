@@ -1,10 +1,10 @@
 ---
-- name: Provision Fedora thin client
+- name: Webclient Profile
   hosts: localhost
   become: true
   tasks:
-    - name: Provision VMware Horizon Client on the local host
-      include_tasks: provision-vmware.yml
+    - name: Provision Google Chrome on the local host
+      include_tasks: provision-chrome.yml
 
     - name: Upgrade all packages to their latest versions
       dnf:

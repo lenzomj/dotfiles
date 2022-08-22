@@ -1,0 +1,30 @@
+---
+- name: Add common system security tools
+  package:
+    name:
+      - ca-certificates
+      - pass
+      - gnupg2
+      - paperkey
+      - opensc
+      - pcsc-tools
+    state: present
+
+- when: ansible_os_family == 'Debian'
+  block:
+    - name: (Debian) Add system security tools
+      package:
+        name:
+          - scdaemon
+          - pcscd
+          - secure-delete
+        state: present
+
+- when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Add system security tools
+      package:
+        name:
+          - gnupg2-smime
+          - srm
+        state: present

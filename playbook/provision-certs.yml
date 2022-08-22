@@ -1,16 +1,26 @@
 ---
-- name: Provision root certs on the local host
-  hosts: localhost
-  become: true
-  tasks:
-    - name: Create temporary directory
+- when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Create temporary directory
       tempfile:
         state: directory
         suffix: ansible
       register: tmpdir
 
-    - name: Enable smart card support (PC/SC, OpenSC, NSS)
-      dnf:
+    - name: (RHEL) Obtain Root CA certificate bundle
+      get_url:
+        url: "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/certificates_pkcs7_DoD.zip"
+        dest: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
+        checksum: sha256:557dd02c22ba0fd28ac8390958565f51bdd5aef53fc7320342c6881a9a5103c8
+
+    - name: (RHEL) Unpack Root CA certificate bundle
+      unarchive:
+        src: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
+        dest: "{{ tmpdir.path }}/"
+        remote_src: true
+
+    - name: (RHEL) Add smart card support (PC/SC, OpenSC, NSS)
+      package:
         name:
           - nss-tools
           - pcsc-tools
@@ -18,19 +28,7 @@
           - openssl
         state: present
 
-    - name: Obtain Root CA certificate bundle
-      get_url:
-        url: "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/certificates_pkcs7_DoD.zip"
-        dest: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
-        checksum: sha256:557dd02c22ba0fd28ac8390958565f51bdd5aef53fc7320342c6881a9a5103c8
-
-    - name: Unpack Root CA certificate bundle
-      unarchive:
-        src: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
-        dest: "{{ tmpdir.path }}/"
-        remote_src: true
-
-    - name: Export Root CA certificates
+    - name: (RHEL) Add Root CA certificates
       shell: |
         openssl pkcs7 -in Certificates_PKCS7_v5.9_DoD.pem.p7b -print_certs -out DoD_CAs_v5.9.pem
         cp DoD_CAs_v5.9.pem /etc/pki/ca-trust/source/anchors/

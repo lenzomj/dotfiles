@@ -1,0 +1,10 @@
+- name: Configure Python Environment
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Install user python packages
+      pip:
+        name:
+          - pipenv
+          - build
+        extra_args: --user

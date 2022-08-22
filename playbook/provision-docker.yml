@@ -1,0 +1,57 @@
+---
+- when: ansible_os_family == 'Debian'
+  block:
+    - name: (Debian) Identify Docker group users
+      pause:
+        prompt: Add user(s) to Docker group (e.g., "{{ lookup('env', 'USER') }}")
+        echo: true
+      register: var_users
+
+    - name: (Debian) Add Docker repository dependencies
+      apt:
+        name:
+          - ca-certificates
+          - gnupg2
+          - lsb-release
+        update_cache: true
+
+    - name: (Debian) Add Docker GPG apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: (Debian) Add Docker repository
+      apt_repository:
+        repo: >
+          deb https://download.docker.com/linux/debian
+          "{{ ansible_distribution_release }}"
+          stable
+        state: present
+
+    - name: (Debian) Add docker-ce"
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Add Docker group
+      group:
+        name: docker
+        state: present
+
+    - name: Add user(s) to Docker group
+      user:
+        name: "{{ item }}"
+        groups: docker
+        append: true
+      with_items: "{{ var_users.user_input }}"
+
+- when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Add container management tools
+      package:
+        name:
+          - buildah
+          - podman
+          - skopeo
+        state: present
