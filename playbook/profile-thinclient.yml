@@ -17,6 +17,7 @@
         state: directory
         suffix: ansible
       register: tmpdir
+      check_mode: false
 
     - include_tasks: provision-certs.yml
 
@@ -27,11 +28,13 @@
         url: "{{ vmware_downloads }}/{{ vmware_installer }}"
         dest: "{{ tmpdir.path }}/{{ vmware_installer }}"
         checksum: "sha256:{{ vmware_sha256sum }}"
+      check_mode: false
 
     - name: Make VMWare Horizons Client installer executable
       file:
         path: "{{ tmpdir.path }}/{{ vmware_installer }}"
         mode: a+x
+      check_mode: false
 
     - name: Verify existing VMWare Horizons Client installation
       shell: |
@@ -48,6 +51,7 @@
         - vmware-horizon-smartcard
       register: vmware_components
       ignore_errors: true
+      check_mode: false
 
     - name: Install VMWare Horizons Client for Linux
       when: vmware_components is failed or ( _reinstall | bool )
