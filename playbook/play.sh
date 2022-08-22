@@ -94,7 +94,11 @@ main() {
   declare -a _manifest=(${PROFILES[${_profile}]})
   for file in "${_manifest[@]}"; do
     if [[ ${_local} -eq 0 ]]; then
-      try curl -sS "${SOURCE}/${_branch}/playbook/${file}" -o "${_tmpdir}/${file}"
+      try curl -sS \
+               -H "Cache-Control: no-cache, no-store, must-revalidate" \
+               -H "Pragma: no-cache" \
+               -H "Expires: 0" \
+          "${SOURCE}/${_branch}/playbook/${file}" -o "${_tmpdir}/${file}"
     else
       try cp "${SCRIPT_DIR}/${file}" "${_tmpdir}/${file}"
     fi
