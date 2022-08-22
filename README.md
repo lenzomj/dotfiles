@@ -34,3 +34,8 @@ remote add origin git@github.com:me/vault.git
 ```bash
 dotfiles/uninstall.sh $HOME
 ```
+
+# Provisioning
+```bash
+curl -sS https://raw.githubusercontent.com/lenzomj/dotfiles/master/playbook/play.sh -o play.sh
+```

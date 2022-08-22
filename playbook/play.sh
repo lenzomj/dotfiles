@@ -31,7 +31,7 @@ SOURCE=https://raw.githubusercontent.com/lenzomj/dotfiles
 # Profiles
 DEFAULT_PROFILE=WEBCLIENT
 declare -A PROFILES=(
-  [thinclient]="provison-certs.yml
+  [thinclient]="provision-certs.yml
                 provision-chrome.yml
                 provision-cleanup.yml
                 profile-thinclient.yml"
