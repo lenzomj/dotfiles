@@ -35,11 +35,13 @@ declare -A PROFILES=(
   [thinclient]="provision-certs.yml
                 provision-chrome.yml
                 provision-cleanup.yml
+                provision-setup.yml
                 profile-thinclient.yml"
 
   [webclient]="provision-certs.yml
                provision-chrome.yml
                provision-cleanup.yml
+               provision-setup.yml
                profile-webclient.yml"
 
   [workstation]="provision-certs.yml
@@ -47,6 +49,7 @@ declare -A PROFILES=(
                  provision-chrome.yml
                  provision-docker.yml
                  provision-cleanup.yml
+                 provision-setup.yml
                  profile-workstation.yml"
 )
 

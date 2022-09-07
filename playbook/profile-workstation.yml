@@ -3,6 +3,8 @@
   hosts: localhost
   become: true
   tasks:
+    - include_tasks: provision-setup.yml
+
     - name: Add common system tools
       package:
         name:
@@ -31,8 +33,6 @@
     - include_tasks: provision-chrome.yml
 
     - include_tasks: provision-docker.yml
-
-    - include_tasks: provision-netclient.yml
 
     - when: ansible_os_family == 'Debian'
       block:

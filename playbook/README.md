@@ -4,7 +4,11 @@
 
 ### Generate Client Keys
 ```bash
+# Local key
 ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "user@hostname"
+
+# U2F/FIDO Security Key
+ssh-keygen -t ed25519-sk -O resident -C "user@hostname"
 ```
 
 ### Rotate Host Keys

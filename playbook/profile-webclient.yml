@@ -3,6 +3,8 @@
   hosts: localhost
   become: true
   tasks:
+    - include_tasks: provision-setup.yml
+
     - include_tasks: provision-certs.yml
 
     - include_tasks: provision-chrome.yml
