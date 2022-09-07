@@ -47,6 +47,14 @@ if [[ -d "$HOME/.nvm" ]]; then
 fi
 # }}}
 
+# pyenv {{{
+if [[ -d "$HOME/.pyenv" ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
+# }}}
+
 # GPG Tools {{{
 # Necessary for TTY-based PIN entry
 export GPG_TTY=$(tty)
