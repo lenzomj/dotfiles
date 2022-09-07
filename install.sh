@@ -59,6 +59,7 @@ dotinstall vim/common.vimrc         "${PREFIX}"
 dotinstall vim/common.vim           "${PREFIX}"
 
 mkdir -p "${PREFIX}/.gnupg"
+chmod 700 "${PREFIX}/.gnupg"
 syminstall gpg/gpg.conf "${PREFIX}/.gnupg" "gpg.conf"
 
 echo "install: Creating file ${PREFIX}/.config/nvim/init.vim"
