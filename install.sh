@@ -70,9 +70,4 @@ let &packpath = &runtimepath
 source ${PREFIX}/.vimrc
 EOF
 
-#if [ "$(command -v vim)" ]; then
-#  echo "install: Installing vim plugins ..."
-#  vim -E -s -u "${PREFIX}/.vimrc" +PlugInstall +qall
-#fi
-
 echo "install: Complete"

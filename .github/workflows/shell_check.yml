@@ -20,4 +20,4 @@ jobs:
         # (-e SC1071) ShellCheck only supports sh/bash/dash/ksh scripts
         SHELLCHECK_OPTS: -e SC1071
       with:
-        ignore: other
+        ignore_paths: other

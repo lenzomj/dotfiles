@@ -21,6 +21,7 @@ OPTIONS:
 PROFILES:
     thinclient
     webclient
+    workstation
 EOF
 }
 
@@ -29,28 +30,35 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 DEFAULT_BRANCH=master
 SOURCE=https://raw.githubusercontent.com/lenzomj/dotfiles
 
-# Profiles
 DEFAULT_PROFILE=WEBCLIENT
-declare -A PROFILES=(
-  [thinclient]="provision-certs.yml
-                provision-chrome.yml
-                provision-cleanup.yml
-                provision-setup.yml
-                profile-thinclient.yml"
 
-  [webclient]="provision-certs.yml
-               provision-chrome.yml
-               provision-cleanup.yml
-               provision-setup.yml
-               profile-webclient.yml"
+# shellcheck disable=SC2034 # Ignore unused variable
+thinclient=(
+provision-thinclient.yml
+provision-setup.yml
+provision-certs.yml
+provision-chrome.yml
+provision-cleanup.yml
+)
 
-  [workstation]="provision-certs.yml
-                 provision-security.yml
-                 provision-chrome.yml
-                 provision-docker.yml
-                 provision-cleanup.yml
-                 provision-setup.yml
-                 profile-workstation.yml"
+# shellcheck disable=SC2034 # Ignore unused variable
+webclient=(
+profile-webclient.yml
+provision-setup.yml
+provision-certs.yml
+provision-chrome.yml
+provision-cleanup.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+workstation=(
+profile-workstation.yml
+provision-setup.yml
+provision-certs.yml
+provision-chrome.yml
+provision-cleanup.yml
+provision-docker.yml
+provision-security.yml
 )
 
 main() {
@@ -60,7 +68,7 @@ main() {
   local _profile=${DEFAULT_PROFILE}
   local _branch=${DEFAULT_BRANCH}
   local _tmpdir
-  local _manifest
+  local _list
 
   while [[ $# -gt 0 ]]; do
     case "${1}" in
@@ -83,7 +91,7 @@ main() {
       --profile|-p)
         _profile=$(echo "${2}" | tr '[:upper:]' '[:lower:]')
         shift 2
-        [[ "${PROFILES[${_profile}]+exists}" ]] || \
+        [[ -z "${!_profile}" ]] && \
           err "unknown profile '${_profile}'"
         ;;
       --branch|-b)
@@ -100,8 +108,8 @@ main() {
 
   _tmpdir="$(try mktemp -d)"
 
-  declare -a _manifest=(${PROFILES[${_profile}]})
-  for file in "${_manifest[@]}"; do
+  _list="${_profile}[@]"
+  for file in "${!_list}"; do
     if [[ ${_local} -eq 0 ]]; then
       try curl -sS \
                -H "Cache-Control: no-cache, no-store, must-revalidate" \
@@ -113,18 +121,18 @@ main() {
     fi
   done
 
-  describe_inventory ${_tmpdir}
+  describe_inventory "${_tmpdir}"
 
-  pushd "${_tmpdir}" &> /dev/null;
+  pushd "${_tmpdir}" &> /dev/null || exit;
     if [[ ${_dryrun} -eq 0 ]]; then
       try ansible-playbook -i hosts "profile-${_profile}.yml"
     else
       try ansible-playbook -i hosts "profile-${_profile}.yml" --check --diff
     fi
-  popd &> /dev/null;
+  popd &> /dev/null || exit;
 
   if [[ ${_persist} -eq 0 ]]; then
-    try rm -rf ${_tmpdir}
+    try rm -rf "${_tmpdir}"
   fi
 }
 
