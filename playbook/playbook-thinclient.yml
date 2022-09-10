@@ -9,10 +9,10 @@
   vars_prompt:
     - name: _reinstall
       prompt: Reinstall VMware Horizon Client?
-      default: false
+      default: 'false'
       private: false
   tasks:
-    - include_tasks: provision-setup.yml
+    - include_tasks: tasks/provision-setup.yml
 
     - name: Create temporary directory
       ansible.builtin.tempfile:
@@ -21,21 +21,16 @@
       register: tmpdir
       check_mode: false
 
-    - include_tasks: provision-certs.yml
+    - include_tasks: tasks/provision-certs.yml
 
-    - include_tasks: provision-chrome.yml
+    - include_tasks: tasks/provision-chrome.yml
 
     - name: Download VMWare Horizons Client installer for Linux
       ansible.builtin.get_url:
         url: "{{ vmware_downloads }}/{{ vmware_installer }}"
         dest: "{{ tmpdir.path }}/{{ vmware_installer }}"
         checksum: "sha256:{{ vmware_sha256sum }}"
-      check_mode: false
-
-    - name: Make VMWare Horizons Client installer executable
-      ansible.builtin.file:
-        path: "{{ tmpdir.path }}/{{ vmware_installer }}"
-        mode: a+x
+        mode: 0700
       check_mode: false
 
     - name: Verify existing VMWare Horizons Client installation
@@ -54,9 +49,10 @@
       register: vmware_components
       ignore_errors: true
       check_mode: false
+      changed_when: false
 
     - name: Install VMWare Horizons Client for Linux
-      when: vmware_components is failed or ( _reinstall | bool )
+      when: vmware_components is failed or (_reinstall | bool)
       ansible.builtin.shell: |
         env TERM=dumb VMWARE_EULAS_AGREED=yes \
         ./{{ vmware_installer }} --console --regular \
@@ -74,12 +70,14 @@
       args:
         chdir: "{{ tmpdir.path }}"
 
-    - when: ansible_os_family == 'RedHat'
+    - name: (RHEL) Configure VMWare PKCS11 support
+      when: ansible_os_family == 'RedHat'
       block:
         - name: Create PKCS11 directory under /usr/lib/vmware/view
           ansible.builtin.file:
             path: "/usr/lib/vmware/view/pkcs11"
             state: directory
+            mode: 0755
 
         - name: Create symbolic link to PKCS11 library from /usr/lib/vmware/view
           ansible.builtin.file:
@@ -94,4 +92,4 @@
             regexp: '^LANG='
             line: LANG=en_US.UTF-8
 
-    - include_tasks: provision-cleanup.yml
+    - include_tasks: tasks/provision-cleanup.yml

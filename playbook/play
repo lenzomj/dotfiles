@@ -33,32 +33,47 @@ SOURCE=https://raw.githubusercontent.com/lenzomj/dotfiles
 DEFAULT_PROFILE=WEBCLIENT
 
 # shellcheck disable=SC2034 # Ignore unused variable
+docker=(
+playbook-docker.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+nodejs=(
+playbook-nodejs.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+python=(
+playbook-python.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
 thinclient=(
-provision-thinclient.yml
-provision-setup.yml
-provision-certs.yml
-provision-chrome.yml
-provision-cleanup.yml
+playbook-thinclient.yml
+tasks/provision-setup.yml
+tasks/provision-certs.yml
+tasks/provision-chrome.yml
+tasks/provision-cleanup.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
 webclient=(
-profile-webclient.yml
-provision-setup.yml
-provision-certs.yml
-provision-chrome.yml
-provision-cleanup.yml
+playbook-webclient.yml
+tasks/provision-setup.yml
+tasks/provision-certs.yml
+tasks/provision-chrome.yml
+tasks/provision-cleanup.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
 workstation=(
-profile-workstation.yml
-provision-setup.yml
-provision-certs.yml
-provision-chrome.yml
-provision-cleanup.yml
-provision-docker.yml
-provision-security.yml
+playbook-workstation.yml
+tasks/provision-setup.yml
+tasks/provision-certs.yml
+tasks/provision-chrome.yml
+tasks/provision-cleanup.yml
+tasks/provision-docker.yml
+tasks/provision-security.yml
 )
 
 main() {
@@ -108,6 +123,8 @@ main() {
 
   _tmpdir="$(try mktemp -d)"
 
+  mkdir -p "${_tmpdir}/tasks"
+
   _list="${_profile}[@]"
   for file in "${!_list}"; do
     if [[ ${_local} -eq 0 ]]; then
@@ -125,9 +142,9 @@ main() {
 
   pushd "${_tmpdir}" &> /dev/null || exit;
     if [[ ${_dryrun} -eq 0 ]]; then
-      try ansible-playbook -i hosts "profile-${_profile}.yml"
+      try ansible-playbook -i hosts "playbook-${_profile}.yml"
     else
-      try ansible-playbook -i hosts "profile-${_profile}.yml" --check --diff
+      try ansible-playbook -i hosts "playbook-${_profile}.yml" --check --diff
     fi
   popd &> /dev/null || exit;
 

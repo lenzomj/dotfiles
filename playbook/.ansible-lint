@@ -1,2 +1,6 @@
 skip_list:
   - '403'
+
+kinds:
+  - playbook: "playbook-*.yml"
+  - tasks: "tasks/*.yml"

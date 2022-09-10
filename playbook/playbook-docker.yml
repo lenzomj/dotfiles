@@ -1,4 +1,7 @@
 ---
+#
+# ansible-galaxy collection install community.docker
+#
 - name: Configure Docker
   hosts: localhost
   become: false
@@ -24,7 +27,9 @@
         creates: "{{ lookup('env', 'HOME') }}/.local/bin/docker-credential-pass"
 
     - name: Configure Docker to use pass credential helper
-      ansible.builtin.shell: |
-        sed -i '0,/{/s/{/{\n\t"credsStore": "pass",/' .docker/config.json
-      args:
-        chdir: "{{ lookup('env', 'HOME') }}"
+      community.docker.docker_config:
+        name: config
+        data_src: "{{ lookup('env', 'HOME') }}/.docker/config.json"
+        labels:
+          credsStore: pass
+        state: present

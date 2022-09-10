@@ -25,7 +25,7 @@
       check_mode: false
 
     - name: (RHEL) Add smart card support (PC/SC, OpenSC, NSS)
-      ansible-builtin.package:
+      ansible.builtin.package:
         name:
           - nss-tools
           - pcsc-tools
