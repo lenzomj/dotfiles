@@ -15,7 +15,7 @@
     - include_tasks: provision-setup.yml
 
     - name: Create temporary directory
-      tempfile:
+      ansible.builtin.tempfile:
         state: directory
         suffix: ansible
       register: tmpdir
@@ -26,20 +26,20 @@
     - include_tasks: provision-chrome.yml
 
     - name: Download VMWare Horizons Client installer for Linux
-      get_url:
+      ansible.builtin.get_url:
         url: "{{ vmware_downloads }}/{{ vmware_installer }}"
         dest: "{{ tmpdir.path }}/{{ vmware_installer }}"
         checksum: "sha256:{{ vmware_sha256sum }}"
       check_mode: false
 
     - name: Make VMWare Horizons Client installer executable
-      file:
+      ansible.builtin.file:
         path: "{{ tmpdir.path }}/{{ vmware_installer }}"
         mode: a+x
       check_mode: false
 
     - name: Verify existing VMWare Horizons Client installation
-      shell: |
+      ansible.builtin.shell: |
         ./{{ vmware_installer }} --console --list-components | grep {{ item }}
       args:
         chdir: "{{ tmpdir.path }}"
@@ -57,7 +57,7 @@
 
     - name: Install VMWare Horizons Client for Linux
       when: vmware_components is failed or ( _reinstall | bool )
-      shell: |
+      ansible.builtin.shell: |
         env TERM=dumb VMWARE_EULAS_AGREED=yes \
         ./{{ vmware_installer }} --console --regular \
         --set-setting vmware-horizon-html5mmr html5mmrEnable yes \
@@ -77,19 +77,19 @@
     - when: ansible_os_family == 'RedHat'
       block:
         - name: Create PKCS11 directory under /usr/lib/vmware/view
-          file:
+          ansible.builtin.file:
             path: "/usr/lib/vmware/view/pkcs11"
             state: directory
 
         - name: Create symbolic link to PKCS11 library from /usr/lib/vmware/view
-          file:
+          ansible.builtin.file:
             src: "/usr/lib64/pkcs11/opensc-pkcs11.so"
             dest: "/usr/lib/vmware/view/pkcs11/libopenscpkcs11.so"
             state: link
             force: true
 
         - name: Adjust default locale
-          lineinfile:
+          ansible.builtin.lineinfile:
             path: /etc/locale.conf
             regexp: '^LANG='
             line: LANG=en_US.UTF-8

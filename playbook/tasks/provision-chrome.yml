@@ -1,13 +1,14 @@
 ---
-- when: ansible_os_family == 'RedHat'
+- name: (RHEL) Add Google Chrome
+  when: ansible_os_family == 'RedHat'
   block:
     - name: (RHEL) Add third-party Fedora repositories
-      dnf:
+      ansible.builtin.dnf:
         name: fedora-workstation-repositories
         state: present
 
     - name: (RHEL) Add Google Chrome stable (third-party)
-      dnf:
+      ansible.builtin.dnf:
         name: google-chrome-stable
         enablerepo: google-chrome
         state: present

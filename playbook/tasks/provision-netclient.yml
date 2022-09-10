@@ -2,7 +2,7 @@
 - when: ansible_os_family == 'Debian'
   block:
     - name: (Debian) Install network audio tools
-      package:
+      ansible.builtin.package:
         name:
           - netcat
           - sox

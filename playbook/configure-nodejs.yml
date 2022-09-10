@@ -7,18 +7,18 @@
     nvm_dir: "{{ ansible_env.HOME }}/.nvm"
   tasks:
     - name: Create default NVM_DIR
-      file:
+      ansible.builtin.file:
         path: "{{ nvm_dir }}"
         state: directory
 
     - name: Install Node Version Manager (NVM)
-      shell: >
+      ansible.builtin.shell: >
         curl -o- {{ nvm_ver }}/install.sh | NVM_DIR={{ nvm_dir }} bash
       args:
         creates: "{{ nvm_dir }}/nvm.sh"
 
     - name: Install node.js versions
-      shell: >
+      ansible.builtin.shell: >
         source {{ nvm_dir }}/nvm.sh && nvm install {{ item }}
       args:
         creates: "{{ nvm_dir }}/versions/node/v{{ item }}"

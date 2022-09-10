@@ -1,22 +1,20 @@
 ---
 - name: (Debian) Upgrade all packages to their latest versions
   when: ansible_os_family == 'Debian'
-  apt:
+  ansible.builtin.apt:
     name: "*"
     state: latest
     autoclean: true
     autoremove: true
 
-- when: ansible_os_family == 'RedHat'
+- name: (RHEL) Upgrade all packages and cleanup
+  when: ansible_os_family == 'RedHat'
   block:
     - name: (RHEL) Upgrade all packages to their latest versions
-      dnf:
+      ansible.builtin.dnf:
         name: "*"
         state: latest
 
     - name: (RHEL) Autoremove old packages
-      dnf:
+      ansible.builtin.dnf:
         autoremove: true
-
-
-

@@ -1,10 +1,10 @@
 ---
 - name: (Debian) Update package cache
   when: ansible_os_family == 'Debian'
-  apt:
+  ansible.builtin.apt:
     update_cache: true
 
 - name: (RHEL) Update package cache
   when: ansible_os_family == 'RedHat'
-  dnf:
+  ansible.builtin.dnf:
     update_cache: true

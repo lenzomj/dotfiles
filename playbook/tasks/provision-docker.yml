@@ -1,14 +1,15 @@
 ---
-- when: ansible_os_family == 'Debian'
+- name: (Debian) Add Docker for container management
+  when: ansible_os_family == 'Debian'
   block:
     - name: (Debian) Identify Docker group users
-      pause:
+      ansible.builtin.pause:
         prompt: Add user(s) to Docker group (e.g., "{{ lookup('env', 'USER') }}")
         echo: true
       register: var_users
 
     - name: (Debian) Add Docker repository dependencies
-      apt:
+      ansible.builtin.apt:
         name:
           - ca-certificates
           - gnupg2
@@ -16,12 +17,12 @@
         update_cache: true
 
     - name: (Debian) Add Docker GPG apt key
-      apt_key:
+      ansible.builtin.apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
     - name: (Debian) Add Docker repository
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: >
           deb https://download.docker.com/linux/debian
           "{{ ansible_distribution_release }}"
@@ -29,29 +30,28 @@
         state: present
 
     - name: (Debian) Add docker-ce"
-      apt:
+      ansible.builtin.apt:
         name: docker-ce
         state: latest
         update_cache: true
 
     - name: Add Docker group
-      group:
+      ansible.builtin.group:
         name: docker
         state: present
 
     - name: Add user(s) to Docker group
-      user:
+      ansible.builtin.user:
         name: "{{ item }}"
         groups: docker
         append: true
       with_items: "{{ var_users.user_input }}"
 
-- when: ansible_os_family == 'RedHat'
-  block:
-    - name: (RHEL) Add container management tools
-      package:
-        name:
-          - buildah
-          - podman
-          - skopeo
-        state: present
+- name: (RHEL) Add container management tools
+  when: ansible_os_family == 'RedHat'
+  ansible.builtin.package:
+    name:
+      - buildah
+      - podman
+      - skopeo
+    state: present

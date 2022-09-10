@@ -1,6 +1,6 @@
 ---
 - name: Add common system security tools
-  package:
+  ansible.builtin.package:
     name:
       - ca-certificates
       - pass
@@ -10,20 +10,22 @@
       - pcsc-tools
     state: present
 
-- when: ansible_os_family == 'Debian'
+- name: (Debian) Configure Debian security environment
+  when: ansible_os_family == 'Debian'
   block:
     - name: (Debian) Add system security tools
-      package:
+      ansible.builtin.package:
         name:
           - scdaemon
           - pcscd
           - secure-delete
         state: present
 
-- when: ansible_os_family == 'RedHat'
+- name: (RHEL) Configure Enterprise Linux security environment
+  when: ansible_os_family == 'RedHat'
   block:
     - name: (RHEL) Add system security tools
-      package:
+      ansible.builtin.package:
         name:
           - gnupg2-smime
           - srm
