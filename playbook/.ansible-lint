@@ -1,5 +1,5 @@
-skip_list:
-  - '403'
+warn_list:
+  - package-latest
 
 kinds:
   - playbook: "playbook-*.yml"
