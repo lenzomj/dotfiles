@@ -1,4 +1,17 @@
 localhost
+chaosbox
 
-[localbox]
+[vagrant]
+chaosbox
+
+[local]
 localhost
+
+[local:vars]
+ansible_connection=local
+ansible_python_interpreter="/usr/bin/env python3"
+
+[vagrant:vars]
+ansible_connection=ssh
+ansible_python_interpreter="/usr/bin/env python3"
+ansible_user="kali"

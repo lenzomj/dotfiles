@@ -1,0 +1,6 @@
+warn_list:
+  - package-latest
+
+kinds:
+  - playbook: "playbook-*.yml"
+  - tasks: "tasks/*.yml"

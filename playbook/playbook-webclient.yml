@@ -1,0 +1,12 @@
+---
+- name: Webclient Profile
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/provision-setup.yml
+
+    - include_tasks: tasks/provision-certs.yml
+
+    - include_tasks: tasks/provision-chrome.yml
+
+    - include_tasks: tasks/provision-cleanup.yml

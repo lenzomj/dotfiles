@@ -7,6 +7,7 @@
 git clone https://github.com/lenzomj/dotfiles.git
 dotfiles/install.sh $HOME
 ```
+
 # Post-Install
 
 ## 1. Install Vim Plugins
@@ -17,12 +18,26 @@ vim +'PlugInstall --sync' +qa
 # Neovim
 nvim --headless +PlugInstall +qall
 ```
-## 2. (Optional) Add GitHub Public Key
+
+## 2. (Optional) Add Personal Public Key
+```bash
+# Manual
+gpg --import <public_key>.asc
+
+# Keyserver
+gpg --recv $KEYID
+
+gpg --edit-key $KEYID
+gpg --card-status
+```
+
+## 3. (Optional) Add GitHub Public Key
 ```bash
 curl https://github.com/web-flow.gpg | gpg --import
 gpg --edit-key noreply@github.com trust quit
 ```
-## 3. (Optional) Create Git-based Encrypted Vault
+
+## 4. (Optional) Create Git-based Encrypted Vault
 ```bash
 pass init $GPG_KEYID
 cd $HOME/.password-store
@@ -33,4 +48,10 @@ remote add origin git@github.com:me/vault.git
 # Uninstall
 ```bash
 dotfiles/uninstall.sh $HOME
+```
+
+# Provisioning
+```bash
+curl -sSf https://raw.githubusercontent.com/lenzomj/dotfiles/master/playbook/play \
+  | bash -s -- -p <profile>
 ```

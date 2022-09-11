@@ -1,0 +1,16 @@
+- name: Configure Python Environment
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Install user python packages
+      ansible.builtin.pip:
+        name:
+          - pipenv
+          - build
+        extra_args: --user
+
+    - name: Configure pyenv
+      ansible.builtin.git:
+        repo: https://github.com/pyenv/pyenv.git
+        dest: "{{ ansible_env.HOME }}/.pyenv"
+        version: "v2.3.4"

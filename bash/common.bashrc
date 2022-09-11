@@ -47,9 +47,12 @@ if [[ -d "$HOME/.nvm" ]]; then
 fi
 # }}}
 
-# Pipenv {{{
-# Bash completion
-eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+# pyenv {{{
+if [[ -d "$HOME/.pyenv" ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
 # }}}
 
 # GPG Tools {{{

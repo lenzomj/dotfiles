@@ -1,0 +1,35 @@
+---
+#
+# ansible-galaxy collection install community.docker
+#
+- name: Configure Docker
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+
+    - name: Get Docker credential helper
+      ansible.builtin.get_url:
+        url: https://github.com/docker/docker-credential-helpers/releases/download/v0.6.4/docker-credential-pass-v0.6.4-amd64.tar.gz
+        dest: "{{ tmpdir.path }}/docker-credential-pass.tar.gz"
+        mode: 0644
+        checksum: "sha256:23ee4682adc93058d94b27f15a31bafd13a89c2de1c3092a04f30b43cf7c323d"
+
+    - name: Unpack Docker credential helper to ~/.local/bin
+      ansible.builtin.unarchive:
+        remote_src: true
+        src: "{{ tmpdir.path }}/docker-credential-pass.tar.gz"
+        dest: "{{ lookup('env', 'HOME') }}/.local/bin/"
+        creates: "{{ lookup('env', 'HOME') }}/.local/bin/docker-credential-pass"
+
+    - name: Configure Docker to use pass credential helper
+      community.docker.docker_config:
+        name: config
+        data_src: "{{ lookup('env', 'HOME') }}/.docker/config.json"
+        labels:
+          credsStore: pass
+        state: present

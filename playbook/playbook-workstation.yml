@@ -1,0 +1,115 @@
+---
+- name: Workstation Profile
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/provision-setup.yml
+
+    - name: Add common system tools
+      ansible.builtin.package:
+        name:
+          - git
+          - tmux
+          - gawk
+          - wget
+          - python3
+          - python3-pip
+          - ansible
+        state: present
+
+    - name: Add common productivity tools
+      ansible.builtin.package:
+        name:
+          - vim
+          - neovim
+          - groff
+          - aspell
+          - aspell-en
+        state: present
+
+    - include_tasks: tasks/provision-security.yml
+
+    - include_tasks: tasks/provision-certs.yml
+
+    - include_tasks: tasks/provision-chrome.yml
+
+    - include_tasks: tasks/provision-docker.yml
+
+    - name: (Debian) Configure Debian workstation
+      when: ansible_os_family == 'Debian'
+      block:
+        - name: (Debian) Add system tools
+          ansible.builtin.package:
+            name:
+              - python3-apt
+              - curl
+            state: present
+
+        - name: (Debian) Add development tools
+          ansible.builtin.package:
+            name:
+              - build-essential
+            state: present
+
+        - name: (Debian) Add python build dependencies
+          ansible.builtin.package:
+            name:
+              - libssl-dev
+              - zlib1g-dev
+              - libbz2-dev
+              - libreadline-dev
+              - libsqlite3-dev
+              - llvm
+              - libncursesw5-dev
+              - xz-utils
+              - tk-dev
+              - libxml2-dev
+              - libxmlsec1-dev
+              - libffi-dev
+              - liblzma-dev
+            state: present
+
+        - name: (Debian) Add office productivity tools
+          ansible.builtin.package:
+            name:
+              - mutt
+            state: present
+
+    - name: (RHEL) Configure Enterprise Linux workstation
+      when: ansible_os_family == 'RedHat'
+      block:
+        - name: (RHEL) Add system tools
+          ansible.builtin.package:
+            name:
+              - python3-dnf
+              - curl-minimal
+            state: present
+
+        - name: (RHEL) Add development tools
+          ansible.builtin.package:
+            name:
+              - '@Development tools'
+            state: present
+
+        - name: (RHEL) Add python build dependencies
+          ansible.builtin.package:
+            name:
+              - zlib-devel
+              - bzip2
+              - bzip2-devel
+              - readline-devel
+              - sqlite
+              - sqlite-devel
+              - openssl-devel
+              - tk-devel
+              - libffi-devel
+              - xz-devel
+            state: present
+
+        - name: (RHEL) Add office productivity tools
+          ansible.builtin.package:
+            name:
+              - libreoffice
+            state: present
+
+    - include: tasks/provision-cleanup.yml

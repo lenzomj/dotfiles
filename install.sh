@@ -59,6 +59,7 @@ dotinstall vim/common.vimrc         "${PREFIX}"
 dotinstall vim/common.vim           "${PREFIX}"
 
 mkdir -p "${PREFIX}/.gnupg"
+chmod 700 "${PREFIX}/.gnupg"
 syminstall gpg/gpg.conf "${PREFIX}/.gnupg" "gpg.conf"
 
 echo "install: Creating file ${PREFIX}/.config/nvim/init.vim"
@@ -68,10 +69,5 @@ set runtimepath^=${PREFIX}/.vim runtimepath+=${PREFIX}/.vim/after
 let &packpath = &runtimepath
 source ${PREFIX}/.vimrc
 EOF
-
-#if [ "$(command -v vim)" ]; then
-#  echo "install: Installing vim plugins ..."
-#  vim -E -s -u "${PREFIX}/.vimrc" +PlugInstall +qall
-#fi
 
 echo "install: Complete"
