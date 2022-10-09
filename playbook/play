@@ -69,11 +69,14 @@ tasks/provision-cleanup.yml
 workstation=(
 playbook-workstation.yml
 tasks/provision-setup.yml
+tasks/provision-common.yml
+tasks/provision-pybuilder.yml
+tasks/provision-security.yml
 tasks/provision-certs.yml
 tasks/provision-chrome.yml
-tasks/provision-cleanup.yml
 tasks/provision-docker.yml
-tasks/provision-security.yml
+tasks/provision-office.yml
+tasks/provision-cleanup.yml
 )
 
 main() {

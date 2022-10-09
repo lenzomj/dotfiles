@@ -1,0 +1,12 @@
+---
+- name: (RHEL) Configure Enterprise Linux AVR development environment
+  when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Add AVR toolchain
+      ansible.builtin.package:
+        name:
+          - systemd-devel
+          - avrdude
+          - avr-gcc
+          - avr-libc
+        state: present
