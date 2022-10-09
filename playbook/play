@@ -48,6 +48,11 @@ playbook-python.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
+rustup=(
+playbook-rustup.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
 thinclient=(
 playbook-thinclient.yml
 tasks/provision-setup.yml
@@ -70,12 +75,24 @@ workstation=(
 playbook-workstation.yml
 tasks/provision-setup.yml
 tasks/provision-common.yml
-tasks/provision-pybuilder.yml
 tasks/provision-security.yml
+tasks/provision-devtools.yml
+tasks/provision-pybuilder.yml
 tasks/provision-certs.yml
 tasks/provision-chrome.yml
 tasks/provision-docker.yml
 tasks/provision-office.yml
+tasks/provision-cleanup.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+embedded=(
+playbook-embedded.yml
+tasks/provision-setup.yml
+tasks/provision-common.yml
+tasks/provision-security.yml
+tasks/provision-devtools.yml
+tasks/provision-avrtools.yml
 tasks/provision-cleanup.yml
 )
 

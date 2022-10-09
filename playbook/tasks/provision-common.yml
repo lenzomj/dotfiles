@@ -4,9 +4,6 @@
     name:
       - vim
       - neovim
-#     - groff
-#     - aspell
-#     - aspell-en
     state: present
 
 - name: Add common system tools

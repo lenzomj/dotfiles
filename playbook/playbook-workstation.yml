@@ -7,6 +7,8 @@
 
     - include_tasks: tasks/provision-common.yml
 
+    - include_tasks: tasks/provision-devtools.yml
+
     - include_tasks: tasks/provision-pybuilder.yml
 
     - include_tasks: tasks/provision-security.yml

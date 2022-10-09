@@ -2,6 +2,19 @@
 - name: (RHEL) Configure Enterprise Linux AVR development environment
   when: ansible_os_family == 'RedHat'
   block:
+    - name: (RHEL) Identify dialout group users
+      ansible.builtin.pause:
+        prompt: Add user(s) to dialout group (e.g., "{{ lookup('env', 'USER') }}")
+        echo: true
+      register: var_users
+
+    - name: Add user(s) to dialout group
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: dialout
+        append: true
+      with_items: "{{ var_users.user_input }}"
+
     - name: (RHEL) Add AVR toolchain
       ansible.builtin.package:
         name:
