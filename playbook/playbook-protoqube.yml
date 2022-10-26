@@ -1,5 +1,5 @@
 ---
-- name: Embedded Profile
+- name: ProtoQube Profile
   hosts: localhost
   become: true
   tasks:
@@ -13,4 +13,4 @@
 
     - include_tasks: tasks/provision-avrtools.yml
 
-    - include: tasks/provision-cleanup.yml
+    - include_tasks: tasks/provision-cleanup.yml

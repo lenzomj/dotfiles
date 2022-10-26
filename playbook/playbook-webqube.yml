@@ -1,5 +1,5 @@
 ---
-- name: Webclient Profile
+- name: WebQube Profile
   hosts: localhost
   become: true
   tasks:
