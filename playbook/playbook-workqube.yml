@@ -1,0 +1,24 @@
+---
+- name: WorkQube Profile
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/provision-setup.yml
+
+    - include_tasks: tasks/provision-common.yml
+
+    - include_tasks: tasks/provision-devtools.yml
+
+    - include_tasks: tasks/provision-pybuilder.yml
+
+    - include_tasks: tasks/provision-security.yml
+
+    - include_tasks: tasks/provision-certs.yml
+
+    - include_tasks: tasks/provision-chrome.yml
+
+    - include_tasks: tasks/provision-docker.yml
+
+    - include_tasks: tasks/provision-office.yml
+
+    - include: tasks/provision-cleanup.yml

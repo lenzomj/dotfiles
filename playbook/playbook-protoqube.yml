@@ -1,0 +1,16 @@
+---
+- name: ProtoQube Profile
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/provision-setup.yml
+
+    - include_tasks: tasks/provision-common.yml
+
+    - include_tasks: tasks/provision-security.yml
+
+    - include_tasks: tasks/provision-devtools.yml
+
+    - include_tasks: tasks/provision-avrtools.yml
+
+    - include_tasks: tasks/provision-cleanup.yml

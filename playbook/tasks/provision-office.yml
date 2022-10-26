@@ -1,0 +1,26 @@
+---
+- name: Add common documentation tools
+  ansible.builtin.package:
+    name:
+      - groff
+      - aspell
+      - aspell-en
+    state: present
+
+- name: (Debian) Configure Debian office environment
+  when: ansible_os_family == 'Debian'
+  block:
+    - name: (Debian) Add office tools
+      ansible.builtin.package:
+        name:
+          - mutt
+        state: present
+
+- name: (RHEL) Configure Enterprise Linux office environment
+  when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Add office tools
+      ansible.builtin.package:
+        name:
+          - libreoffice
+        state: present

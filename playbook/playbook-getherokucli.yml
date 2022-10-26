@@ -1,0 +1,29 @@
+---
+- name: Configure Heroku CLI
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
+
+    - name: Download Heroku CLI bundle
+      ansible.builtin.get_url:
+        url:  "https://cli-assets.heroku.com/heroku-linux-x64.tar.gz"
+        dest: "{{ tmpdir.path }}"
+        mode: 0700
+        checksum: "sha256:79160dac0ff49fa7e745835a774f59ec4b7f65f982e4fb768dc16f43d3c9c5dc"
+
+    - name: Extract Heroku CLI bundle
+      ansible.builtin.unarchive:
+        src: "{{ tmpdir.path }}/heroku-linux-x64.tar.gz"
+        dest: "{{ ansible_env.HOME }}/.local"
+
+    - name: Add Heroku CLI to path
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc_local"
+        line: "export PATH={{ ansible_env.HOME}}/.local/heroku/bin:$PATH"
+        create: true

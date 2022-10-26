@@ -1,0 +1,39 @@
+---
+- name: Add common productivity tools
+  ansible.builtin.package:
+    name:
+      - vim
+      - neovim
+    state: present
+
+- name: Add common system tools
+  ansible.builtin.package:
+    name:
+      - git
+      - tmux
+      - gawk
+      - wget
+      - python3
+      - python3-pip
+      - ansible
+    state: present
+
+- name: (Debian) Configure Debian system
+  when: ansible_os_family == 'Debian'
+  block:
+    - name: (Debian) Add system tools
+      ansible.builtin.package:
+        name:
+          - python3-apt
+          - curl
+        state: present
+
+- name: (RHEL) Configure Enterprise Linux system
+  when: ansible_os_family == 'RedHat'
+  block:
+    - name: (RHEL) Add system tools
+      ansible.builtin.package:
+        name:
+          - python3-dnf
+          - curl-minimal
+        state: present

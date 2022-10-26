@@ -1,0 +1,19 @@
+---
+- name: (RHEL) Configure Enterprise Linux AVR development environment
+  when: ansible_os_family == 'RedHat'
+  block:
+    - name: Add user(s) to dialout group
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: dialout
+        append: true
+      with_items: "{{ lookup('env', 'USER') }}"
+
+    - name: (RHEL) Add AVR toolchain
+      ansible.builtin.package:
+        name:
+          - systemd-devel
+          - avrdude
+          - avr-gcc
+          - avr-libc
+        state: present

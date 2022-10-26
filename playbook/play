@@ -33,23 +33,52 @@ SOURCE=https://raw.githubusercontent.com/lenzomj/dotfiles
 DEFAULT_PROFILE=WEBCLIENT
 
 # shellcheck disable=SC2034 # Ignore unused variable
-docker=(
-playbook-docker.yml
+getdockercreds=(
+playbook-getdockercreds.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
-nodejs=(
-playbook-nodejs.yml
+getherokucli=(
+playbook-getherokucli.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
-python=(
-playbook-python.yml
+getnodejs=(
+playbook-getnodejs.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
-thinclient=(
-playbook-thinclient.yml
+getpython=(
+playbook-getpython.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+getrustup=(
+playbook-getrustup.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+protoqube=(
+playbook-protoqube.yml
+tasks/provision-setup.yml
+tasks/provision-common.yml
+tasks/provision-security.yml
+tasks/provision-devtools.yml
+tasks/provision-avrtools.yml
+tasks/provision-cleanup.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+signalqube=(
+playbook-signalqube.yml
+tasks/provision-setup.yml
+tasks/provision-signal.yml
+tasks/provision-cleanup.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
+thinqube=(
+playbook-thinqube.yml
 tasks/provision-setup.yml
 tasks/provision-certs.yml
 tasks/provision-chrome.yml
@@ -57,8 +86,8 @@ tasks/provision-cleanup.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
-webclient=(
-playbook-webclient.yml
+webqube=(
+playbook-webqube.yml
 tasks/provision-setup.yml
 tasks/provision-certs.yml
 tasks/provision-chrome.yml
@@ -66,14 +95,18 @@ tasks/provision-cleanup.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
-workstation=(
+workqube=(
 playbook-workstation.yml
 tasks/provision-setup.yml
+tasks/provision-common.yml
+tasks/provision-security.yml
+tasks/provision-devtools.yml
+tasks/provision-pybuilder.yml
 tasks/provision-certs.yml
 tasks/provision-chrome.yml
-tasks/provision-cleanup.yml
 tasks/provision-docker.yml
-tasks/provision-security.yml
+tasks/provision-office.yml
+tasks/provision-cleanup.yml
 )
 
 main() {
