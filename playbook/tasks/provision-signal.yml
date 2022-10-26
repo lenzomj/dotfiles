@@ -26,7 +26,7 @@
         repo: >
           deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg]
           https://updates.signal.org/desktop/apt
-          "{{ ansible_distribution_release }}"
+          xenial
           main
         state: present
 
