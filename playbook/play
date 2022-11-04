@@ -96,7 +96,7 @@ tasks/provision-cleanup.yml
 
 # shellcheck disable=SC2034 # Ignore unused variable
 workqube=(
-playbook-workstation.yml
+playbook-workqube.yml
 tasks/provision-setup.yml
 tasks/provision-common.yml
 tasks/provision-security.yml
