@@ -16,6 +16,7 @@
           - libffi-devel
           - xz-devel
           - swig
+          - python3-devel
         state: present
 
 - name: (Debian) Configure python builder environment
@@ -38,4 +39,5 @@
           - libffi-dev
           - liblzma-dev
           - swig
+          - python3-dev
         state: present
