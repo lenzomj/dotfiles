@@ -15,6 +15,7 @@
           - tk-devel
           - libffi-devel
           - xz-devel
+          - swig
         state: present
 
 - name: (Debian) Configure python builder environment
@@ -36,4 +37,5 @@
           - libxmlsec1-dev
           - libffi-dev
           - liblzma-dev
+          - swig
         state: present
