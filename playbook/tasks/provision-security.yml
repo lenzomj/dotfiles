@@ -19,6 +19,7 @@
           - scdaemon
           - pcscd
           - secure-delete
+          - libengine-pkcs11-openssl
         state: present
 
 - name: (RHEL) Configure Enterprise Linux security environment
@@ -29,4 +30,5 @@
         name:
           - gnupg2-smime
           - srm
+          - openssl-pkcs11
         state: present
