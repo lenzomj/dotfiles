@@ -1,0 +1,3 @@
+# or warn_list
+skip_list:
+  - package-latest

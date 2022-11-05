@@ -12,7 +12,8 @@
       default: 'false'
       private: false
   tasks:
-    - include_tasks: tasks/provision-setup.yml
+    - name: Setup
+      ansible.builtin.include_tasks: tasks/provision-setup.yml
 
     - name: Create temporary directory
       ansible.builtin.tempfile:
@@ -21,9 +22,11 @@
       register: tmpdir
       check_mode: false
 
-    - include_tasks: tasks/provision-certs.yml
+    - name: Provision Certs
+      ansible.builtin.include_tasks: tasks/provision-certs.yml
 
-    - include_tasks: tasks/provision-chrome.yml
+    - name: Provision Chrome
+      ansible.builtin.include_tasks: tasks/provision-chrome.yml
 
     - name: Download VMWare Horizons Client installer for Linux
       ansible.builtin.get_url:
@@ -92,4 +95,5 @@
             regexp: '^LANG='
             line: LANG=en_US.UTF-8
 
-    - include_tasks: tasks/provision-cleanup.yml
+    - name: Cleanup
+      ansible.builtin.include_tasks: tasks/provision-cleanup.yml
