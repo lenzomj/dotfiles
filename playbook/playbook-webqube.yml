@@ -3,10 +3,14 @@
   hosts: localhost
   become: true
   tasks:
-    - include_tasks: tasks/provision-setup.yml
+    - name: Setup
+      ansible.builtin.include_tasks: tasks/provision-setup.yml
 
-    - include_tasks: tasks/provision-certs.yml
+    - name: Provision Certs
+      ansible.builtin.include_tasks: tasks/provision-certs.yml
 
-    - include_tasks: tasks/provision-chrome.yml
+    - name: Provision Chrome
+      ansible.builtin.include_tasks: tasks/provision-chrome.yml
 
-    - include_tasks: tasks/provision-cleanup.yml
+    - name: Cleanup
+      ansible.builtin.include_tasks: tasks/provision-cleanup.yml

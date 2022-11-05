@@ -3,22 +3,32 @@
   hosts: localhost
   become: true
   tasks:
-    - include_tasks: tasks/provision-setup.yml
+    - name: Setup
+      ansible.builtin.include_tasks: tasks/provision-setup.yml
 
-    - include_tasks: tasks/provision-common.yml
+    - name: Common
+      ansible.builtin.include_tasks: tasks/provision-common.yml
 
-    - include_tasks: tasks/provision-devtools.yml
+    - name: Provision Devtools
+      ansible.builtin.include_tasks: tasks/provision-devtools.yml
 
-    - include_tasks: tasks/provision-pybuilder.yml
+    - name: Provision PyBuilder
+      ansible.builtin.include_tasks: tasks/provision-pybuilder.yml
 
-    - include_tasks: tasks/provision-security.yml
+    - name: Provision Security
+      ansible.builtin.include_tasks: tasks/provision-security.yml
 
-    - include_tasks: tasks/provision-certs.yml
+    - name: Provision Certs
+      ansible.builtin.include_tasks: tasks/provision-certs.yml
 
-    - include_tasks: tasks/provision-chrome.yml
+    - name: Provision Chrome
+      ansible.builtin.include_tasks: tasks/provision-chrome.yml
 
-    - include_tasks: tasks/provision-docker.yml
+    - name: Provision Docker
+      ansible.builtin.include_tasks: tasks/provision-docker.yml
 
-    - include_tasks: tasks/provision-office.yml
+    - name: Provision Office
+      ansible.builtin.include_tasks: tasks/provision-office.yml
 
-    - include: tasks/provision-cleanup.yml
+    - name: Cleanup
+      ansible.builtin.include_tasks: tasks/provision-cleanup.yml

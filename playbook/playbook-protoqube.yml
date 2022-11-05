@@ -3,14 +3,20 @@
   hosts: localhost
   become: true
   tasks:
-    - include_tasks: tasks/provision-setup.yml
+    - name: Setup
+      ansible.builtin.include_tasks: tasks/provision-setup.yml
 
-    - include_tasks: tasks/provision-common.yml
+    - name: Common
+      ansible.builtin.include_tasks: tasks/provision-common.yml
 
-    - include_tasks: tasks/provision-security.yml
+    - name: Provision Security
+      ansible.builtin.include_tasks: tasks/provision-security.yml
 
-    - include_tasks: tasks/provision-devtools.yml
+    - name: Provision DevTools
+      ansible.builtin.include_tasks: tasks/provision-devtools.yml
 
-    - include_tasks: tasks/provision-avrtools.yml
+    - name: Provision AVRTools
+      ansible.builtin.include_tasks: tasks/provision-avrtools.yml
 
-    - include_tasks: tasks/provision-cleanup.yml
+    - name: Cleanup
+      ansible.builtin.include_tasks: tasks/provision-cleanup.yml
