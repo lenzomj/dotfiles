@@ -44,3 +44,10 @@
       args:
         creates: "{{ ansible_env.HOME }}/.cargo/bin/tokei"
         executable: /bin/bash
+
+    - name: Oxidize du ... dust
+      ansible.builtin.shell: >
+        cargo install du-dust
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/dust"
+        executable: /bin/bash
