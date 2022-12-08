@@ -58,6 +58,11 @@ playbook-getrustup.yml
 )
 
 # shellcheck disable=SC2034 # Ignore unused variable
+oxidize=(
+playbook-oxidize.yml
+)
+
+# shellcheck disable=SC2034 # Ignore unused variable
 protoqube=(
 playbook-protoqube.yml
 tasks/provision-setup.yml

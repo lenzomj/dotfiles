@@ -1,0 +1,53 @@
+---
+- name: Oxidize
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Oxidize ls ... exa
+      ansible.builtin.shell: >
+        cargo install exa
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/exa"
+        executable: /bin/bash
+
+    - name: Oxidize find ... fd
+      ansible.builtin.shell: >
+        cargo install fd-find
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/fd"
+        executable: /bin/bash
+
+    - name: Oxidize grep ... rg
+      ansible.builtin.shell: >
+        cargo install ripgrep
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/rg"
+        executable: /bin/bash
+
+    - name: Oxidize cat ... bat
+      ansible.builtin.shell: >
+        cargo install bat
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/bat"
+        executable: /bin/bash
+
+    - name: Oxidize regexgen ... grex
+      ansible.builtin.shell: >
+        cargo install grex
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/grex"
+        executable: /bin/bash
+
+    - name: Oxidize cloc ... tokei
+      ansible.builtin.shell: >
+        cargo install tokei
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/tokei"
+        executable: /bin/bash
+
+    - name: Oxidize du ... dust
+      ansible.builtin.shell: >
+        cargo install du-dust
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/dust"
+        executable: /bin/bash
