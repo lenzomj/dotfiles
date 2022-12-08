@@ -180,6 +180,7 @@ call DeclarePlugin('itchyny/lightline.vim')
 call DeclarePlugin('godlygeek/tabular')
 call DeclarePlugin('plasticboy/vim-markdown')
 call DeclarePlugin('gyim/vim-boxdraw')
+call DeclarePlugin('rust-lang/rust.vim')
 
 " Version Control
 call DeclarePlugin('airblade/vim-gitgutter')
