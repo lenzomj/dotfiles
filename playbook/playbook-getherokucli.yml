@@ -25,6 +25,6 @@
     - name: Add Heroku CLI to path
       ansible.builtin.lineinfile:
         path: "{{ ansible_env.HOME }}/.bashrc_local"
-        line: "export PATH={{ ansible_env.HOME }}/.local/heroku/bin:$PATH"
+        line: "alias heroku={{ ansible_env.HOME }}/.local/heroku/bin/heroku"
         mode: 0644
         create: true
