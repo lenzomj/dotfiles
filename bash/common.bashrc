@@ -78,3 +78,7 @@ gpg-sign () {
     && echo "${1} => ${output}"
 }
 # }}}
+
+# Terminal {{{
+export TMOUT=0
+# }}}
