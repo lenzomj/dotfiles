@@ -12,10 +12,10 @@
 
     - name: Download rustup Installer
       ansible.builtin.get_url:
-        url: "https://sh.rustup.rs"
+        url: "https://raw.githubusercontent.com/rust-lang/rustup/master/rustup-init.sh"
         dest: "{{ tmpdir.path }}"
         mode: 0700
-        checksum: "sha256:173f4881e2de99ba9ad1acb59e65be01b2a44979d83b6ec648d0d22f8654cbce"
+        checksum: "sha256:be3535b3033ff5e0ecc4d589a35d3656f681332f860c5fd6684859970165ddcc"
 
     - name: Install Rust Installer
       ansible.builtin.shell: >
