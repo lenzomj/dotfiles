@@ -2,11 +2,11 @@
 - name: (RHEL) Configure development environment
   when: ansible_os_family == 'RedHat'
   block:
-  - name: (RHEL) Add development tools
-    ansible.builtin.package:
-      name:
-        - '@Development tools'
-      state: present
+    - name: (RHEL) Add development tools
+      ansible.builtin.package:
+        name:
+          - '@Development tools'
+        state: present
 
 - name: (Debian) Configure development environment
   when: ansible_os_family == 'Debian'

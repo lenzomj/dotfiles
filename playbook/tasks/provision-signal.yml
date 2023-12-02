@@ -34,4 +34,5 @@
       ansible.builtin.apt:
         name: signal-desktop
         state: latest
+        only_upgrade: true
         update_cache: true

@@ -4,6 +4,7 @@
   ansible.builtin.apt:
     name: "*"
     state: latest
+    only_upgrade: true
     autoclean: true
     autoremove: true
 
@@ -14,6 +15,7 @@
       ansible.builtin.dnf:
         name: "*"
         state: latest
+        update_only: true
 
     - name: (RHEL) Autoremove old packages
       ansible.builtin.dnf:

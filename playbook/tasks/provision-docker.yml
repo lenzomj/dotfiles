@@ -33,6 +33,7 @@
       ansible.builtin.apt:
         name: docker-ce
         state: latest
+        only_upgrade: true
         update_cache: true
 
     - name: Add Docker group

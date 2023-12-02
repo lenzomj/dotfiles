@@ -13,7 +13,7 @@
       ansible.builtin.get_url:
         url: "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/certificates_pkcs7_DoD.zip"
         dest: "{{ tmpdir.path }}/certificates_pkcs7_DoD.zip"
-        mode: 0644
+        mode: "0644"
         checksum: sha256:557dd02c22ba0fd28ac8390958565f51bdd5aef53fc7320342c6881a9a5103c8
       check_mode: false
 
