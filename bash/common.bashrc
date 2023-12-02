@@ -55,6 +55,13 @@ if [[ -d "$HOME/.pyenv" ]]; then
 fi
 # }}}
 
+# texlive {{{
+if [[ -d "$HOME/.local/texlive" ]]; then
+  export TEXLIVE_ROOT="$HOME/.local/texlive/2023/bin/x86_64-linux/"
+  export PATH="$TEXLIVE_ROOT:$PATH"
+fi
+# }}}
+
 # anaconda {{{
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

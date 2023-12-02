@@ -1,0 +1,35 @@
+---
+- name: Provision TeXLive Environment
+  hosts: localhost
+  become: false
+  vars:
+    texlive_dest: "{{ ansible_env.HOME }}/.local/texlive/2023"
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
+
+    - name: Download TeXLive installer
+      ansible.builtin.get_url:
+        url: "https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
+        dest: "{{ tmpdir.path }}"
+
+    - name: Unpack TeXLive installer
+      unarchive:
+        src: "{{ tmpdir.path }}/install-tl-unx.tar.gz"
+        dest: "{{ tmpdir.path }}"
+
+    - name: Install TeXLive
+      ansible.builtin.shell: |
+        cd install-tl-*/
+        perl ./install-tl --no-interaction \
+                          --scheme=minimal \
+                          --texdir={{ texlive_dest }}
+      args:
+        creates: "{{ texlive_dest }}/bin/x86_64-linux/tlmgr"
+        chdir: "{{ tmpdir.path }}"
+        executable: /bin/sh
+
