@@ -10,16 +10,20 @@
       register: tmpdir
       check_mode: false
 
-    - name: Download rustup Installer
+    - name: Download rustup Installer Package
       ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/rust-lang/rustup/master/rustup-init.sh"
+        url: "https://github.com/rust-lang/rustup/archive/refs/tags/1.26.0.tar.gz"
         dest: "{{ tmpdir.path }}"
-        mode: 0700
-        checksum: "sha256:be3535b3033ff5e0ecc4d589a35d3656f681332f860c5fd6684859970165ddcc"
+        checksum: "sha256:6f20ff98f2f1dbde6886f8d133fe0d7aed24bc76c670ea1fca18eb33baadd808"
+
+    - name: Unpack rustup Installer
+      unarchive:
+        src: "{{ tmpdir.path }}/rustup-1.26.0.tar.gz"
+        dest: "{{ tmpdir.path }}"
 
     - name: Install Rust Installer
       ansible.builtin.shell: >
-        ./rustup-init.sh -y --no-modify-path
+        ./rustup-1.26.0/rustup-init.sh -y --no-modify-path
       args:
         creates: "{{ ansible_env.HOME }}/.rustup/settings.toml"
         chdir: "{{ tmpdir.path }}"
