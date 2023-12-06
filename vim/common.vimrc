@@ -186,6 +186,9 @@ call DeclarePlugin('rust-lang/rust.vim')
 call DeclarePlugin('airblade/vim-gitgutter')
 call DeclarePlugin('tpope/vim-fugitive')
 
+" Autocompletion
+call DeclarePlugin('github/copilot.vim')
+
 call plug#end()
 " }}}
 
