@@ -15,10 +15,11 @@
     - name: Download TeXLive installer
       ansible.builtin.get_url:
         url: "https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
+        mode: "0700"
         dest: "{{ tmpdir.path }}"
 
     - name: Unpack TeXLive installer
-      unarchive:
+      ansible.builtin.unarchive:
         src: "{{ tmpdir.path }}/install-tl-unx.tar.gz"
         dest: "{{ tmpdir.path }}"
 
@@ -32,4 +33,3 @@
         creates: "{{ texlive_dest }}/bin/x86_64-linux/tlmgr"
         chdir: "{{ tmpdir.path }}"
         executable: /bin/sh
-

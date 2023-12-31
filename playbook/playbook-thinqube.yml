@@ -33,7 +33,7 @@
         url: "{{ vmware_downloads }}/{{ vmware_installer }}"
         dest: "{{ tmpdir.path }}/{{ vmware_installer }}"
         checksum: "sha256:{{ vmware_sha256sum }}"
-        mode: 0700
+        mode: "0700"
       check_mode: false
 
     - name: Verify existing VMWare Horizons Client installation
@@ -70,6 +70,7 @@
         --set-setting vmware-horizon-smartcard smartcardEnable yes \
         --set-setting vmware-horizon-tsdr tsdrEnable no \
         --set-setting vmware-horizon-usb usbEnable no
+      changed_when: true
       args:
         chdir: "{{ tmpdir.path }}"
 
@@ -80,7 +81,7 @@
           ansible.builtin.file:
             path: "/usr/lib/vmware/view/pkcs11"
             state: directory
-            mode: 0755
+            mode: "0755"
 
         - name: Create symbolic link to PKCS11 library from /usr/lib/vmware/view
           ansible.builtin.file:

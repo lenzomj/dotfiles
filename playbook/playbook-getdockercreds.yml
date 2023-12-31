@@ -16,7 +16,7 @@
       ansible.builtin.get_url:
         url: https://github.com/docker/docker-credential-helpers/releases/download/v0.6.4/docker-credential-pass-v0.6.4-amd64.tar.gz
         dest: "{{ tmpdir.path }}/docker-credential-pass.tar.gz"
-        mode: 0644
+        mode: "0644"
         checksum: "sha256:23ee4682adc93058d94b27f15a31bafd13a89c2de1c3092a04f30b43cf7c323d"
 
     - name: Unpack Docker credential helper to ~/.local/bin

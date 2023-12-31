@@ -9,26 +9,8 @@
     - name: Common
       ansible.builtin.include_tasks: tasks/provision-common.yml
 
-    - name: Provision Devtools
-      ansible.builtin.include_tasks: tasks/provision-devtools.yml
-
-    - name: Provision PyBuilder
-      ansible.builtin.include_tasks: tasks/provision-pybuilder.yml
-
-    - name: Provision Security
-      ansible.builtin.include_tasks: tasks/provision-security.yml
-
-    - name: Provision Certs
-      ansible.builtin.include_tasks: tasks/provision-certs.yml
-
-    - name: Provision Chrome
-      ansible.builtin.include_tasks: tasks/provision-chrome.yml
-
-    - name: Provision Docker
-      ansible.builtin.include_tasks: tasks/provision-docker.yml
-
-    - name: Provision Office
-      ansible.builtin.include_tasks: tasks/provision-office.yml
+    - name: Visual Studio Code
+      ansible.builtin.include_tasks: tasks/provision-vscode.yml
 
     - name: Cleanup
       ansible.builtin.include_tasks: tasks/provision-cleanup.yml

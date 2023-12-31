@@ -1,3 +1,5 @@
+profile: production
+
 warn_list:
   - package-latest
 
