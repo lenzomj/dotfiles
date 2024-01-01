@@ -1,0 +1,26 @@
+---
+- name: Configure Web3 Development Environment
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
+
+    - name: Download Solana install tool
+      ansible.builtin.get_url:
+        url: "https://release.solana.com/v1.17.13/install"
+        dest: "{{ tmpdir.path }}"
+        mode: "0700"
+        checksum: "sha256:5c7bbfd8ac5fa99590666897d64b9d10c8f8acd04370f5fc9df42d59b5e4f707"
+
+    - name: Install Solana tools (stable channel)
+      ansible.builtin.shell: >
+        ./install --no-modify-path stable
+      args:
+        creates: "{{ ansible_env.HOME }}/.local/share/solana/install"
+        chdir: "{{ tmpdir.path }}"
+        executable: /bin/sh

@@ -32,6 +32,12 @@ if [[ ":${LD_LIBRARY_PATH}:" != *":${HOME}/.local/lib:"* ]]; then
 fi
 # }}}
 
+# Solana {{{
+if [[ -d "$HOME/.local/share/solana/install" ]]; then
+  export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+fi
+# }}}
+
 # Cargo {{{
 if [[ -f "$HOME/.cargo/env" ]]; then
   source "$HOME/.cargo/env"
