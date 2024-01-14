@@ -3,7 +3,7 @@
   hosts: localhost
   become: false
   vars:
-    nvm_uri: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1"
+    nvm_uri: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7"
     nvm_dir: "{{ ansible_env.HOME }}/.nvm"
   tasks:
     - name: Create default NVM_DIR
@@ -17,7 +17,7 @@
         url: "{{ nvm_uri }}/install.sh"
         dest: "{{ nvm_dir }}"
         mode: "0700"
-        checksum: "sha256:fabc489b39a5e9c999c7cab4d281cdbbcbad10ec2f8b9a7f7144ad701b6bfdc7"
+        checksum: "sha256:8e45fa547f428e9196a5613efad3bfa4d4608b74ca870f930090598f5af5f643"
 
     - name: Install Node Version Manager (NVM)
       ansible.builtin.shell: >
@@ -25,7 +25,7 @@
       args:
         creates: "{{ nvm_dir }}/nvm.sh"
         chdir: "{{ nvm_dir }}"
-        executable: /bin/bash
+        executable: /bin/sh
 
     - name: Install node.js versions
       ansible.builtin.shell: >
@@ -33,6 +33,4 @@
       args:
         creates: "{{ nvm_dir }}/versions/node/v{{ item }}"
         chdir: "{{ ansible_env.HOME }}"
-        executable: /bin/bash
-      loop:
-        - 16.17.0  # LTS
+        executable: /bin/sh

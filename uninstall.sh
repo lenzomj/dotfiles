@@ -53,6 +53,7 @@ dotremove () {
 
 dotremove bash/common.bash_profile "${PREFIX}"
 dotremove bash/common.bashrc       "${PREFIX}"
+dotremove zsh/common.zshrc         "${PREFIX}"
 dotremove git/common.gitconfig     "${PREFIX}"
 dotremove git/common.muttrc        "${PREFIX}"
 dotremove other/common.inputrc     "${PREFIX}"

@@ -50,6 +50,7 @@ dotinstall () {
 
 dotinstall bash/common.bash_profile "${PREFIX}"
 dotinstall bash/common.bashrc       "${PREFIX}"
+dotinstall zsh/common.zshrc         "${PREFIX}"
 dotinstall git/common.gitconfig     "${PREFIX}"
 dotinstall mutt/common.muttrc       "${PREFIX}"
 dotinstall other/common.inputrc     "${PREFIX}"
