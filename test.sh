@@ -14,6 +14,7 @@ setup () {
   PREFIX="$(mktemp -d "${PREFIX}")"
   echo "setup: Creating ${PREFIX} ..."
   echo "setup: Creating ${PREFIX}/.bashrc"    | tee "${PREFIX}/.bashrc"
+  echo "setup: Creating ${PREFIX}/.zshrc"     | tee "${PREFIX}/.zshrc"
   echo "setup: Creating ${PREFIX}/.vimrc"     | tee "${PREFIX}/.vimrc"
   echo "setup: Creating ${PREFIX}/.gitconfig" | tee "${PREFIX}/.gitconfig"
   echo "setup: Creating symlink ${PREFIX}/.inputrc"
@@ -37,6 +38,7 @@ test_install () {
   echo "test_install: Verifying symlinks ..."
   { [ "${ROOT}/bash/common.bash_profile" -ef "${PREFIX}/.bash_profile" ] \
     && [ "${ROOT}/bash/common.bashrc" -ef "${PREFIX}/.bashrc" ] \
+    && [ "${ROOT}/zsh/common.zshrc" -ef "${PREFIX}/.zshrc" ] \
     && [ "${ROOT}/git/common.gitconfig" -ef "${PREFIX}/.gitconfig" ] \
     && [ "${ROOT}/other/common.inputrc" -ef "${PREFIX}/.inputrc" ] \
     && [ "${ROOT}/termux" -ef "${PREFIX}/.termux" ] \
@@ -47,6 +49,7 @@ test_install () {
 
   echo "test_install: Verifying backups ..."
   { [ -s "${PREFIX}/.bashrc.old" ] \
+    && [ -s "${PREFIX}/.zshrc.old" ] \
     && [ -s "${PREFIX}/.vimrc.old"  ] \
     && [ -s "${PREFIX}/.gitconfig.old" ]; } || throw_error
 }
@@ -58,6 +61,7 @@ test_uninstall () {
   echo "test-uninstall: Verifying symlinks ..."
   { [ ! -L "${PREFIX}/.bash_profile" ] \
     && [ ! -L "${PREFIX}/.bashrc" ] \
+    && [ ! -L "${PREFIX}/.zshrc" ] \
     && [ ! -L "${PREFIX}/.gitconfig" ] \
     && [ ! -L "${PREFIX}/.inputrc" ] \
     && [ ! -L "${PREFIX}/.tmux.conf" ] \
@@ -67,6 +71,7 @@ test_uninstall () {
 
   echo "test-uninstall: Verifying backups ..."
   { [ -s "${PREFIX}/.bashrc" ] \
+    && [ -s "${PREFIX}/.zshrc" ] \
     && [ -s "${PREFIX}/.vimrc"  ] \
     && [ -s "${PREFIX}/.gitconfig" ]; } || throw_error
 
