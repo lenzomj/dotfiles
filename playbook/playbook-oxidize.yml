@@ -58,4 +58,3 @@
       args:
         creates: "{{ ansible_env.HOME }}/.cargo/bin/eva"
         executable: /bin/sh
-
