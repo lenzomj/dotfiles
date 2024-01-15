@@ -34,3 +34,5 @@
         creates: "{{ nvm_dir }}/versions/node/v{{ item }}"
         chdir: "{{ ansible_env.HOME }}"
         executable: /bin/sh
+      loop:
+        - 20.11
