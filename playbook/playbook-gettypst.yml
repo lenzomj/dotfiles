@@ -1,0 +1,30 @@
+---
+- name: Install Typst
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
+
+    - name: Download Typst
+      ansible.builtin.get_url:
+        url: "https://github.com/typst/typst/releases/download/v0.11.0/typst-x86_64-unknown-linux-musl.tar.xz"
+        dest: "{{ tmpdir.path }}"
+        mode: "0700"
+        checksum: "sha256:70b8b25ac0ce6d23fdbc0b055cf00b0769ad75f7d5a29faeae9286e158cce952"
+
+    - name: Extract Typst bundle
+      ansible.builtin.unarchive:
+        src: "{{ tmpdir.path }}/typst-x86_64-unknown-linux-musl.tar.xz"
+        dest: "{{ ansible_env.HOME }}/.local"
+
+    - name: Add Typst to path
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc_local"
+        line: "export PATH={{ ansible_env.HOME }}/.local/typst-x86_64-unknown-linux-musl:$PATH"
+        mode: "0644"
+        create: true
