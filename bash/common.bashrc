@@ -109,8 +109,3 @@ gpg-sign () {
 }
 # }}}
 
-# Terminal {{{
-export TMOUT=0
-# }}}
-
-
