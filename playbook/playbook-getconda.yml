@@ -1,0 +1,28 @@
+---
+- name: Install Conda
+  hosts: localhost
+  become: false
+  environment:
+    TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
+
+    - name: Download Conda installer
+      ansible.builtin.get_url:
+        url: "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+        dest: "{{ tmpdir.path }}"
+        mode: "0700"
+        checksum: "sha256:b978856ec3c826eb495b60e3fffe621f670c101150ebcbdeede4f961f22dc438"
+
+    - name: Run Conda installer
+      ansible.builtin.shell: >
+        ./Miniconda3-latest-Linux-x86_64.sh -m -s -b -p $HOME/anaconda3
+      args:
+        creates: "{{ ansible_env.HOME }}/anaconda3"
+        chdir: "{{ tmpdir.path }}"
+        executable: /bin/sh
