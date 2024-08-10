@@ -112,6 +112,12 @@ set splitright
 set lazyredraw
 " }}}
 
+" Language Key Mappings {{{
+set keymap=russian-yawerty
+set iminsert=0
+set imsearch=-1
+" }}}
+
 " File-Specific Settings {{{
 filetype plugin indent on
 
