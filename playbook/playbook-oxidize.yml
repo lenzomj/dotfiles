@@ -2,6 +2,8 @@
 - name: Oxidize
   hosts: localhost
   become: false
+  environment:
+    TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
   tasks:
     - name: Oxidize ls ... exa
       ansible.builtin.shell: >

@@ -2,6 +2,8 @@
 - name: Configure Rust Environment
   hosts: localhost
   become: false
+  environment:
+    TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
   tasks:
     - name: Create temporary directory
       ansible.builtin.tempfile:
