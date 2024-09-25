@@ -61,6 +61,15 @@ if [[ -d "$HOME/.pyenv" ]]; then
 fi
 # }}}
 
+# Kerberos {{{
+if [[ -d "$HOME/.local/krb5" ]]; then
+  KRB5_ROOT="$HOME/.local/krb5"
+  OSSH_ROOT="$HOME/.local/ossh"
+  export PATH="$KRB5_ROOT/bin:$OSSH_ROOT/bin:$PATH"
+  export KRB5_CONFIG="$KRB5_ROOT/etc/krb5.conf"
+fi
+# }}}
+
 # texlive {{{
 if [[ -d "$HOME/.local/texlive" ]]; then
   export TEXLIVE_ROOT="$HOME/.local/texlive/2023/bin/x86_64-linux/"
