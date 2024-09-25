@@ -187,6 +187,7 @@ call DeclarePlugin('godlygeek/tabular')
 call DeclarePlugin('plasticboy/vim-markdown')
 call DeclarePlugin('gyim/vim-boxdraw')
 call DeclarePlugin('rust-lang/rust.vim')
+call DeclarePlugin('kaarmu/typst.vim')
 
 " Version Control
 call DeclarePlugin('airblade/vim-gitgutter')
