@@ -1,0 +1,35 @@
+---
+- name: Configure Vassal
+  hosts: localhost
+  become: false
+  environment:
+    TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
+  vars:
+    vassal: "VASSAL-3.7.14-linux.tar.bz2"
+    vassal_version: "3.7.14"
+    vassal_sha256: "fc5481664afa81e148124f5b747613c5d271ead6755309409c139811dea94a54"
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
+
+    - name: Download VASSAL bundle
+      ansible.builtin.get_url:
+        url: "https://github.com/vassalengine/vassal/releases/download/{{ vassal_version }}/{{ vassal }}"
+        dest: "{{ tmpdir.path }}"
+        mode: "0700"
+        checksum: "sha256:{{ vassal_sha256 }}"
+
+    - name: Extract VASSAL bundle
+      ansible.builtin.unarchive:
+        src: "{{ tmpdir.path }}/{{ vassal }}"
+        dest: "{{ ansible_env.HOME }}/.local"
+
+    - name: Create symlink in .local/bin pointing to VASSAL.sh
+      ansible.builtin.file:
+        src: "{{ ansible_env.HOME }}/.local/VASSAL-{{ vassal_version }}/VASSAL.sh"
+        dest: "{{ ansible_env.HOME }}/.local/bin/vassal"
+        state: link
