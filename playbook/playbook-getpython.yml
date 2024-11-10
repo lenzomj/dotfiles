@@ -1,16 +1,31 @@
 - name: Configure Python Environment
   hosts: localhost
+  vars:
+    pyenv_version: "v2.4.17"
+    python_version: "3.12.0"
   become: false
+  environment:
+    TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
   tasks:
-    - name: Install user python packages
-      ansible.builtin.pip:
-        name:
-          - pipenv
-          - build
-        extra_args: --user
-
     - name: Configure pyenv
       ansible.builtin.git:
         repo: https://github.com/pyenv/pyenv.git
         dest: "{{ ansible_env.HOME }}/.pyenv"
-        version: "v2.3.4"
+        version: "{{ pyenv_version }}"
+
+    - name: Install new default Python version using pyenv
+      ansible.builtin.shell: |
+        export PYENV_ROOT="$HOME/.pyenv"
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init --path)"
+        pyenv install {{ python_version }}
+        pyenv global {{ python_version }}
+      args:
+        executable: /bin/bash
+        creates: "{{ ansible_env.HOME }}/.pyenv/versions/{{ python_version }}"
+
+    - name: Verify that default system python is now managed by pyenv
+      ansible.builtin.command: pyenv version-name
+      register: pyenv_python_version
+      ignore_errors: true
+      changed_when: false
