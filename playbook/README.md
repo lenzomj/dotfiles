@@ -2,11 +2,7 @@
 
 1. `python -m ensurepip --upgrade`
 
-2. `python -m pip install ansible`
-
-3. `ansible-playbook playbook-getpython.yml`
-
-4. `python -m pip install -r requirements.txt`
+2. `python -m pip install -r requirements.txt`
 
 ## Drafts
 

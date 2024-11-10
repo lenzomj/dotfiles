@@ -13,19 +13,23 @@
         dest: "{{ ansible_env.HOME }}/.pyenv"
         version: "{{ pyenv_version }}"
 
-    - name: Install new default Python version using pyenv
+    - name: Install new Python version using pyenv
       ansible.builtin.shell: |
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
         eval "$(pyenv init --path)"
         pyenv install {{ python_version }}
-        pyenv global {{ python_version }}
       args:
         executable: /bin/bash
         creates: "{{ ansible_env.HOME }}/.pyenv/versions/{{ python_version }}"
 
-    - name: Verify that default system python is now managed by pyenv
-      ansible.builtin.command: pyenv version-name
-      register: pyenv_python_version
-      ignore_errors: true
-      changed_when: false
+    - name: Ensure core pip packages are installed
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        state: present
+        extra_args: --user
+      with_items:
+        - pip
+        - ansible
+        - ansible-lint
+        - poetry
