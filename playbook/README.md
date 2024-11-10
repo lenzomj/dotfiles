@@ -1,10 +1,12 @@
-# Playbook
+# Initialization
 
-1. Install `python` and `pipenv`
+1. `python -m ensurepip --upgrade`
 
-2. Initialize using `pipenv install`
+2. `python -m pip install ansible`
 
-3. Call `ansible-playbook <play-name>.yml`
+3. `ansible-playbook playbook-getpython.yml`
+
+4. `python -m pip install -r requirements.txt`
 
 ## Drafts
 
