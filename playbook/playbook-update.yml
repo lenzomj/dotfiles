@@ -1,0 +1,16 @@
+---
+- name: Update Environment
+  hosts: localhost
+  become: false
+  tasks:
+
+    - name: Check if rustup is installed
+      ansible.builtin.command: which rustup
+      register: rustup_exists
+      changed_when: false
+      ignore_errors: true
+
+    - name: Update Rust Environment
+      ansible.builtin.command: rustup update
+      changed_when: false
+      when: rustup_exists.rc == 0
