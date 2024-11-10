@@ -170,6 +170,7 @@ call plug#begin(expand($VIMHOME.'/.vim/bundle'))
 
 " File System Navigation
 call DeclarePlugin('preservim/nerdtree')
+call DeclarePlugin('preservim/tagbar')
 
 " Text/Code Navigation
 call DeclarePlugin('ctrlpvim/ctrlp.vim')
@@ -256,6 +257,12 @@ if PluginAvailable('nerdtree')
   map <leader>[ :NERDTreeToggle<cr>
   let NERDTreeShowHidden=1
   let NERDTreeMinimalUI=1
+endif
+" }}}
+
+" ---- tagbar plugin {{{
+if PluginAvailable('tagbar')
+  map <Leader>] :TagbarToggle<CR>
 endif
 " }}}
 

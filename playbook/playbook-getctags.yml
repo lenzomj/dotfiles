@@ -1,0 +1,33 @@
+---
+- name: Configure ctags
+  hosts: localhost
+  become: false
+  vars:
+    uri: "https://github.com/universal-ctags/ctags-nightly-build/releases/download"
+    build: "2024.11.08%2Bb6d1cacac14c96155e9058512e97198e33056ed9"
+    package: "uctags-2024.11.08-linux-x86_64.tar.xz"
+    sha256: "4f292bcdf4a143ea8ade9f9580f8e36c4d536fcedfdd88626ce65e9a6dca57f8"
+  environment:
+    TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
+  tasks:
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
+
+    - name: Download ctags package
+      ansible.builtin.get_url:
+        url: "{{ uri }}/{{ build }}/{{ package }}"
+        dest: "{{ tmpdir.path }}"
+        mode: "0700"
+        checksum: "sha256:{{ sha256 }}"
+
+    - name: Unarchive ctags package to  ~/.local
+      ansible.builtin.unarchive:
+        src: "{{ tmpdir.path }}/{{ package }}"
+        dest: "{{ ansible_env.HOME }}/.local/"
+        extra_opts: ["--strip-components=1"]
+        remote_src: true
+        creates: "{{ ansible_env.HOME }}/.local/bin/ctags"
