@@ -13,7 +13,7 @@
         dest: "{{ ansible_env.HOME }}/.pyenv"
         version: "{{ pyenv_version }}"
 
-    - name: Install new Python version using pyenv
+    - name: Install new default Python version using pyenv
       ansible.builtin.shell: |
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"

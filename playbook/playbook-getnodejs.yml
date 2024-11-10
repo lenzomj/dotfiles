@@ -3,7 +3,8 @@
   hosts: localhost
   become: false
   vars:
-    nvm_uri: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7"
+    nvm_version: "v0.40.1"
+    nvm_checksum: "abdb525ee9f5b48b34d8ed9fc67c6013fb0f659712e401ecd88ab989b3af8f53"
     nvm_dir: "{{ ansible_env.HOME }}/.nvm"
   tasks:
     - name: Create default NVM_DIR
@@ -14,10 +15,10 @@
 
     - name: Download Node version Manager (NVM) Installer
       ansible.builtin.get_url:
-        url: "{{ nvm_uri }}/install.sh"
+        url: "https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh"
         dest: "{{ nvm_dir }}"
         mode: "0700"
-        checksum: "sha256:8e45fa547f428e9196a5613efad3bfa4d4608b74ca870f930090598f5af5f643"
+        checksum: "sha256:{{ nvm_checksum }}"
 
     - name: Install Node Version Manager (NVM)
       ansible.builtin.shell: >
@@ -35,4 +36,4 @@
         chdir: "{{ ansible_env.HOME }}"
         executable: /bin/sh
       loop:
-        - 20.11
+        - 22.11.0
