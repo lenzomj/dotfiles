@@ -63,9 +63,6 @@ set foldmethod=indent
 
 " Folding is disabled in new buffers by default
 set nofoldenable
-
-" Folding is enabled by marker in vim files
-autocmd FileType vim setlocal foldmethod=marker foldenable
 "  }}}
 
 " ---- Search {{{
@@ -146,7 +143,7 @@ autocmd Bufread,BufNewFile *.bats set filetype=sh
 autocmd FileType sh,zsh,vim,bats setlocal shiftwidth=2 tabstop=2 expandtab
 
 " vim
-autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab foldmethod=marker foldenable
 " }}}
 
 " Plugin Manager {{{
