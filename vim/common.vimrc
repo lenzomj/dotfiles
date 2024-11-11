@@ -55,8 +55,18 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 
 " Visual autocomplete for command menu (e.g. :e ~/path/to/file)
 set wildmenu
-
 " }}}
+
+" ---- Folding {{{
+" Use indentation to guide folding
+set foldmethod=indent
+
+" Folding is disabled in new buffers by default
+set nofoldenable
+
+" Folding is enabled by marker in vim files
+autocmd FileType vim setlocal foldmethod=marker foldenable
+"  }}}
 
 " ---- Search {{{
 " Search while typing
@@ -157,11 +167,7 @@ endfunction
 
 " Returns true, if a plugin is available
 function! PluginAvailable(plugin)
-  let status = isdirectory(expand($VIMHOME.'/.vim/bundle/'.a:plugin))
-  if ! status
-    echom a:plugin.' is not available'
-  endif
-  return status
+  return has_key(g:plugs, a:plugin)
 endfunction
 
 " To install, execute :PlugInstall
@@ -170,14 +176,18 @@ call plug#begin(expand($VIMHOME.'/.vim/bundle'))
 
 " File System Navigation
 call DeclarePlugin('preservim/nerdtree')
-call DeclarePlugin('preservim/tagbar')
 
 " Text/Code Navigation
 call DeclarePlugin('ctrlpvim/ctrlp.vim')
-call DeclarePlugin('pseewald/vim-anyfold')
+call DeclarePlugin('preservim/tagbar')
+
+" Writing
 call DeclarePlugin('preservim/vim-pencil')
 call DeclarePlugin('preservim/vim-wordy')
-call DeclarePlugin('vim-syntastic/syntastic')
+
+if (has('nvim') && v:version >= 800) || (has('patch-9.0.0'))
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 
 " Look and Feel
 call DeclarePlugin('flazz/vim-colorschemes')
@@ -198,16 +208,6 @@ call DeclarePlugin('tpope/vim-fugitive')
 call DeclarePlugin('github/copilot.vim')
 
 call plug#end()
-" }}}
-
-" ---- anyfold plugin {{{
-if PluginAvailable('vim-anyfold')
-  autocmd FileType * AnyFoldActivate " Activate for all filetypes
-
-  " Close all marker folds when opening a new buffer
-  autocmd BufRead * setlocal foldmethod=marker
-  autocmd BufRead * normal zM
-endif
 " }}}
 
 " ---- colorscheme plugins {{{
