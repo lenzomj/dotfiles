@@ -4,30 +4,48 @@
   become: false
   environment:
     TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
+  vars:
+    rustup_version: "1.27.1"
+    rustup_checksum: "sha256:f5ba37f2ba68efec101198dca1585e6e7dd7640ca9c526441b729a79062d3b77"
   tasks:
+    - name: Check installed version of rustup
+      ansible.builtin.command: rustup --version
+      register: rustup_version_check
+      ignore_errors: true
+      changed_when: false
+
+    - name: Set installed rustup version fact
+      ansible.builtin.set_fact:
+        installed_rustup_version: "{{ rustup_version_check.stdout | regex_search('rustup ([0-9.]+)', '\\1') | first }}"
+      when: rustup_version_check.rc == 0
+
     - name: Create temporary directory
       ansible.builtin.tempfile:
         state: directory
         suffix: ansible
       register: tmpdir
       check_mode: false
+      when: installed_rustup_version is not defined or installed_rustup_version != rustup_version
 
-    - name: Download rustup Installer Package
+    - name: Download rustup installer package
       ansible.builtin.get_url:
-        url: "https://github.com/rust-lang/rustup/archive/refs/tags/1.26.0.tar.gz"
+        url: "https://github.com/rust-lang/rustup/archive/refs/tags/{{ rustup_version }}.tar.gz"
         dest: "{{ tmpdir.path }}"
         mode: "0700"
-        checksum: "sha256:6f20ff98f2f1dbde6886f8d133fe0d7aed24bc76c670ea1fca18eb33baadd808"
+        checksum: "{{ rustup_checksum }}"
+      when: installed_rustup_version is not defined or installed_rustup_version != rustup_version
 
-    - name: Unpack rustup Installer
+    - name: Unpack rustup installer
       ansible.builtin.unarchive:
-        src: "{{ tmpdir.path }}/rustup-1.26.0.tar.gz"
+        src: "{{ tmpdir.path }}/rustup-{{ rustup_version }}.tar.gz"
         dest: "{{ tmpdir.path }}"
+      when: installed_rustup_version is not defined or installed_rustup_version != rustup_version
 
-    - name: Install Rust Installer
+    - name: Install rustup
       ansible.builtin.shell: >
-        ./rustup-1.26.0/rustup-init.sh -y --no-modify-path
+        ./rustup-{{ rustup_version }}/rustup-init.sh -y --no-modify-path
       args:
         creates: "{{ ansible_env.HOME }}/.rustup/settings.toml"
         chdir: "{{ tmpdir.path }}"
         executable: /bin/sh
+      when: installed_rustup_version is not defined or installed_rustup_version != rustup_version
