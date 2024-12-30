@@ -1,0 +1,33 @@
+---
+- name: (RHEL) Provision Linux AVR Development Environment
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Add user(s) to dialout group
+      become: true
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: dialout
+        append: true
+      with_items: "{{ lookup('env', 'USER') }}"
+
+    - name: (RHEL) Add AVR toolchain
+      become: true
+      ansible.builtin.package:
+        name:
+          - openssl-devel
+          - systemd-devel
+          - avrdude
+          - avr-gcc
+          - avr-libc
+        state: present
+
+    - name: Install avr cargo packages # noqa: command-instead-of-shell
+      ansible.builtin.shell:
+        cmd: "cargo install ravedude"
+        creates: "/home/{{ lookup('env', 'USER') }}/.cargo/bin/ravedude"
+
+    - name: Install cargo-generate # noqa: command-instead-of-shell
+      ansible.builtin.shell:
+        cmd: "cargo install cargo-generate"
+        creates: "/home/{{ lookup('env', 'USER') }}/.cargo/bin/cargo-generate"
