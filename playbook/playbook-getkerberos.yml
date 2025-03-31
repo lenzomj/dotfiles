@@ -3,10 +3,8 @@
   hosts: localhost
   become: false
   vars:
-    kerberos: "HPCMP_RELEASE_20210920_client-3.10.0-1127.el7.x86_64-Linux-64.tar.gz"
-    openssh: "user-openssh-8.7p1a-x86_64-unknown-linux-gnu.tgz"
-    kerberos_sha256: "3e27093790c97a4be50479e9a465c0953e669dd1afd537ef425e537bf9f9faf4"
-    openssh_sha256: "314e4d7043ca456099abc0006d17a963c0f186d3cc657c31d9a6c5aed2095c64"
+    kerberos: "kerberos-client.x86_64.rpm"
+    kerberos_sha256: "10e2b2a0c22ab20f7f672e00d535cc7221fbfa12cc3811a9ec7bd449d7c72a0d"
   tasks:
     - name: Get checksum of Kerberos installer
       ansible.builtin.stat:
@@ -14,32 +12,23 @@
         checksum_algorithm: sha256
       register: kerberos_stat
 
-    - name: Get checksum of OpenSSH installer
-      ansible.builtin.stat:
-        path: "{{ ansible_env.HOME }}/Downloads/{{ openssh }}"
-        checksum_algorithm: sha256
-      register: openssh_stat
-
     - name: Verify checksum of Kerberos installer
       ansible.builtin.fail:
         msg: "Checksum of Kerberos installer does not match"
       when: kerberos_stat.stat.checksum != kerberos_sha256
 
-    - name: Verify checksum of OpenSSH installer
-      ansible.builtin.fail:
-        msg: "Checksum of OpenSSH installer does not match"
-      when: openssh_stat.stat.checksum != openssh_sha256
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: ansible
+      register: tmpdir
+      check_mode: false
 
-    - name: Unarchive Kerberos installer to ~/.local
-      ansible.builtin.unarchive:
-        src: "{{ ansible_env.HOME }}/Downloads/{{ kerberos }}"
-        dest: "{{ ansible_env.HOME }}/.local"
-        remote_src: true
-        creates: "{{ ansible_env.HOME }}/.local/krb5"
-
-    - name: Unarchive OpenSSH installer to ~/.local
-      ansible.builtin.unarchive:
-        src: "{{ ansible_env.HOME }}/Downloads/{{ openssh }}"
-        dest: "{{ ansible_env.HOME }}/.local"
-        remote_src: true
-        creates: "{{ ansible_env.HOME }}/.local/ossh"
+    - name: Unpack Kerberos installer to ~/.local
+      ansible.builtin.shell: |
+        set -o pipefail
+        rpm2cpio "{{ kerberos_stat.stat.path }}" | cpio -idmv -D "{{ tmpdir.path }}"
+        tar -C "{{ tmpdir.path }}" -cf - . | tar --strip-components=3 -C "{{ ansible_env.HOME }}/.local"  -xf -
+      args:
+        executable: /bin/bash
+        creates: "${{ ansible_env.HOME }}/.local/krb5"

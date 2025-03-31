@@ -64,9 +64,9 @@ fi
 # Kerberos {{{
 if [[ -d "$HOME/.local/krb5" ]]; then
   KRB5_ROOT="$HOME/.local/krb5"
-  OSSH_ROOT="$HOME/.local/ossh"
-  export PATH="$KRB5_ROOT/bin:$OSSH_ROOT/bin:$PATH"
-  export KRB5_CONFIG="$KRB5_ROOT/etc/krb5.conf"
+  export PATH="$KRB5_ROOT/bin:$PATH"
+  #export LD_LIBRARY_PATH="${KRB5_ROOT}/lib:${LD_LIBRARY_PATH}"
+  export KRB5_CONFIG="$KRB5_ROOT/krb5.conf"
 fi
 # }}}
 
