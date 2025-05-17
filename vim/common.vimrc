@@ -230,6 +230,8 @@ call DeclarePlugin('preservim/vim-wordy')
 
 if (has('nvim') && v:version >= 800) || (has('patch-9.0.0'))
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'CopilotC-Nvim/CopilotChat.nvim'
 endif
 
 " Look and Feel
@@ -251,6 +253,16 @@ call DeclarePlugin('tpope/vim-fugitive')
 call DeclarePlugin('github/copilot.vim')
 
 call plug#end()
+" }}}
+
+" ---- CopilotChat plugin {{{
+if (has('nvim') && v:version >= 800) && PluginAvailable('CopilotChat.nvim')
+lua << EOF
+require("CopilotChat").setup {
+-- See Configuration section for options
+}
+EOF
+endif
 " }}}
 
 " ---- colorscheme plugins {{{
