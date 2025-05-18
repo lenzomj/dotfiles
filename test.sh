@@ -65,8 +65,7 @@ test_install () {
     {
       [ "${ROOT}/vim/common.vimrc" -ef "${PREFIX}/.vimrc" ] \
       && [ "${ROOT}/vim/common.vim" -ef "${PREFIX}/.vim" ] \
-      && [ -d "${PREFIX}/.vim/bundle" ] \
-      && [ -d "${PREFIX}/.vim/autoload" ] \
+      && [ -d "${PREFIX}/.vim/autoload/plug.vim" ] \
       && [ -s "${PREFIX}/.vimrc.old" ];
     } || throw_error
   fi
