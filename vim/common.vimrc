@@ -197,20 +197,14 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2 expandtab foldmethod=marker
 " Set runtimepath for unconventional installs
 exe 'set rtp+='.expand($VIMHOME.'/.vim')
 
-" Declares a plugin using a local cache/mirror, if available
-function! DeclarePlugin(plugin)
-  let fq_local_path = expand($VIM_PLUG_CACHE.'/github.com/'.a:plugin.'.git')
-  let fq_remote_path = 'https://github.com/'.a:plugin.'.git'
-  if isdirectory(fq_local_path)
-    Plug 'file://'.fq_local_path
-  else
-    Plug fq_remote_path
-  endif
-endfunction
-
 " Returns true, if a plugin is available
 function! PluginAvailable(plugin)
-  return has_key(g:plugs, a:plugin)
+  return isdirectory(expand($VIMHOME.'/.vim/bundle/'.a:plugin))
+endfunction
+
+" Returns true, if a plugin is available and nvim is installed
+function! NvimPluginAvailable(plugin)
+  return isdirectory(expand($VIMHOME.'/.vim/bundle/'.a:plugin)) && has('nvim')
 endfunction
 
 " To install, execute :PlugInstall
@@ -218,19 +212,19 @@ endfunction
 call plug#begin(expand($VIMHOME.'/.vim/bundle'))
 
 " File System Navigation
-call DeclarePlugin('preservim/nerdtree')
+Plug 'preservim/nerdtree'
 
 " Text/Code Navigation
-call DeclarePlugin('ctrlpvim/ctrlp.vim')
-call DeclarePlugin('preservim/tagbar')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'preservim/tagbar'
 
 " Writing
-call DeclarePlugin('preservim/vim-pencil')
-call DeclarePlugin('preservim/vim-wordy')
+Plug 'preservim/vim-pencil'
+Plug 'preservim/vim-wordy'
 
 " GitHub Copilot for Vim and Neovim and Conquerer of Completion (CoC)
 " Requires Neovim or vim 9.x
-if (has('nvim') && v:version >= 800) || (has('patch-9.0.0'))
+if has('nvim-0.8') || has('patch-9.0.0')
   if executable('node')
     Plug 'github/copilot.vim'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -238,7 +232,7 @@ if (has('nvim') && v:version >= 800) || (has('patch-9.0.0'))
 endif
 
 " GitHub Copilot Chat for Neovim
-if(has('nvim') && v:version >= 800)
+if has('nvim-0.8')
   if executable('node')
     Plug 'nvim-lua/plenary.nvim'
     Plug 'CopilotC-Nvim/CopilotChat.nvim'
@@ -246,25 +240,25 @@ if(has('nvim') && v:version >= 800)
 endif
 
 " Look and Feel
-call DeclarePlugin('flazz/vim-colorschemes')
-call DeclarePlugin('itchyny/lightline.vim')
+Plug 'flazz/vim-colorschemes'
+Plug 'itchyny/lightline.vim'
 
 " Special File Types
-call DeclarePlugin('godlygeek/tabular')
-call DeclarePlugin('plasticboy/vim-markdown')
-call DeclarePlugin('gyim/vim-boxdraw')
-call DeclarePlugin('rust-lang/rust.vim')
-call DeclarePlugin('kaarmu/typst.vim')
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'gyim/vim-boxdraw'
+Plug 'rust-lang/rust.vim'
+Plug 'kaarmu/typst.vim'
 
 " Version Control
-call DeclarePlugin('airblade/vim-gitgutter')
-call DeclarePlugin('tpope/vim-fugitive')
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 " }}}
 
 " ---- GitHub Copilot Chat plugin {{{
-if (PluginAvailable('CopilotChat.nvim'))
+if NvimPluginAvailable('CopilotChat.nvim')
 lua << EOF
 require("CopilotChat").setup {
   debug = false,
