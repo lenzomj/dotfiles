@@ -12,12 +12,12 @@ throw_error () {
 
 setup () {
   PREFIX="$(mktemp -d "${PREFIX}")"
-  echo "test_setup: Creating ${PREFIX} ..."
-  echo "test_setup: Creating ${PREFIX}/.bashrc"    | tee "${PREFIX}/.bashrc"
-  echo "test_setup: Creating ${PREFIX}/.zshrc"     | tee "${PREFIX}/.zshrc"
-  echo "test_setup: Creating ${PREFIX}/.vimrc"     | tee "${PREFIX}/.vimrc"
-  echo "test_setup: Creating ${PREFIX}/.gitconfig" | tee "${PREFIX}/.gitconfig"
-  echo "test_setup: Creating symlink ${PREFIX}/.inputrc"
+  echo "test: Creating ${PREFIX} ..."
+  echo "test: Creating ${PREFIX}/.bashrc"    | tee "${PREFIX}/.bashrc"
+  echo "test: Creating ${PREFIX}/.zshrc"     | tee "${PREFIX}/.zshrc"
+  echo "test: Creating ${PREFIX}/.vimrc"     | tee "${PREFIX}/.vimrc"
+  echo "test: Creating ${PREFIX}/.gitconfig" | tee "${PREFIX}/.gitconfig"
+  echo "test: Creating symlink ${PREFIX}/.inputrc"
   ln -s "/dev/null" "${PREFIX}/.inputrc"
 }
 
@@ -27,15 +27,15 @@ teardown () {
     printf "%s: Error %d at line %d.\n" \
       "${FUNCNAME[1]}" "${_status}" "${BASH_LINENO[0]}"
   fi
-  echo "test_teardown: Removing ${PREFIX} ..."
+  echo "test: Removing ${PREFIX} ..."
   rm -rf "${PREFIX}"
 }
 
 test_install () {
-  echo "test_install: Executing ${ROOT}/setup.sh ..."
+  echo "test: Executing ${ROOT}/setup.sh ..."
   "${ROOT}/setup.sh" "${PREFIX}"
 
-  echo "test_install: Verifying symlinks ..."
+  echo "test: Verifying symlinks ..."
 
   # Bash
   {
@@ -65,7 +65,7 @@ test_install () {
     {
       [ "${ROOT}/vim/common.vimrc" -ef "${PREFIX}/.vimrc" ] \
       && [ "${ROOT}/vim/common.vim" -ef "${PREFIX}/.vim" ] \
-      && [ -d "${PREFIX}/.vim/autoload/plug.vim" ] \
+      && [ -f "${PREFIX}/.vim/autoload/plug.vim" ] \
       && [ -s "${PREFIX}/.vimrc.old" ];
     } || throw_error
   fi
@@ -88,10 +88,10 @@ test_install () {
 }
 
 test_uninstall () {
-  echo "test_install: Executing ${ROOT}/setup.sh -u ..."
+  echo "test: Executing ${ROOT}/setup.sh -u ..."
   "${ROOT}/setup.sh" -u "${PREFIX}"
 
-  echo "test_uninstall: Verifying symlinks ..."
+  echo "test: Verifying symlinks ..."
   { [ ! -L "${PREFIX}/.bash_profile" ] \
     && [ ! -L "${PREFIX}/.bashrc" ] \
     && [ ! -L "${PREFIX}/.inputrc" ] \
@@ -104,11 +104,12 @@ test_uninstall () {
     && [ ! -L "${PREFIX}/.gnupg/gpg.conf" ];
   } || throw_error
 
-  echo "test-uninstall: Verifying backups ..."
+  echo "test: Verifying backups ..."
   { [ -s "${PREFIX}/.bashrc" ] \
     && [ -s "${PREFIX}/.zshrc" ] \
     && [ -s "${PREFIX}/.vimrc"  ] \
-    && [ -s "${PREFIX}/.gitconfig" ]; } || throw_error
+    && [ -s "${PREFIX}/.gitconfig" ];
+  } || throw_error
 }
 
 setup
