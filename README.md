@@ -2,15 +2,30 @@
 ![ShellCheck](https://github.com/lenzomj/dotfiles/workflows/ShellCheck/badge.svg)
 ![Vint](https://github.com/lenzomj/dotfiles/workflows/Vint/badge.svg)
 
-# Install
+# Setup
+
+## 1. Clone and Run Setup
 ```bash
 git clone https://github.com/lenzomj/dotfiles.git
-dotfiles/install.sh $HOME
+dotfiles/setup.sh $HOME
 ```
 
-# Post-Install
+## 2. Install Essential Tools
+```bash
+python -m ensurepip --upgrade
+python -m pip install --user -r playbook/requirements.txt
+```
 
-## 1. Install Vim Plugins
+## 3. Install Optional Tools
+```bash
+ansible-playbook playbook-getctags.yml
+ansible-playbook playbook-getnodejs.yml
+ansible-playbook playbook-getneovim.yml
+```
+
+# How-To
+
+## Install Vim Plugins
 ```bash
 # Vim
 vim +'PlugInstall --sync' +qa
@@ -19,7 +34,7 @@ vim +'PlugInstall --sync' +qa
 nvim --headless +PlugInstall +qall
 ```
 
-## 2. (Optional) Add Personal Public Key
+## Add Personal Public Key
 ```bash
 # Manual
 gpg --import <public_key>.asc
@@ -31,13 +46,13 @@ gpg --edit-key $KEYID
 gpg --card-status
 ```
 
-## 3. (Optional) Add GitHub Public Key
+## Add GitHub Public Key
 ```bash
 curl https://github.com/web-flow.gpg | gpg --import
 gpg --edit-key noreply@github.com trust quit
 ```
 
-## 4. (Optional) Create Git-based Encrypted Vault
+## Create Git-based Encrypted Vault
 ```bash
 pass init $GPG_KEYID
 cd $HOME/.password-store
@@ -47,11 +62,5 @@ remote add origin git@github.com:me/vault.git
 
 # Uninstall
 ```bash
-dotfiles/uninstall.sh $HOME
-```
-
-# Provisioning
-```bash
-curl -sSf https://raw.githubusercontent.com/lenzomj/dotfiles/master/playbook/play \
-  | bash -s -- -p <profile>
+dotfiles/setup.sh -u $HOME
 ```

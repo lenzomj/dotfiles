@@ -228,10 +228,21 @@ call DeclarePlugin('preservim/tagbar')
 call DeclarePlugin('preservim/vim-pencil')
 call DeclarePlugin('preservim/vim-wordy')
 
+" GitHub Copilot for Vim and Neovim and Conquerer of Completion (CoC)
+" Requires Neovim or vim 9.x
 if (has('nvim') && v:version >= 800) || (has('patch-9.0.0'))
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'CopilotC-Nvim/CopilotChat.nvim'
+  if executable('node')
+    Plug 'github/copilot.vim'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  endif
+endif
+
+" GitHub Copilot Chat for Neovim
+if(has('nvim') && v:version >= 800)
+  if executable('node')
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'CopilotC-Nvim/CopilotChat.nvim'
+  endif
 endif
 
 " Look and Feel
@@ -249,17 +260,15 @@ call DeclarePlugin('kaarmu/typst.vim')
 call DeclarePlugin('airblade/vim-gitgutter')
 call DeclarePlugin('tpope/vim-fugitive')
 
-" Autocompletion
-call DeclarePlugin('github/copilot.vim')
-
 call plug#end()
 " }}}
 
-" ---- CopilotChat plugin {{{
-if (has('nvim') && v:version >= 800) && PluginAvailable('CopilotChat.nvim')
+" ---- GitHub Copilot Chat plugin {{{
+if (PluginAvailable('CopilotChat.nvim'))
 lua << EOF
 require("CopilotChat").setup {
--- See Configuration section for options
+  debug = false,
+  show_help = true,
 }
 EOF
 endif
