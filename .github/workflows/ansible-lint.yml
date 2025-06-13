@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: fedora-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
@@ -24,3 +24,10 @@ jobs:
       - name: Run ansible-lint
         run: |
           ansible-lint playbook/
+
+      - name: Syntax check all playbooks
+        run: |
+          for pb in playbook/*.yml; do
+            echo "Testing $pb"
+            ansible-playbook --syntax-check "$pb"
+          done
