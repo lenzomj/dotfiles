@@ -1,9 +1,21 @@
 # Initialization
 
-1. `python -m ensurepip --upgrade`
+To set up a Python virtual environment and install all required packages for the playbooks, run:
 
-2. `python -m pip install -r requirements.txt`
+```bash
+./setup.sh
+```
 
+This will:
+- Create a virtual environment in `.venv` (if it doesn't exist)
+- Activate the virtual environment
+- Install all packages from `requirements.txt`
+
+To activate the virtual environment in a new shell session, run:
+
+```bash
+source .venv/bin/activate
+```
 ## Drafts
 
 The following plays have not yet migrated to an Ansible playbook.

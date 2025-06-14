@@ -9,6 +9,7 @@ localhost
 
 [local:vars]
 ansible_connection=local
+ansible_python_interpreter="auto_silent"
 
 [vagrant:vars]
 ansible_connection=ssh
