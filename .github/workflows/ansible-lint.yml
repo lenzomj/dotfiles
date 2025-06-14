@@ -24,3 +24,10 @@ jobs:
       - name: Run ansible-lint
         run: |
           ansible-lint playbook/
+
+      - name: Syntax check all playbooks
+        run: |
+          for pb in playbook/*.yml; do
+            echo "Testing $pb"
+            ansible-playbook --syntax-check "$pb"
+          done
