@@ -2,6 +2,8 @@
    editor = vim
 [user]
    name = "Matthew J. Lenzo"
+[alias]
+   lg = log --graph --oneline --decorate --all
 [include]
    path = ~/.gitconfig-local
 [color]
@@ -19,4 +21,7 @@
 [fetch]
   prune = true
 [diff]
+  tool = vimdiff
   colorMoved = zebra
+[merge]
+  tool = vimdiff
