@@ -6,7 +6,7 @@ DOTFILES_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
 UNINSTALL=0
 
 # Load common script functions and variables
-# shellcheck source=../tools/common.sh
+# shellcheck source-path=SCRIPTDIR/../tools/common.sh
 source "${DOTFILES_ROOT}/tools/common.sh"
 
 show_help() {
