@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 # setup_venv.sh: Set up Python virtual environment and install requirements for playbook
 
 set -e
@@ -19,7 +19,7 @@ if [ ! -d "$VENV_DIR" ]; then
 fi
 
 echo "Activating virtual environment..."
-# shellcheck disable=SC1090
+# shellcheck disable=SC1091
 source "$VENV_DIR/bin/activate"
 
 echo "Installing requirements from $REQ_FILE..."
