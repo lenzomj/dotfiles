@@ -1,0 +1,34 @@
+---
+- name: Create ~/.local/stage
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/stage"
+    state: directory
+    mode: "0700"
+  register: local_stage
+
+- name: Create ~/.local/bin
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+    mode: "0700"
+  register: local_bin
+
+- name: Unarchive {{ package_name }}
+  ansible.builtin.unarchive:
+    src: "{{ local_cache.path }}/{{ package_name }}"
+    dest: "{{ local_stage.path }}"
+  when: package_type == "archive"
+
+- name: Copy {{ package_name }}
+  ansible.builtin.copy:
+    src: "{{ local_cache.path }}/{{ package_name }}"
+    dest: "{{ local_stage.path }}"
+    mode: "0700"
+  when: package_type == "binary"
+
+- name: Create symlinks
+  ansible.builtin.file:
+    src: "{{ local_stage.path }}/{{ item.src }}"
+    dest: "{{ local_bin.path }}/{{ item.lnk }}"
+    state: link
+  loop: "{{ package_bins }}"

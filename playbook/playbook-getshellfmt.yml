@@ -1,0 +1,17 @@
+---
+- name: Fetch and install Shellfmt
+  hosts: localhost
+  vars:
+    package_name: "shfmt_v3.11.0_linux_amd64"
+    package_type: "binary"
+    package_link: "https://github.com/mvdan/sh/releases/download/v3.11.0/{{ package_name }}"
+    package_hash: "1904ec6bac715c1d05cd7f6612eec8f67a625c3749cb327e5bfb4127d09035ff"
+    package_bins:
+      - src: "{{ package_name }}"
+        lnk: "shfmt"
+  tasks:
+    - name: Fetch Package
+      ansible.builtin.include_tasks: tasks/fetch_package.yml
+
+    - name: Install Package
+      ansible.builtin.include_tasks: tasks/install_package.yml
