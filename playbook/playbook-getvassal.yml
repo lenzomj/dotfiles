@@ -1,35 +1,17 @@
 ---
-- name: Configure Vassal
+- name: Fetch and install Vassal
   hosts: localhost
-  become: false
-  environment:
-    TMPDIR: "{{ alt_tmpdir | default('/tmp') }}"
   vars:
-    vassal: "VASSAL-3.7.14-linux.tar.bz2"
-    vassal_version: "3.7.14"
-    vassal_sha256: "fc5481664afa81e148124f5b747613c5d271ead6755309409c139811dea94a54"
+    package_type: "archive"
+    package_name: "VASSAL-3.7.16-linux.tar.bz2"
+    package_link: "https://github.com/vassalengine/vassal/releases/download/3.7.16/{{ package_name }}"
+    package_hash: "1629a09df1ff352a83ba791d2a002f4cf8bb2ca37db731bdc93aacc1626901aa"
+    package_bins:
+      - src: "VASSAL-3.7.16/VASSAL.sh"
+        lnk: "vassal"
   tasks:
-    - name: Create temporary directory
-      ansible.builtin.tempfile:
-        state: directory
-        suffix: ansible
-      register: tmpdir
-      check_mode: false
+    - name: Fetch Package
+      ansible.builtin.include_tasks: tasks/fetch_package.yml
 
-    - name: Download VASSAL bundle
-      ansible.builtin.get_url:
-        url: "https://github.com/vassalengine/vassal/releases/download/{{ vassal_version }}/{{ vassal }}"
-        dest: "{{ tmpdir.path }}"
-        mode: "0700"
-        checksum: "sha256:{{ vassal_sha256 }}"
-
-    - name: Extract VASSAL bundle
-      ansible.builtin.unarchive:
-        src: "{{ tmpdir.path }}/{{ vassal }}"
-        dest: "{{ ansible_env.HOME }}/.local"
-
-    - name: Create symlink in .local/bin pointing to VASSAL.sh
-      ansible.builtin.file:
-        src: "{{ ansible_env.HOME }}/.local/VASSAL-{{ vassal_version }}/VASSAL.sh"
-        dest: "{{ ansible_env.HOME }}/.local/bin/vassal"
-        state: link
+    - name: Install Package
+      ansible.builtin.include_tasks: tasks/install_package.yml
