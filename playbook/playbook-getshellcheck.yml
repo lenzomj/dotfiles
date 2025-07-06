@@ -1,5 +1,5 @@
 ---
-- name: Fetch and install Shelltools
+- name: Fetch and install Shellcheck
   hosts: localhost
   vars:
     package_type: "archive"
