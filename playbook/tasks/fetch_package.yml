@@ -1,0 +1,14 @@
+---
+- name: Create local cache directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/cache"
+    state: directory
+    mode: "0700"
+  register: local_cache
+
+- name: Fetch {{ package_name }}
+  ansible.builtin.get_url:
+    url: "{{ package_link }}"
+    dest: "{{ local_cache.path }}/{{ package_name }}"
+    mode: "0700"
+    checksum: "sha256:{{ package_hash }}"
