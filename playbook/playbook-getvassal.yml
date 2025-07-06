@@ -15,4 +15,3 @@
 
     - name: Install Package
       ansible.builtin.include_tasks: tasks/install_package.yml
-
